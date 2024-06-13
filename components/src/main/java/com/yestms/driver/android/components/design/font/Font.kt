@@ -10,6 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.yestms.driver.android.components.R.font.helvetica_regular as regular
+import com.yestms.driver.android.components.R.font.helvetica_medium as medium
 
 val typography = CustomFont(
     medium16pxRegular = createText(
@@ -18,6 +19,27 @@ val typography = CustomFont(
         FontStyle.Normal,
         weight = FontWeight.W400,
         lineHeight = 24.sp
+    ),
+    medium16pxMedium = createText(
+        font = medium,
+        size = 16.sp,
+        FontStyle.Normal,
+        weight = FontWeight.W500,
+        lineHeight = 24.sp
+    ),
+    small14pxRegular = createText(
+        font = regular,
+        size = 14.sp,
+        style = FontStyle.Normal,
+        weight = FontWeight.W400,
+        lineHeight = 24.sp
+    ),
+    xsMedium = createText(
+        font = medium,
+        size = 12.sp,
+        style = FontStyle.Normal,
+        weight = FontWeight.W500,
+        lineHeight = 18.sp
     )
 )
 
@@ -35,4 +57,4 @@ private fun createText(
     lineHeight = lineHeight
 )
 
-val LocalFont = staticCompositionLocalOf { typography }
+val LocalCustomFont = staticCompositionLocalOf { typography }

@@ -1,4 +1,4 @@
-package com.yestms.driver.android.components.design.theme
+package com.yestms.driver.android.data.enums
 
 enum class ThemeMode(val id: Int) {
     DAY(1),

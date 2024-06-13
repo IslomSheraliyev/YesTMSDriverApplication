@@ -9,26 +9,29 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.yestms.driver.android.components.design.color.tmsLightColorScheme
 import com.yestms.driver.android.components.design.font.typography
+import com.yestms.driver.android.data.enums.ThemeMode
+import com.yestms.driver.android.data.local.AppPreferences
 
 private val lightColorScheme = tmsLightColorScheme()
 
 private val colorPalette = lightColorScheme(
-    primary = Color.Transparent,
-    secondary = Color.Transparent,
-    tertiary = Color.Transparent,
-    background = Color.Transparent,
+    primary = Color.Blue,
+    secondary = Color.Blue,
+    tertiary = Color.Blue,
+    background = Color.Blue,
     surface = Color.Transparent,
     onPrimary = Color.Transparent,
     onError = Color.Transparent,
 )
 
 private val darkColorPalette = darkColorScheme(
-    primary = Color.Transparent,
-    secondary = Color.Transparent,
-    tertiary = Color.Transparent,
-    background = Color.Transparent,
+    primary = Color.Blue,
+    secondary = Color.Blue,
+    tertiary = Color.Blue,
+    background = Color.Blue,
     surface = Color.Transparent,
     onPrimary = Color.Transparent,
     onError = Color.Transparent,
@@ -40,6 +43,8 @@ fun YesTMSDriverApplicationTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+
+    val uiController = rememberSystemUiController()
 
     val darkTheme = when (theme) {
         ThemeMode.DAY -> false
@@ -67,4 +72,10 @@ fun YesTMSDriverApplicationTheme(
             content = content
         )
     }
+
+    uiController.setSystemBarsColor(
+        color = Color.Transparent,
+        isNavigationBarContrastEnforced = false,
+        darkIcons = AppPreferences.themeMode == ThemeMode.DAY
+    )
 }

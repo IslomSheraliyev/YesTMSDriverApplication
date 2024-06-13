@@ -1,4 +1,4 @@
-package com.yestms.driver.android.components.prefabs
+package com.yestms.driver.android.components.spacer
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer

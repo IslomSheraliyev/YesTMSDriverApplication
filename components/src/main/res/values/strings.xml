@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_enter_user_id">To access your workspace, enter the\nprovided User ID from your dispatcher</string>
+    <string name="login">Log In</string>
+    <string name="enter_user_id">Enter your User ID</string>
+    <string name="user_not_found">User not found</string>
+    <string name="on_duty">On Duty</string>
+    <string name="loads">Loads</string>
+    <string name="stats">Stats</string>
+</resources>
