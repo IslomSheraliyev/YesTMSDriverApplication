@@ -1,4 +1,4 @@
-package com.yestms.driver.android.data.remote.response.auth.check
+package com.yestms.driver.android.domain.model.auth.check
 
 import com.yestms.driver.android.domain.model.auth.common.AuthDispatchersModel
 
@@ -9,7 +9,7 @@ data class AuthCheckUserModel(
     val email: String,
     val firstName: String,
     val lastName: String,
-    val confirmEmail: String,
+    val confirmEmail: Boolean,
     val photo: String,
     val dateOfBirth: String,
     val password: String,
@@ -18,7 +18,7 @@ data class AuthCheckUserModel(
     val activationLink: String,
     val phone: String,
     val driverRate: Int,
-    val dispatcherCommission: String,
+    val dispatcherCommission: Int,
     val driverResident: String,
     val currentLocation: String,
     val currentLocationLat: String,

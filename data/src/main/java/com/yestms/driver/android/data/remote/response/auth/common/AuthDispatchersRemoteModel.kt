@@ -1,9 +1,9 @@
-package com.yestms.driver.android.data.remote.response.auth.login_driver
+package com.yestms.driver.android.data.remote.response.auth.common
 
 import com.google.gson.annotations.SerializedName
 
-data class AuthLoginDriverDispatchersRemoteModel(
+data class AuthDispatchersRemoteModel(
     val id: Int?,
     @SerializedName("dispatcher_assigned")
-    val dispatcherAssigned: AuthLoginDriverDispatcherRemoteModel?
+    val dispatcherAssigned: AuthDispatcherRemoteModel?
 )

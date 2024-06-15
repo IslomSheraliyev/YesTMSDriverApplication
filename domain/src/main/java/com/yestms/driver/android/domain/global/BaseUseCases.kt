@@ -1,4 +1,4 @@
-package uz.fitgroup.gameportal.domain.global
+package com.yestms.driver.android.domain.global
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

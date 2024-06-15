@@ -52,7 +52,7 @@ fun UserIDTextField(
                     shape = RoundedCornerShape(8.dp)
                 ),
             textStyle = CustomTheme.typography.medium16pxRegular.copy(color = CustomTheme.colorScheme.grey500),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             singleLine = true,
             decorationBox = { innerTextField ->
                 TextFieldDefaults.DecorationBox(

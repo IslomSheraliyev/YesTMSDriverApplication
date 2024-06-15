@@ -1,7 +1,7 @@
-package com.yestms.driver.android.data.remote.response.auth.login
+package com.yestms.driver.android.data.remote.response.auth.login_driver
 
 import com.google.gson.annotations.SerializedName
-import com.yestms.driver.android.data.remote.response.common.DispatchersRemoteModel
+import com.yestms.driver.android.data.remote.response.auth.common.AuthDispatchersRemoteModel
 
 data class AuthLoginDriverUserRemoteModel(
     val fullName: String?,
@@ -9,7 +9,7 @@ data class AuthLoginDriverUserRemoteModel(
     val email: String?,
     val firstName: String?,
     val lastName: String?,
-    val confirmEmail: String?,
+    val confirmEmail: Boolean?,
     val photo: String?,
     val dateOfBirth: String?,
     val password: String?,
@@ -18,7 +18,7 @@ data class AuthLoginDriverUserRemoteModel(
     val activationLink: String?,
     val phone: String?,
     val driverRate: Int?,
-    val dispatcherCommission: String?,
+    val dispatcherCommission: Int?,
     val driverResident: String?,
     val currentLocation: String?,
     val currentLocationLat: String?,
@@ -38,6 +38,6 @@ data class AuthLoginDriverUserRemoteModel(
     val userRole: AuthLoginDriverUserRoleRemoteModel?,
     @SerializedName("driver_type")
     val driverType: AuthLoginDriverDriverTypeRemoteModel?,
-    val dispatchers: List<DispatchersRemoteModel>?,
+    val dispatchers: List<AuthDispatchersRemoteModel>?,
     val company: AuthLoginDriverCompanyRemoteModel?
 )

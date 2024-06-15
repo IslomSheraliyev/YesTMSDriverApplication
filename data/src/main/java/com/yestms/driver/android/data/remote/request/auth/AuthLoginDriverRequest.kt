@@ -1,4 +1,5 @@
-package com.yestms.driver.android.data.remote.response.auth
+package com.yestms.driver.android.data.remote.request.auth
 
-class AuthLoginDriverRequest {
-}
+data class AuthLoginDriverRequest(
+    val externalId: String
+)

@@ -1,13 +1,15 @@
-package com.yestms.driver.android.data.remote.response.common
+package com.yestms.driver.android.data.remote.response.auth.check
+
+import com.yestms.driver.android.data.remote.response.auth.common.AuthDispatchersRemoteModel
 
 
-data class UserRemoteModel(
+data class AuthCheckUserRemoteModel(
     val fullName: String?,
     val id: Int?,
     val email: String?,
     val firstName: String?,
     val lastName: String?,
-    val confirmEmail: String?,
+    val confirmEmail: Boolean?,
     val photo: String?,
     val dateOfBirth: String?,
     val password: String?,
@@ -16,8 +18,8 @@ data class UserRemoteModel(
     val activationLink: String?,
     val phone: String?,
     val driverRate: Int?,
-    val dispatcherCommission: String?,
-    val driverResident: Int?,
+    val dispatcherCommission: Int?,
+    val driverResident: String?,
     val currentLocation: String?,
     val currentLocationLat: String?,
     val currentLocationLng: String?,
@@ -32,5 +34,5 @@ data class UserRemoteModel(
     val driverTypeId: Int?,
     val truckId: Int?,
     val companyId: Int?,
-    val dispatchers: List<DispatchersRemoteModel>?
+    val dispatchers: List<AuthDispatchersRemoteModel>?
 )

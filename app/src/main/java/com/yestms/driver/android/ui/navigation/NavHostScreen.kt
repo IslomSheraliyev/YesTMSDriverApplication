@@ -7,8 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.yestms.driver.android.components.navigation.Screen
-import com.yestms.driver.android.ui.screens.home.HomeScreen
 import com.yestms.driver.android.ui.screens.login.LoginScreen
+import com.yestms.driver.android.ui.screens.main.MainScreen
 
 @Composable
 fun NavHostScreen() {
@@ -21,7 +21,7 @@ fun NavHostScreen() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.LoginScreen.screenName
+        startDestination = Screen.Main.screenName
     ) {
         composable(
             route = Screen.LoginScreen.screenName
@@ -30,9 +30,9 @@ fun NavHostScreen() {
         }
 
         composable(
-            route = Screen.HomeScreen.screenName
-        ){
-            HomeScreen(navController)
+            route = Screen.Main.screenName
+        ) {
+            MainScreen(navController = navController)
         }
     }
 }

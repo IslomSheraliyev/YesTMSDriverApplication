@@ -16,8 +16,20 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
+
     buildTypes {
         release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -57,9 +69,10 @@ dependencies {
 
     //Chucker
     implementation(libs.library)
-//    debugImplementation(libs.library.no.op)
+    releaseImplementation(libs.library.no.op)
 
     //Paging
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
+
 }

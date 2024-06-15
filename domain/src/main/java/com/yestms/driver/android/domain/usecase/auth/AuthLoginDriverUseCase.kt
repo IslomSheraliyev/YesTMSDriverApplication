@@ -5,7 +5,7 @@ import com.yestms.driver.android.domain.model.auth.login_driver.AuthLoginDriverM
 import com.yestms.driver.android.domain.repository.AuthRepository
 import kotlinx.coroutines.Dispatchers
 
-class LoginDriverUseCase(
+class AuthLoginDriverUseCase(
     private val repository: AuthRepository
 ) : UseCaseWithParams<String, AuthLoginDriverModel>(Dispatchers.IO) {
     override suspend fun execute(parameter: String): AuthLoginDriverModel {

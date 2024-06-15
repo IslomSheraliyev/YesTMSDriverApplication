@@ -1,4 +1,6 @@
 package com.yestms.driver.android.domain.model.auth.check
 
-class AuthCheckModel {
-}
+data class AuthCheckModel(
+    val token: String,
+    val user: AuthCheckUserModel
+)

@@ -1,4 +1,4 @@
-package com.yestms.driver.android.ui.screens.home
+package com.yestms.driver.android.ui.screens.loads
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController

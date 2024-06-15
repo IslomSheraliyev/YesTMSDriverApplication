@@ -1,4 +1,7 @@
-package com.yestms.driver.android.domain.model.auth
+package com.yestms.driver.android.domain.model.auth.login_driver
 
-class AuthLoginDriverDriverTypeModel {
-}
+data class AuthLoginDriverDriverTypeModel(
+    val id: Int,
+    val name: String,
+    val description: String
+)

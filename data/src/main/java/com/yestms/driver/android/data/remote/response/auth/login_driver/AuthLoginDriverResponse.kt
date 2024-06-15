@@ -1,6 +1,4 @@
-package com.yestms.driver.android.data.remote.response.auth
-
-import com.yestms.driver.android.data.remote.response.auth.login.AuthLoginDriverUserRemoteModel
+package com.yestms.driver.android.data.remote.response.auth.login_driver
 
 data class AuthLoginDriverResponse(
     val token: String?,

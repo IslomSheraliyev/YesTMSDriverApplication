@@ -1,6 +1,6 @@
-package com.yestms.driver.android.domain.model.auth.login_driver
+package com.yestms.driver.android.domain.model.auth.common
 
-data class AuthLoginDriverDispatchersModel(
+data class AuthDispatchersModel(
     val id: Int,
-    val dispatcherAssigned: AuthLoginDriverDispatcherModel
+    val dispatcherAssigned: AuthDispatcherModel
 )

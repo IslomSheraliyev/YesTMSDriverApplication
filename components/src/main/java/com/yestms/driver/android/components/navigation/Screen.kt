@@ -5,5 +5,21 @@ sealed class Screen(
 ) {
     data object LoginScreen : Screen("login")
 
-    data object HomeScreen : Screen("home")
+    data object Main : Screen("main") {
+        val menu = listOf(
+            Loads,
+            Stats,
+            Notifications,
+            DriverDetails,
+        )
+
+        data object Loads : Screen("main/loads")
+
+        data object Stats : Screen("main/stats")
+
+        data object Notifications : Screen("main/notifications")
+
+        data object DriverDetails : Screen("main/driver_details")
+
+    }
 }

@@ -1,18 +1,15 @@
-package com.yestms.driver.android.data.mapper.auth.login_driver
+package com.yestms.driver.android.data.mapper.auth
 
+import com.yestms.driver.android.data.mapper.auth.common.AuthCommonMapper.dispatchersMapper
 import com.yestms.driver.android.data.mapper.common.Mapper
 import com.yestms.driver.android.data.mapper.common.or0
 import com.yestms.driver.android.data.mapper.common.orFalse
 import com.yestms.driver.android.data.remote.response.auth.login_driver.AuthLoginDriverCompanyRemoteModel
-import com.yestms.driver.android.data.remote.response.auth.common.AuthDispatcherRemoteModel
-import com.yestms.driver.android.data.remote.response.auth.common.AuthDispatchersRemoteModel
 import com.yestms.driver.android.data.remote.response.auth.login_driver.AuthLoginDriverDriverTypeRemoteModel
 import com.yestms.driver.android.data.remote.response.auth.login_driver.AuthLoginDriverResponse
 import com.yestms.driver.android.data.remote.response.auth.login_driver.AuthLoginDriverUserRemoteModel
 import com.yestms.driver.android.data.remote.response.auth.login_driver.AuthLoginDriverUserRoleRemoteModel
 import com.yestms.driver.android.domain.model.auth.login_driver.AuthLoginDriverCompanyModel
-import com.yestms.driver.android.domain.model.auth.common.AuthDispatcherModel
-import com.yestms.driver.android.domain.model.auth.common.AuthDispatchersModel
 import com.yestms.driver.android.domain.model.auth.login_driver.AuthLoginDriverDriverTypeModel
 import com.yestms.driver.android.domain.model.auth.login_driver.AuthLoginDriverModel
 import com.yestms.driver.android.domain.model.auth.login_driver.AuthLoginDriverUserModel
@@ -88,25 +85,6 @@ object LoginDriverMapper {
                 id = remote?.id.or0(),
                 name = remote?.name.orEmpty(),
                 description = remote?.description.orEmpty()
-            )
-        }
-
-    private val dispatchersMapper:
-            Mapper<AuthDispatchersRemoteModel?, AuthDispatchersModel> =
-        { remote ->
-            AuthDispatchersModel(
-                id = remote?.id.or0(),
-                dispatcherAssigned = remote?.dispatcherAssigned.let(dispatcherMapper)
-            )
-        }
-
-    private val dispatcherMapper:
-            Mapper<AuthDispatcherRemoteModel?, AuthDispatcherModel> =
-        { remote ->
-            AuthDispatcherModel(
-                id = remote?.id.or0(),
-                userId = remote?.userId.or0(),
-                dispatcherId = remote?.dispatcherId.or0()
             )
         }
 

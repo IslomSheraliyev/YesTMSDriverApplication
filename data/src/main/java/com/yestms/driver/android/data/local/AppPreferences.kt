@@ -37,4 +37,10 @@ object AppPreferences {
         set(value) {
             preferences.edit()?.putString(AppPreferences::accessToken.name, value)?.apply()
         }
+
+    var externalId: String
+        get() = preferences.getString(AppPreferences::externalId.name, "") ?: ""
+        set(value) {
+            preferences.edit()?.putString(AppPreferences::externalId.name, value)?.apply()
+        }
 }
