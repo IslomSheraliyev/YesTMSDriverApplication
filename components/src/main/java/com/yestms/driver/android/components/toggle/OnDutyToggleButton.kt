@@ -61,11 +61,16 @@ fun OnDutySwitch(
         modifier = modifier
             .width(switchWidth)
             .height(switchHeight)
-            .clip(RoundedCornerShape(12.dp))
-            .border(3.dp, grey200Light, RoundedCornerShape(12.dp))
-            .padding(2.dp)
+            .clip(
+                shape = RoundedCornerShape(12.dp)
+            )
+            .border(
+                width = 3.dp,
+                color = lerp(grey200Light, blue700Light, offset.value),
+                shape = RoundedCornerShape(12.dp)
+            )
             .background(
-                lerp(
+                color = lerp(
                     grey100Light,
                     blue700Light,
                     offset.value

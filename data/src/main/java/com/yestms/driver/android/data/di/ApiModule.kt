@@ -1,6 +1,7 @@
 package com.yestms.driver.android.data.di
 
 import com.yestms.driver.android.data.remote.api.AuthApi
+import com.yestms.driver.android.data.remote.api.LoadsApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,4 +17,10 @@ object ApiModule {
     fun provideAuthApi(retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
     }
+
+    @[Provides Singleton]
+    fun provideLoadsApi(retrofit: Retrofit): LoadsApi {
+        return retrofit.create(LoadsApi::class.java)
+    }
+
 }

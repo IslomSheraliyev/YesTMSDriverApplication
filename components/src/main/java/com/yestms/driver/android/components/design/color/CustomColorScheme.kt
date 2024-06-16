@@ -18,6 +18,7 @@ class CustomColorScheme(
     grey100: Color,
     grey300: Color,
     blue100: Color,
+    grey800: Color,
 ) {
     val blue50 by mutableStateOf(blue50, structuralEqualityPolicy())
     val blue700 by mutableStateOf(blue700, structuralEqualityPolicy())
@@ -30,6 +31,7 @@ class CustomColorScheme(
     val grey100 by mutableStateOf(grey100, structuralEqualityPolicy())
     val grey300 by mutableStateOf(grey300, structuralEqualityPolicy())
     val blue100 by mutableStateOf(blue100, structuralEqualityPolicy())
+    val grey800 by mutableStateOf(grey800, structuralEqualityPolicy())
 }
 
 fun tmsLightColorScheme(
@@ -43,7 +45,8 @@ fun tmsLightColorScheme(
     grey500: Color = grey500Light,
     grey100: Color = grey100Light,
     grey300: Color = grey300Light,
-    blue100: Color = blue100Light
+    blue100: Color = blue100Light,
+    grey800: Color = grey800Light
 ) = CustomColorScheme(
     blue50 = blue50,
     blue700 = blue700,
@@ -55,7 +58,8 @@ fun tmsLightColorScheme(
     grey500 = grey500,
     grey100 = grey100,
     grey300 = grey300,
-    blue100 = blue100
+    blue100 = blue100,
+    grey800 = grey800
 )
 
 val LocalCustomColorScheme = staticCompositionLocalOf { tmsLightColorScheme() }

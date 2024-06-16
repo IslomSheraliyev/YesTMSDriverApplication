@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.yestms.driver.android.components.app_bar.MainAppBar
 import com.yestms.driver.android.components.navigation.Screen
+import com.yestms.driver.android.ui.navigation.createScreen
 import com.yestms.driver.android.ui.screens.loads.LoadsScreen
 
 @Composable
@@ -32,8 +33,9 @@ fun MainScreenContent(
             startDestination = Screen.Main.Loads.screenName,
             modifier = Modifier
                 .weight(1f)
+                .fillMaxSize()
         ) {
-            composable(route = Screen.Main.Loads.screenName) {
+            createScreen(route = Screen.Main.Loads.screenName) {
                 LoadsScreen(navController = navController)
             }
         }

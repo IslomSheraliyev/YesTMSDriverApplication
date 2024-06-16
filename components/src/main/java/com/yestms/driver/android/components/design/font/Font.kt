@@ -40,6 +40,13 @@ val typography = CustomFont(
         style = FontStyle.Normal,
         weight = FontWeight.W500,
         lineHeight = 18.sp
+    ),
+    smMedium = createText(
+        font = medium,
+        size = 14.sp,
+        style = FontStyle.Normal,
+        weight = FontWeight.W500,
+        lineHeight = 20.sp
     )
 )
 

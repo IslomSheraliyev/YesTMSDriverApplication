@@ -1,6 +1,7 @@
 [versions]
 
 compose = "1.0.0-beta01"
+gson = "2.11.0"
 kotlin = "1.9.0"
 
 
@@ -29,10 +30,10 @@ espresso = "3.5.1"
 okhttp = "4.12.0"
 pagingCompose = "3.3.0"
 playServicesAds = "23.1.0"
-retrofit = "2.8.0"
+retrofit = "2.6.0"
 text-ext = "1.1.5"
 gradle-plugin = "8.2.2"
-composeAnimation = "1.7.0-beta03"
+composeAnimation = "1.7.0-alpha08"
 constraintlayout = "2.1.4"
 navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"

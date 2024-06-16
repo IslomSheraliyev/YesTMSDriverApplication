@@ -1,9 +1,14 @@
 package com.yestms.driver.android.ui.navigation
 
 
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.yestms.driver.android.components.navigation.Screen
@@ -23,16 +28,18 @@ fun NavHostScreen() {
         navController = navController,
         startDestination = Screen.Main.screenName
     ) {
-        composable(
+        createScreen(
             route = Screen.LoginScreen.screenName
         ) {
             LoginScreen(navController)
         }
 
-        composable(
+        createScreen(
             route = Screen.Main.screenName
         ) {
             MainScreen(navController = navController)
         }
     }
 }
+
+

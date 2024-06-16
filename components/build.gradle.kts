@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.constraintlayout.compose)
     implementation(project(":data"))
+    implementation(project(":domain"))
 
     //test
     testImplementation(libs.junit)

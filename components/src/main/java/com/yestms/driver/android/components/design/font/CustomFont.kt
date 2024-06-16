@@ -6,5 +6,6 @@ data class CustomFont(
     val medium16pxRegular: TextStyle = TextStyle(),
     val medium16pxMedium: TextStyle = TextStyle(),
     val small14pxRegular: TextStyle = TextStyle(),
-    val xsMedium: TextStyle = TextStyle()
+    val xsMedium: TextStyle = TextStyle(),
+    val smMedium: TextStyle = TextStyle()
 )

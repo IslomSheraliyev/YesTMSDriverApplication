@@ -7,7 +7,7 @@ internal object AuthUrl {
     const val LOGIN = "$PRE/login"
 }
 
-internal object LoadUrl {
+internal object LoadsUrl {
     const val LOADS = "loads"
     const val ALERT_STATUSES = "$LOADS/alert-statuses"
     const val LOADS_UNSEEN_COUNT = "$LOADS/loads-unseen-count"
