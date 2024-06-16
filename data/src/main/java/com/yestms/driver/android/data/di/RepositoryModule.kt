@@ -2,8 +2,10 @@ package com.yestms.driver.android.data.di
 
 import com.yestms.driver.android.data.repository.AuthRepositoryImpl
 import com.yestms.driver.android.data.repository.LoadsRepositoryImpl
+import com.yestms.driver.android.data.repository.NoticesRepositoryImpl
 import com.yestms.driver.android.domain.repository.AuthRepository
 import com.yestms.driver.android.domain.repository.LoadsRepository
+import com.yestms.driver.android.domain.repository.NoticesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +21,10 @@ object RepositoryModule {
 
     @[Singleton Provides]
     fun provideLoadsRepository(repositoryImpl: LoadsRepositoryImpl): LoadsRepository =
+        repositoryImpl
+
+        @[Singleton Provides]
+    fun provideNoticesRepository(repositoryImpl: NoticesRepositoryImpl): NoticesRepository =
         repositoryImpl
 
 

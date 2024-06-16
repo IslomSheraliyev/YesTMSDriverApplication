@@ -2,10 +2,8 @@ package com.yestms.driver.android.components.card
 
 import android.icu.text.DecimalFormat
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,12 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.prefabs.StatusComponent
 import com.yestms.driver.android.domain.model.loads.get.LoadModel
 import com.yestms.driver.android.components.R.font.helvetica_medium as medium
 import com.yestms.driver.android.components.R.font.helvetica_regular as regular
 
 @Composable
-fun InfoCard(
+fun LoadCard(
     load: LoadModel,
     modifier: Modifier = Modifier
 ) {
@@ -152,27 +151,11 @@ fun InfoCard(
                 )
             }
 
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = Color(GraphicsColor.parseColor(load.loadStatus.color)).copy(alpha = .12f),
-                        shape = RoundedCornerShape(34.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = load.loadStatus.name,
-                    color = Color(GraphicsColor.parseColor(load.loadStatus.color)),
-                    style = CustomTheme.typography.smMedium,
-                    modifier = Modifier
-                        .padding(
-                            vertical = 4.dp,
-                            horizontal = 14.dp
-                        )
-                )
-            }
+            StatusComponent(
+                color = Color(GraphicsColor.parseColor(load.loadStatus.color)),
+                text = load.loadStatus.name,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }

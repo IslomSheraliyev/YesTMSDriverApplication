@@ -1,6 +1,5 @@
 package com.yestms.driver.android.ui.screens.loads
 
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.yestms.driver.android.core.BaseViewModel
@@ -31,23 +30,28 @@ class LoadsViewModel @Inject constructor(
         brokers: Float? = null,
         driver: Float? = null,
         type: Float? = null
-    ) {
-        viewModelScope.launch {
-            getLoadsUseCase(
-                GetLoadsUseCase.Params(
-                    search,
-                    pickUpDateFrom,
-                    pickUpDateTo,
-                    deliveryDateFrom,
-                    deliveryDateTo,
-                    status,
-                    brokers,
-                    driver,
-                    type
-                )
-            ).cachedIn(viewModelScope).collectLatest { pagingData ->
-                _loads.emit(pagingData)
-            }
-        }
+    ) = vmScope.launch {
+
+        _isRefreshing.emit(true)
+
+        getLoadsUseCase(
+            GetLoadsUseCase.Params(
+                search,
+                pickUpDateFrom,
+                pickUpDateTo,
+                deliveryDateFrom,
+                deliveryDateTo,
+                status,
+                brokers,
+                driver,
+                type
+            )
+        ).onSuccess { result ->
+            _isRefreshing.emit(false)
+            result.cachedIn(vmScope)
+                .collectLatest { data ->
+                    _loads.emit(data)
+                }
+        }.onFailure(::errorProcess)
     }
 }

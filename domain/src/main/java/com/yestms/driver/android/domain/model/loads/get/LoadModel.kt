@@ -1,5 +1,8 @@
 package com.yestms.driver.android.domain.model.loads.get
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class LoadModel(
     val id: Int,
     val loadId: String,

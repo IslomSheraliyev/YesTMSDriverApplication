@@ -1,8 +1,8 @@
 package com.yestms.driver.android.ui.navigation
 
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NamedNavArgument
@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.yestms.driver.android.components.navigation.Screen
 
 val NavController.canGoBack: Boolean
     get() =
@@ -30,36 +31,31 @@ fun NavController.safePopBackStack() {
     if (canGoBack)
         this.popBackStack()
 }
-
 fun NavGraphBuilder.createScreen(
-    route: String,
+    route: Screen,
     arguments: List<NamedNavArgument> = emptyList(),
     content: @Composable () -> Unit
 ) {
     composable(
-        route = route,
+        route = route.screenName,
         arguments = arguments,
         enterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { it },
+            fadeIn(
                 animationSpec = tween(durationMillis = 300)
             )
         },
         exitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { -it },
-                animationSpec = tween(durationMillis = 300)
-            )
-        },
-        popExitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { it },
+            fadeOut(
                 animationSpec = tween(durationMillis = 300)
             )
         },
         popEnterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { -it },
+            fadeIn(
+                animationSpec = tween(durationMillis = 300)
+            )
+        },
+        popExitTransition = {
+            fadeOut(
                 animationSpec = tween(durationMillis = 300)
             )
         }

@@ -2,9 +2,11 @@ package com.yestms.driver.android.data.di
 
 import com.yestms.driver.android.domain.repository.AuthRepository
 import com.yestms.driver.android.domain.repository.LoadsRepository
+import com.yestms.driver.android.domain.repository.NoticesRepository
 import com.yestms.driver.android.domain.usecase.auth.AuthCheckUseCase
 import com.yestms.driver.android.domain.usecase.auth.AuthLoginDriverUseCase
 import com.yestms.driver.android.domain.usecase.loads.GetLoadsUseCase
+import com.yestms.driver.android.domain.usecase.notices.GetNoticesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,9 +22,13 @@ object UseCaseModule {
         AuthLoginDriverUseCase(repository)
 
     @[Singleton Provides]
+    fun provideAuthCheckUseCase(repository: LoadsRepository) = GetLoadsUseCase(repository)
+
+    @[Singleton Provides]
     fun provideGetLoadsUseCase(repository: AuthRepository) = AuthCheckUseCase(repository)
 
     @[Singleton Provides]
-    fun provideAuthCheckUseCase(repository: LoadsRepository) = GetLoadsUseCase(repository)
+    fun provideGetNoticesUseCase(repository: NoticesRepository) = GetNoticesUseCase(repository)
+
 
 }

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LoadsRepositoryImpl @Inject constructor(
-    private val loadsApi: LoadsApi
+    private val api: LoadsApi
 ) : LoadsRepository {
     override fun getLoads(
         search: String?,
@@ -27,9 +27,7 @@ class LoadsRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = 20),
             pagingSourceFactory = {
-                LoadsPagingSource(
-                    loadsApi
-                )
+                LoadsPagingSource(api)
             }
         ).flow
     }

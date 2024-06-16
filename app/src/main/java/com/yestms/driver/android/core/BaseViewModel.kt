@@ -28,6 +28,7 @@ abstract class BaseViewModel : ViewModel() {
 
     fun errorProcess(throwable: Throwable, f: ((t: Throwable) -> Unit)? = null) {
         vmScope.launch {
+            _isRefreshing.emit(false)
             errorOtherChannel.send(throwable)
             throwable.printStackTrace()
         }

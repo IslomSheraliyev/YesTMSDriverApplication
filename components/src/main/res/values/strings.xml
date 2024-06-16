@@ -8,4 +8,14 @@
     <string name="on_duty">On Duty</string>
     <string name="loads">Loads</string>
     <string name="stats">Stats</string>
+    <string name="unread">Unread</string>
+    <string name="read">Read</string>
+    <string name="view">View</string>
+    <string name="delete">Delete</string>
+    <string name="no_results_found">No results found</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="sort_by">Sort by %1$s</string>
+    <string name="date_created">Date created %1$s</string>
+    <string name="search_with_dots">Search...</string>
+    <string name="search">Search</string>
 </resources>

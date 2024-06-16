@@ -1,14 +1,16 @@
 package com.yestms.driver.android.domain.usecase.loads
 
 import androidx.paging.PagingData
+import com.yestms.driver.android.domain.global.UseCaseWithParams
 import com.yestms.driver.android.domain.model.loads.get.LoadModel
 import com.yestms.driver.android.domain.repository.LoadsRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetLoadsUseCase @Inject constructor(
     private val loadsRepository: LoadsRepository
-) {
+):UseCaseWithParams<GetLoadsUseCase.Params, Flow<PagingData<LoadModel>>>(Dispatchers.IO) {
     data class Params(
         val search: String?,
         val pickUpDateFrom: String?,
@@ -21,17 +23,18 @@ class GetLoadsUseCase @Inject constructor(
         val type: Float?
     )
 
-    operator fun invoke(params: Params): Flow<PagingData<LoadModel>> {
+    override suspend fun execute(parameter: Params): Flow<PagingData<LoadModel>> {
         return loadsRepository.getLoads(
-            params.search,
-            params.pickUpDateFrom,
-            params.pickUpDateTo,
-            params.deliveryDateFrom,
-            params.deliveryDateTo,
-            params.status,
-            params.brokers,
-            params.driver,
-            params.type
+            parameter.search,
+            parameter.pickUpDateFrom,
+            parameter.pickUpDateTo,
+            parameter.deliveryDateFrom,
+            parameter.deliveryDateTo,
+            parameter.status,
+            parameter.brokers,
+            parameter.driver,
+            parameter.type
         )
     }
+
 }

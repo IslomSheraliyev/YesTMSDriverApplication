@@ -17,9 +17,8 @@ import com.yestms.driver.android.components.design.theme.CustomTheme
 fun SegmentItem(
     text: String,
     isChecked: Boolean,
-    index: Int,
     modifier: Modifier = Modifier,
-    onSelect: (index: Int) -> Unit
+    onSelect: () -> Unit
 ) {
     CompositionLocalProvider(
         LocalMinimumInteractiveComponentEnforcement provides false
@@ -31,16 +30,16 @@ fun SegmentItem(
             else
                 CustomTheme.colorScheme.grey100,
             shape = RoundedCornerShape(34.dp),
-            onClick = { onSelect(index) }
+            onClick = onSelect
         ) {
             Text(
                 text = text,
-                color = CustomTheme.colorScheme.grey400,
-                style = CustomTheme.typography.medium16pxRegular,
+                color = if (isChecked) CustomTheme.colorScheme.blue500 else CustomTheme.colorScheme.grey400,
+                style = CustomTheme.typography.md16pxRegular,
                 modifier = Modifier
                     .padding(
                         horizontal = 14.dp,
-                        vertical = 4.dp
+                        vertical = 8.dp
                     )
             )
         }

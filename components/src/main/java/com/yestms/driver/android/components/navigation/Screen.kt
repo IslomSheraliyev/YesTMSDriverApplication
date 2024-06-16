@@ -9,7 +9,7 @@ sealed class Screen(
         val menu = listOf(
             Loads,
             Stats,
-            Notifications,
+            Notices,
             DriverDetails,
         )
 
@@ -17,7 +17,7 @@ sealed class Screen(
 
         data object Stats : Screen("main/stats")
 
-        data object Notifications : Screen("main/notifications")
+        data object Notices : Screen("main/notices")
 
         data object DriverDetails : Screen("main/driver_details")
 

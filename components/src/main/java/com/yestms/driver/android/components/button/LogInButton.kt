@@ -31,7 +31,7 @@ fun LoginButton(
         Text(
             text = stringResource(R.string.login),
             color = CustomTheme.colorScheme.neutralColors100,
-            style = CustomTheme.typography.medium16pxMedium,
+            style = CustomTheme.typography.md16pxMedium,
             modifier = Modifier.padding(
                 horizontal = 28.dp,
                 vertical = 16.dp

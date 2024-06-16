@@ -21,6 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -32,17 +33,17 @@ import com.yestms.driver.android.components.toggle.OnDutySwitch
 
 @Composable
 fun MainAppBar(
+    loadsVisibility: Boolean,
+    statsVisibility: Boolean,
+    noticeVisibility: Boolean,
     modifier: Modifier = Modifier,
-    notificationsButtonVisibility: Boolean = true,
-    closeButtonVisibility: Boolean = false
+    onLoadsClick: () -> Unit,
+    onStatsClick: () -> Unit,
+    onNoticesClick: () -> Unit
 ) {
 
     var isOnDuty by rememberSaveable {
         mutableStateOf(false)
-    }
-
-    var selectedSegmentItemIndex by rememberSaveable {
-        mutableIntStateOf(0)
     }
 
     Column(
@@ -67,7 +68,7 @@ fun MainAppBar(
             Text(
                 text = stringResource(id = R.string.on_duty),
                 color = CustomTheme.colorScheme.grey500,
-                style = CustomTheme.typography.medium16pxMedium
+                style = CustomTheme.typography.md16pxMedium
             )
 
             HorizontalSpacer(dp = 8)
@@ -79,62 +80,50 @@ fun MainAppBar(
                 }
             )
 
-            if (notificationsButtonVisibility) {
-                HorizontalSpacer(dp = 8)
 
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_notification_bell),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(6.dp)
-                    )
-                }
-            }
+            HorizontalSpacer(dp = 8)
 
-            if (closeButtonVisibility) {
-                HorizontalSpacer(dp = 8)
-
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_x_close),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(6.dp)
-                    )
-                }
-            }
-        }
-
-        HorizontalDivider(color = CustomTheme.colorScheme.grey200)
-
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentPadding = PaddingValues(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-
-            item {
-                SegmentItem(
-                    text = stringResource(id = R.string.loads),
-                    isChecked = selectedSegmentItemIndex == 0,
-                    index = 0,
-                    onSelect = { segmentId -> selectedSegmentItemIndex = segmentId }
-                )
-            }
-
-            item {
-                SegmentItem(
-                    text = stringResource(id = R.string.stats),
-                    isChecked = selectedSegmentItemIndex == 1,
-                    index = 1,
-                    onSelect = { segmentId -> selectedSegmentItemIndex = segmentId }
+            IconButton(onClick = onNoticesClick) {
+                Icon(
+                    painter = painterResource(
+                        id = if (noticeVisibility) R.drawable.ic_notification_bell
+                        else R.drawable.ic_x_close
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(6.dp),
+                    tint = Color.Unspecified
                 )
             }
         }
-
-        HorizontalDivider(color = CustomTheme.colorScheme.grey200)
-
     }
+
+    HorizontalDivider(color = CustomTheme.colorScheme.grey200)
+
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth(),
+        contentPadding = PaddingValues(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+
+        item {
+            SegmentItem(
+                text = stringResource(id = R.string.loads),
+                isChecked = loadsVisibility,
+                onSelect = onLoadsClick
+            )
+        }
+
+        item {
+            SegmentItem(
+                text = stringResource(id = R.string.stats),
+                isChecked = statsVisibility,
+                onSelect = onStatsClick
+            )
+        }
+    }
+
+    HorizontalDivider(color = CustomTheme.colorScheme.grey200)
+
 }

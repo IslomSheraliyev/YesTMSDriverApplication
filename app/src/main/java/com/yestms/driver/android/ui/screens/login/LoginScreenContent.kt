@@ -59,7 +59,7 @@ fun LoginScreenContent(
         Text(
             text = stringResource(id = R.string.title_enter_user_id),
             color = CustomTheme.colorScheme.grey400,
-            style = CustomTheme.typography.medium16pxRegular
+            style = CustomTheme.typography.md16pxRegular
         )
 
         VerticalSpacer(weight = 1f)

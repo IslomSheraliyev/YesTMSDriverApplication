@@ -4,7 +4,6 @@ internal object AuthUrl {
     private const val PRE = "auth"
     const val CHECK = "$PRE/check"
     const val LOGIN_DRIVER = "$PRE/login-driver"
-    const val LOGIN = "$PRE/login"
 }
 
 internal object LoadsUrl {
@@ -13,12 +12,12 @@ internal object LoadsUrl {
     const val LOADS_UNSEEN_COUNT = "$LOADS/loads-unseen-count"
 }
 
-internal object NoticesUlr {
+internal object NoticesUrl {
     const val NOTICES = "notices"
     const val UNREAD = "$NOTICES/unread"
 }
 
-internal object SettingsUlr {
+internal object SettingsUrl {
     const val SETTINGS = "settings"
     const val COMPANY_SETTINGS = "$SETTINGS/company-settings"
 }

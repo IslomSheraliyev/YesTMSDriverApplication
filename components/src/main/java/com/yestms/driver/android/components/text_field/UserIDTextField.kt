@@ -51,7 +51,7 @@ fun UserIDTextField(
                     color = if (isError) CustomTheme.colorScheme.red else CustomTheme.colorScheme.grey200,
                     shape = RoundedCornerShape(8.dp)
                 ),
-            textStyle = CustomTheme.typography.medium16pxRegular.copy(color = CustomTheme.colorScheme.grey500),
+            textStyle = CustomTheme.typography.md16pxRegular.copy(color = CustomTheme.colorScheme.grey500),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             singleLine = true,
             decorationBox = { innerTextField ->
@@ -66,7 +66,7 @@ fun UserIDTextField(
                     placeholder = {
                         Text(
                             text = stringResource(id = R.string.enter_user_id),
-                            style = CustomTheme.typography.medium16pxRegular,
+                            style = CustomTheme.typography.md16pxRegular,
                             color = CustomTheme.colorScheme.grey400
                         )
                     },
@@ -100,7 +100,7 @@ fun UserIDTextField(
             Text(
                 text = stringResource(id = R.string.user_not_found),
                 color = CustomTheme.colorScheme.red,
-                style = CustomTheme.typography.small14pxRegular
+                style = CustomTheme.typography.sm14pxRegular
             )
         }
     }
