@@ -1,4 +1,4 @@
-package com.yestms.driver.android.data.mapper.common
+package com.yestms.driver.android.data.mapper
 
 
 typealias Mapper<T, R> = (T) -> R

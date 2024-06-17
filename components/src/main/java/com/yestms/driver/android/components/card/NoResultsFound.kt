@@ -1,8 +1,11 @@
 package com.yestms.driver.android.components.card
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -14,16 +17,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 
 @Composable
 fun NoResultsFound(
-    modifier: Modifier = Modifier
+    @DrawableRes painter: Int,
+    @StringRes title: Int,
+    @StringRes description: Int,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
+            .fillMaxWidth()
             .background(
                 color = CustomTheme.colorScheme.grey20040,
                 shape = RoundedCornerShape(12.dp)
@@ -37,7 +43,7 @@ fun NoResultsFound(
         ) {
 
             Icon(
-                painter = painterResource(id = R.drawable.ic_no_result),
+                painter = painterResource(id = painter),
                 contentDescription = null,
                 tint = Color.Unspecified
             )
@@ -45,7 +51,7 @@ fun NoResultsFound(
             VerticalSpacer(dp = 16)
 
             Text(
-                text = stringResource(id = R.string.no_results_found),
+                text = stringResource(id = title),
                 color = CustomTheme.colorScheme.grey600,
                 style = CustomTheme.typography.smBold
             )
@@ -53,7 +59,7 @@ fun NoResultsFound(
             VerticalSpacer(dp = 16)
 
             Text(
-                text = stringResource(id = R.string.please_try_again),
+                text = stringResource(id = description),
                 color = CustomTheme.colorScheme.grey400,
                 style = CustomTheme.typography.xsMedium
             )

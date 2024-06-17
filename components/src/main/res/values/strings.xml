@@ -18,4 +18,6 @@
     <string name="date_created">Date created %1$s</string>
     <string name="search_with_dots">Search...</string>
     <string name="search">Search</string>
+    <string name="no_notifications_found">No notifications found</string>
+    <string name="you_do_not_have_notifications">You currently have no notifications</string>
 </resources>

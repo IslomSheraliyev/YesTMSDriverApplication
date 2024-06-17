@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.prefabs.StatusComponent
-import com.yestms.driver.android.domain.model.loads.get.LoadModel
+import com.yestms.driver.android.domain.model.loads.LoadModel
 import com.yestms.driver.android.components.R.font.helvetica_medium as medium
 import com.yestms.driver.android.components.R.font.helvetica_regular as regular
 

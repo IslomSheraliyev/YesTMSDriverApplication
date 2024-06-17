@@ -87,11 +87,11 @@ fun MainScreenContent(
                 .fillMaxSize()
         ) {
             createScreen(route = Screen.Main.Loads) {
-                LoadsScreen(navController = topNavController)
+                LoadsScreen()
             }
 
             createScreen(route = Screen.Main.Notices) {
-                NoticesScreen(navController = topNavController)
+                NoticesScreen()
             }
         }
     }

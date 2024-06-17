@@ -2,8 +2,8 @@ package com.yestms.driver.android.data.remote.paging.notices
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.yestms.driver.android.data.mapper.common.orFalse
-import com.yestms.driver.android.data.mapper.notices.NoticesMapper
+import com.yestms.driver.android.data.mapper.orFalse
+import com.yestms.driver.android.data.mapper.NoticesMapper
 import com.yestms.driver.android.data.remote.api.NoticesApi
 import com.yestms.driver.android.domain.model.notices.NoticeModel
 import retrofit2.HttpException

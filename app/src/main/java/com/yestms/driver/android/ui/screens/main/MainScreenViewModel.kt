@@ -66,7 +66,6 @@ class MainScreenViewModel @Inject constructor(
     fun getUnreadCount() = vmScope.launch {
         getUnreadCountUseCount().onSuccess { count ->
             _unreadCount.emit(count)
-            Log.d("habarlar soni", "getUnreadCount: $count")
         }.onFailure(::errorProcess)
     }
 }

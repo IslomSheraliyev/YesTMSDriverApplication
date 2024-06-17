@@ -12,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
+import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.card.LoadCard
 import com.yestms.driver.android.components.card.NoResultsFound
 import com.yestms.driver.android.components.loader.ProgressIndicator
-import com.yestms.driver.android.domain.model.loads.get.LoadModel
+import com.yestms.driver.android.data.mapper.or0
+import com.yestms.driver.android.domain.model.loads.LoadModel
 
 @Composable
 fun LoadsScreenContent(
@@ -31,13 +33,18 @@ fun LoadsScreenContent(
 
             items(
                 count = loads.itemCount,
-                key = { loads[it]?.loadId.orEmpty() }
+                key = { loads[it]?.id.or0() }
             ) { index ->
                 loads[index]?.let { notNull -> LoadCard(load = notNull) }
             }
         }
     else if (loads.itemCount == 0 && loads.loadState.isIdle)
-        NoResultsFound()
+        NoResultsFound(
+            painter = R.drawable.ic_no_loads,
+            title = R.string.no_results_found,
+            description = R.string.please_try_again
+
+        )
     else Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

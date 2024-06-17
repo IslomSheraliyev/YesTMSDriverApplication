@@ -8,7 +8,6 @@ data class NoticeModel(
     val title: String,
     val isActive: Boolean,
     val createdAt: String,
-    val updatedAt: String,
     val userId: Int,
     val loadId: Int
 )

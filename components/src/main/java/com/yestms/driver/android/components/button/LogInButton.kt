@@ -25,9 +25,8 @@ fun LoginButton(
         shape = RoundedCornerShape(8.dp),
         contentPadding = PaddingValues(0.dp),
         onClick = onClick,
-        modifier = modifier,
-
-        ) {
+        modifier = modifier
+    ) {
         Text(
             text = stringResource(R.string.login),
             color = CustomTheme.colorScheme.neutralColors100,

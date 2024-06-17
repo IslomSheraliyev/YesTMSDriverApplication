@@ -3,10 +3,10 @@ package com.yestms.driver.android.data.remote.paging.loads
 import retrofit2.HttpException
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.yestms.driver.android.data.mapper.common.orFalse
-import com.yestms.driver.android.data.mapper.loads.LoadsMapper
+import com.yestms.driver.android.data.mapper.orFalse
+import com.yestms.driver.android.data.mapper.LoadsMapper
 import com.yestms.driver.android.data.remote.api.LoadsApi
-import com.yestms.driver.android.domain.model.loads.get.LoadModel
+import com.yestms.driver.android.domain.model.loads.LoadModel
 import java.io.IOException
 
 class LoadsPagingSource(

@@ -1,4 +1,4 @@
-package com.yestms.driver.android.domain.model.auth.login_driver
+package com.yestms.driver.android.domain.model.auth
 
 data class AuthLoginDriverModel(
     val token: String,

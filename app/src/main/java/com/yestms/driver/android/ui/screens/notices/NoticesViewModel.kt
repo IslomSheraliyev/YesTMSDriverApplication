@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.domain.model.notices.NoticeModel
+import com.yestms.driver.android.domain.usecase.loads.GetLoadsUseCase
 import com.yestms.driver.android.domain.usecase.notices.GetNoticesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

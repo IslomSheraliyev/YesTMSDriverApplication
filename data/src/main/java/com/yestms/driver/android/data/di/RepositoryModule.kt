@@ -23,7 +23,7 @@ object RepositoryModule {
     fun provideLoadsRepository(repositoryImpl: LoadsRepositoryImpl): LoadsRepository =
         repositoryImpl
 
-        @[Singleton Provides]
+    @[Singleton Provides]
     fun provideNoticesRepository(repositoryImpl: NoticesRepositoryImpl): NoticesRepository =
         repositoryImpl
 

@@ -16,6 +16,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
 
+
 @Composable
 fun LoadingDialog(
     isVisible: Boolean

@@ -37,18 +37,17 @@ fun MainScreen(
                 viewModel.getUnreadCount()
             }
         )
-    else if (
-        tokenStatus == AuthCheckTokenStatus.INVALID ||
-        externalIdState == AuthLoginDriverExternalIdStatus.INVALID ||
-        externalIdState == AuthLoginDriverExternalIdStatus.IDLE
-    )
+    else if (tokenStatus == AuthCheckTokenStatus.INVALID)
         LoginScreenContent(
             isError = externalIdState == AuthLoginDriverExternalIdStatus.INVALID,
             onLoginClicked = { value ->
                 viewModel.loginDriver(value)
             }
         )
-    else if (refreshing) {
+    else if (
+        refreshing &&
+        externalIdState == AuthLoginDriverExternalIdStatus.IDLE
+    ) {
         LoadingDialog(isVisible = true)
     }
 }

@@ -7,6 +7,16 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
+abstract class UseCaseWithoutParams(private val coroutineDispatcher: CoroutineDispatcher){
+    suspend operator fun invoke() =
+        withContext(coroutineDispatcher) {
+            runCatching { execute() }
+        }
+
+    @Throws(RuntimeException::class)
+    protected abstract suspend fun execute()
+}
+
 abstract class UseCase<R>(private val coroutineDispatcher: CoroutineDispatcher) {
     suspend operator fun invoke(): Result<R> =
         withContext(coroutineDispatcher) {
