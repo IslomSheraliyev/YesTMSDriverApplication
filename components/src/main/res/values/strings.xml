@@ -15,9 +15,10 @@
     <string name="no_results_found">No results found</string>
     <string name="please_try_again">Please try again</string>
     <string name="sort_by">Sort by %1$s</string>
-    <string name="date_created">Date created %1$s</string>
     <string name="search_with_dots">Search...</string>
     <string name="search">Search</string>
     <string name="no_notifications_found">No notifications found</string>
     <string name="you_do_not_have_notifications">You currently have no notifications</string>
+    <string name="date_from">Date from %1$s</string>
+    <string name="date_to">Date to %1$s</string>
 </resources>

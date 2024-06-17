@@ -30,11 +30,17 @@ import com.yestms.driver.android.domain.model.notices.NoticeModel
 @Composable
 fun NoticesScreenContent(
     notices: LazyPagingItems<NoticeModel>,
-    onSearchClick: (String, String, String) -> Unit
+    onSearchClick: (
+        sortBy: String?,
+        dateFrom: String?,
+        dateTo: String?,
+        searchQuery: String?
+    ) -> Unit
 ) {
 
     var sortBy by rememberSaveable { mutableStateOf("") }
-    var createdDate by rememberSaveable { mutableStateOf("") }
+    var dateFrom by rememberSaveable { mutableStateOf("") }
+    var dateTo by rememberSaveable { mutableStateOf("") }
     var searchQuery by rememberSaveable { mutableStateOf("") }
 
 
@@ -54,8 +60,20 @@ fun NoticesScreenContent(
 
         item {
             DatePickerTextField(
+                value = dateFrom,
+                prefixTextId = R.string.date_from,
                 onDateSelected = {
-                    createdDate = it
+                    dateFrom = it
+                }
+            )
+        }
+
+        item {
+            DatePickerTextField(
+                value = dateTo,
+                prefixTextId = R.string.date_to,
+                onDateSelected = {
+                    dateTo = it
                 }
             )
         }
@@ -73,16 +91,16 @@ fun NoticesScreenContent(
             SearchButton(
                 onClick = {
                     onSearchClick(
-                        sortBy,
-                        if (createdDate.isNotEmpty()) createdDate
-                            .plus("T00:00:00.000Z") else "",
-                        searchQuery
+                        sortBy.ifEmpty { null },
+                        if (dateFrom.isNotEmpty()) dateFrom
+                            .plus("T00:00:00.000Z") else null,
+                        if (dateTo.isNotEmpty()) dateTo
+                            .plus("T00:00:00.000Z") else null,
+                        searchQuery.ifEmpty { null }
                     )
                 }
             )
         }
-
-
 
         when {
             notices.itemCount > 0 -> {

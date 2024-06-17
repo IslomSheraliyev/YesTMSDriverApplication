@@ -46,7 +46,7 @@ fun SearchTextField(
                 color = CustomTheme.colorScheme.grey200,
                 shape = RoundedCornerShape(8.dp)
             ),
-        textStyle = CustomTheme.typography.md16pxRegular.copy(color = CustomTheme.colorScheme.grey500),
+        textStyle = CustomTheme.typography.md16pxRegular.copy(color = CustomTheme.colorScheme.grey400),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         singleLine = true,
         decorationBox = { innerTextField ->

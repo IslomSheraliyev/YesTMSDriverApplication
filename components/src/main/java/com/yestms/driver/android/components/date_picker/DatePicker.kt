@@ -2,6 +2,7 @@ package com.yestms.driver.android.components.date_picker
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
+import androidx.annotation.StringRes
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -23,11 +24,13 @@ import java.util.*
 
 @Composable
 fun DatePickerTextField(
+    value: String,
+    @StringRes prefixTextId: Int,
     onDateSelected: (String) -> Unit
 ) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
-    var selectedDate by remember { mutableStateOf("") }
+    var selectedDate by remember { mutableStateOf(value) }
 
     Surface(
         color = CustomTheme.colorScheme.neutralColors100,
@@ -62,7 +65,7 @@ fun DatePickerTextField(
                 .padding(horizontal = 14.dp, vertical = 12.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.date_created, selectedDate),
+                text = stringResource(id = prefixTextId, selectedDate),
                 color = CustomTheme.colorScheme.grey400,
                 style = CustomTheme.typography.md16pxRegular
             )

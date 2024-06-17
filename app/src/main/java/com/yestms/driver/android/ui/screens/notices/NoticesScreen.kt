@@ -16,10 +16,11 @@ fun NoticesScreen(
 
     NoticesScreenContent(
         notices = viewModel.notices.collectAsLazyPagingItems(),
-        onSearchClick = { sortBy, createdDate, searchQuery ->
+        onSearchClick = { sortBy, dateFrom, dateTo, searchQuery ->
             viewModel.getNotices(
                 sort = sortBy,
-                dateFrom = createdDate,
+                dateFrom = dateFrom,
+                dateTo = dateTo,
                 search = searchQuery
             )
         }
