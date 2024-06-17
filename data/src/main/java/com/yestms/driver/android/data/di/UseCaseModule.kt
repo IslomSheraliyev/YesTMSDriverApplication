@@ -7,6 +7,7 @@ import com.yestms.driver.android.domain.usecase.auth.AuthCheckUseCase
 import com.yestms.driver.android.domain.usecase.auth.AuthLoginDriverUseCase
 import com.yestms.driver.android.domain.usecase.loads.GetLoadsUseCase
 import com.yestms.driver.android.domain.usecase.notices.GetNoticesUseCase
+import com.yestms.driver.android.domain.usecase.notices.GetUnreadCountUseCount
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +30,9 @@ object UseCaseModule {
 
     @[Singleton Provides]
     fun provideGetNoticesUseCase(repository: NoticesRepository) = GetNoticesUseCase(repository)
+
+    @[Singleton Provides]
+    fun provideGetUnreadCountUseCount(repository: NoticesRepository) = GetUnreadCountUseCount(repository)
 
 
 }

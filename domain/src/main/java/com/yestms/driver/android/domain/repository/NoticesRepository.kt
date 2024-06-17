@@ -11,4 +11,6 @@ interface NoticesRepository {
         dateTo: String?,
         dateFrom: String?
     ): Flow<PagingData<NoticeModel>>
+
+    suspend fun getUnreadCount(): Int
 }

@@ -34,4 +34,8 @@ class NoticesRepositoryImpl @Inject constructor(
         ).flow
     }
 
+    override suspend fun getUnreadCount(): Int {
+        return api.getUnreadCount()
+    }
+
 }

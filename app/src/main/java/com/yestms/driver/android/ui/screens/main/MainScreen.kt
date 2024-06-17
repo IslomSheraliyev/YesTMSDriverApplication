@@ -20,6 +20,7 @@ fun MainScreen(
     val tokenStatus by viewModel.tokenStatus.collectAsState()
     val refreshing by viewModel.isRefreshing.collectAsState()
     val externalIdState by viewModel.isUserExternalIdValid.collectAsState()
+    val unreadCount by viewModel.unreadCount.collectAsState()
 
     val bottomNavController = rememberNavController()
 
@@ -27,27 +28,27 @@ fun MainScreen(
         viewModel.check()
     }
 
-    when (tokenStatus) {
-        AuthCheckTokenStatus.VALID -> {
-            MainScreenContent(
-                navController = navController,
-                topNavController = bottomNavController
-            )
-        }
-
-        AuthCheckTokenStatus.INVALID -> {
-            LoginScreenContent(
-                isError = externalIdState == AuthLoginDriverExternalIdStatus.INVALID,
-                onLoginClicked = { value ->
-                    viewModel.loginDriver(value)
-                }
-            )
-        }
-
-        AuthCheckTokenStatus.IDLE -> {
-            if (refreshing) {
-                LoadingDialog(isVisible = true)
+    if (tokenStatus == AuthCheckTokenStatus.VALID || externalIdState == AuthLoginDriverExternalIdStatus.VALID)
+        MainScreenContent(
+            navController = navController,
+            topNavController = bottomNavController,
+            unreadCount = unreadCount,
+            onDestinationChange = {
+                viewModel.getUnreadCount()
             }
-        }
+        )
+    else if (
+        tokenStatus == AuthCheckTokenStatus.INVALID ||
+        externalIdState == AuthLoginDriverExternalIdStatus.INVALID ||
+        externalIdState == AuthLoginDriverExternalIdStatus.IDLE
+    )
+        LoginScreenContent(
+            isError = externalIdState == AuthLoginDriverExternalIdStatus.INVALID,
+            onLoginClicked = { value ->
+                viewModel.loginDriver(value)
+            }
+        )
+    else if (refreshing) {
+        LoadingDialog(isVisible = true)
     }
 }

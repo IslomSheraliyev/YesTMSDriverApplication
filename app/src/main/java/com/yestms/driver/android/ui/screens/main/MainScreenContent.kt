@@ -22,7 +22,9 @@ import com.yestms.driver.android.ui.screens.notices.NoticesScreen
 @Composable
 fun MainScreenContent(
     navController: NavController,
-    topNavController: NavHostController
+    topNavController: NavHostController,
+    unreadCount: Int,
+    onDestinationChange: () -> Unit
 ) {
 
     var noticeVisibility by rememberSaveable {
@@ -44,19 +46,25 @@ fun MainScreenContent(
     ) {
 
         MainAppBar(
+            unreadCount = unreadCount,
             loadsVisibility = loadsVisibility,
             statsVisibility = statsVisibility,
             noticeVisibility = noticeVisibility,
+            onLaunched = {
+                onDestinationChange()
+            },
             onLoadsClick = {
                 loadsVisibility = true
                 statsVisibility = false
                 noticeVisibility = true
                 navigateToScreen(topNavController, Screen.Main.Loads)
+                onDestinationChange()
             },
             onStatsClick = {
                 loadsVisibility = false
                 statsVisibility = true
                 noticeVisibility = true
+                onDestinationChange()
 
             },
             onNoticesClick = {
@@ -67,6 +75,7 @@ fun MainScreenContent(
                     loadsVisibility = true
                     navigateToScreen(topNavController, Screen.Main.Loads)
                 } else navigateToScreen(topNavController, Screen.Main.Notices)
+                onDestinationChange()
             }
         )
 

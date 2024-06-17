@@ -16,4 +16,7 @@ interface NoticesApi {
         @Query("dateTo") dateTo: String? = null,
         @Query("dateFrom") dateFrom: String? = null
     ): NoticesResponse
+
+    @GET(NoticesUrl.UNREAD)
+    suspend fun getUnreadCount(): Int
 }

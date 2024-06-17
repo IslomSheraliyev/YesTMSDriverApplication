@@ -60,7 +60,7 @@ fun SearchTextField(
                 visualTransformation = VisualTransformation.None,
                 placeholder = {
                     Text(
-                        text = stringResource(id = R.string.search),
+                        text = stringResource(id = R.string.search_with_dots ),
                         style = CustomTheme.typography.md16pxRegular,
                         color = CustomTheme.colorScheme.grey400
                     )

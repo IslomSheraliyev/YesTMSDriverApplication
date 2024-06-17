@@ -38,78 +38,85 @@ fun NoticesScreenContent(
     var createdDate by rememberSaveable { mutableStateOf("") }
     var searchQuery by rememberSaveable { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
-        SortBySpinner(
-            onSelectOption = {
-                sortBy = it
-            }
-        )
+        item {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
 
-        VerticalSpacer(dp = 16)
-
-        DatePickerTextField(
-            onDateSelected = {
-                createdDate = it
-            }
-        )
-
-        VerticalSpacer(dp = 16)
-
-        SearchTextField(
-            value = searchQuery,
-            onValueChange = {
-                searchQuery = it
-            }
-        )
-
-        VerticalSpacer(dp = 16)
-
-        SearchButton(
-            onClick = {
-                onSearchClick(
-                    sortBy,
-                    if (createdDate.isNotEmpty()) createdDate
-                        .plus("T00:00:00.000Z") else "",
-                    searchQuery
+                SortBySpinner(
+                    onSelectOption = {
+                        sortBy = it
+                    }
                 )
-            }
-        )
 
-        VerticalSpacer(dp = 16)
+                VerticalSpacer(dp = 16)
+
+                DatePickerTextField(
+                    onDateSelected = {
+                        createdDate = it
+                    }
+                )
+
+                VerticalSpacer(dp = 16)
+
+                SearchTextField(
+                    value = searchQuery,
+                    onValueChange = {
+                        searchQuery = it
+                    }
+                )
+
+                VerticalSpacer(dp = 16)
+
+                SearchButton(
+                    onClick = {
+                        onSearchClick(
+                            sortBy,
+                            if (createdDate.isNotEmpty()) createdDate
+                                .plus("T00:00:00.000Z") else "",
+                            searchQuery
+                        )
+                    }
+                )
+
+                VerticalSpacer(dp = 16)
+            }
+        }
 
         when {
             notices.itemCount > 0 -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    items(
-                        notices.itemCount,
-                        key = { notices[it]?.id.or0() }
-                    ) { index ->
-                        notices[index]?.let { notNull -> NoticeCard(noticeModel = notNull) }
-                    }
+                items(
+                    notices.itemCount,
+                    key = { notices[it]?.id.or0() }
+                ) { index ->
+                    notices[index]?.let { notNull -> NoticeCard(noticeModel = notNull) }
                 }
             }
 
             notices.itemCount == 0 && notices.loadState.append.endOfPaginationReached -> {
-                NoResultsFound()
+                item { NoResultsFound() }
             }
 
             else -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    ProgressIndicator(
-                        modifier = Modifier.size(44.dp)
-                    )
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ProgressIndicator(
+                            modifier = Modifier.size(44.dp)
+                        )
+                    }
                 }
+
             }
         }
     }
