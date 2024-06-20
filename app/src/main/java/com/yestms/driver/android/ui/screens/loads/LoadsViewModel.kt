@@ -21,11 +21,7 @@ class LoadsViewModel @Inject constructor(
     val loads: StateFlow<PagingData<LoadModel>> get() = _loads
 
     fun getLoads() = vmScope.launch {
-
-        _isRefreshing.emit(true)
-
         getLoadsUseCase().onSuccess { result ->
-            _isRefreshing.emit(false)
             result.cachedIn(vmScope)
                 .collectLatest { data ->
                     _loads.emit(data)

@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.button.SearchButton
@@ -102,17 +103,9 @@ fun NoticesScreenContent(
             )
         }
 
-        when {
-            notices.itemCount > 0 -> {
-                items(
-                    notices.itemCount,
-                    key = { notices[it]?.id.or0() }
-                ) { index ->
-                    notices[index]?.let { notNull -> NoticeCard(noticeModel = notNull) }
-                }
-            }
+        when (notices.loadState.refresh) {
 
-            notices.itemCount == 0 && notices.loadState.append.endOfPaginationReached -> {
+            is LoadState.Error -> {
                 item {
                     NoResultsFound(
                         painter = R.drawable.ic_no_notices,
@@ -122,7 +115,7 @@ fun NoticesScreenContent(
                 }
             }
 
-            else -> {
+            is LoadState.Loading -> {
                 item {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -132,6 +125,23 @@ fun NoticesScreenContent(
                             modifier = Modifier.size(44.dp)
                         )
                     }
+                }
+            }
+
+            is LoadState.NotLoading -> {
+                if (notices.itemCount > 0)
+                    items(
+                        notices.itemCount,
+                        key = { notices[it]?.id.or0() }
+                    ) { index ->
+                        notices[index]?.let { notNull -> NoticeCard(noticeModel = notNull) }
+                    }
+                else item {
+                    NoResultsFound(
+                        painter = R.drawable.ic_no_notices,
+                        title = R.string.no_notifications_found,
+                        description = R.string.you_do_not_have_notifications
+                    )
                 }
             }
         }

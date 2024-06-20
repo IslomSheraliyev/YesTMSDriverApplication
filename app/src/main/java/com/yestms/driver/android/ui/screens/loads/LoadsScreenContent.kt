@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.card.LoadCard
@@ -24,34 +25,56 @@ fun LoadsScreenContent(
     loads: LazyPagingItems<LoadModel>,
 ) {
 
-    if (loads.itemCount > 0)
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
 
-            items(
-                count = loads.itemCount,
-                key = { loads[it]?.id.or0() }
-            ) { index ->
-                loads[index]?.let { notNull -> LoadCard(load = notNull) }
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+
+        when (loads.loadState.refresh) {
+            is LoadState.Error -> {
+                item {
+                    NoResultsFound(
+                        painter = R.drawable.ic_no_loads,
+                        title = R.string.no_results_found,
+                        description = R.string.please_try_again
+
+                    )
+                }
+            }
+
+            is LoadState.Loading -> {
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ProgressIndicator(
+                            modifier = Modifier
+                                .size(44.dp)
+                        )
+                    }
+                }
+            }
+
+            is LoadState.NotLoading -> {
+                if (loads.itemCount > 0)
+                    items(
+                        count = loads.itemCount,
+                        key = { loads[it]?.id.or0() }
+                    ) { index ->
+                        loads[index]?.let { notNull -> LoadCard(load = notNull) }
+                    }
+                else item {
+                    NoResultsFound(
+                        painter = R.drawable.ic_no_loads,
+                        title = R.string.no_results_found,
+                        description = R.string.please_try_again
+
+                    )
+                }
             }
         }
-    else if (loads.itemCount == 0 && loads.loadState.isIdle)
-        NoResultsFound(
-            painter = R.drawable.ic_no_loads,
-            title = R.string.no_results_found,
-            description = R.string.please_try_again
-
-        )
-    else Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        ProgressIndicator(
-            modifier = Modifier
-                .size(44.dp)
-        )
     }
 }

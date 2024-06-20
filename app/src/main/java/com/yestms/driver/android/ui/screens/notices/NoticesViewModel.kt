@@ -26,10 +26,7 @@ class NoticesViewModel @Inject constructor(
         dateTo: String? = null,
         dateFrom: String? = null
     ) = vmScope.launch {
-        _isRefreshing.emit(true)
-
         _notices.emit(PagingData.empty())
-
         getNoticesUseCase(
             GetNoticesUseCase.Params(
                 search = search,
@@ -38,7 +35,6 @@ class NoticesViewModel @Inject constructor(
                 dateFrom = dateFrom
             )
         ).onSuccess { result ->
-            _isRefreshing.emit(false)
             result.cachedIn(vmScope)
                 .collectLatest { data ->
                     _notices.emit(data)
