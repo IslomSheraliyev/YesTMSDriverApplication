@@ -21,14 +21,13 @@ import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.button.NoticeButton
 import com.yestms.driver.android.components.design.theme.CustomTheme
-import com.yestms.driver.android.components.prefabs.StatusComponent
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 import com.yestms.driver.android.components.utils.DateConverter
-import com.yestms.driver.android.domain.model.notices.NoticeModel
+import com.yestms.driver.android.domain.model.notifications.NotificationModel
 
 @Composable
 fun NoticeCard(
-    noticeModel: NoticeModel,
+    notificationModel: NotificationModel,
     modifier: Modifier = Modifier
 ) {
 
@@ -70,13 +69,13 @@ fun NoticeCard(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = DateConverter.getNoticeDate(noticeModel.createdAt),
+                        text = DateConverter.getNoticeDate(notificationModel.createdAt),
                         color = CustomTheme.colorScheme.grey800,
                         style = CustomTheme.typography.smMedium
                     )
 
                     Text(
-                        text = DateConverter.getNoticeTime(noticeModel.createdAt),
+                        text = DateConverter.getNoticeTime(notificationModel.createdAt),
                         color = CustomTheme.colorScheme.grey400,
                         style = CustomTheme.typography.xsMedium
                     )
@@ -84,12 +83,12 @@ fun NoticeCard(
 
                 HorizontalSpacer(weight = 1f)
 
-                StatusComponent(
-                    color = if (noticeModel.isActive) CustomTheme.colorScheme.green
+                StatusCard(
+                    color = if (notificationModel.isActive) CustomTheme.colorScheme.green
                     else CustomTheme.colorScheme.orange,
 
                     text = stringResource(
-                        id = if (noticeModel.isActive) R.string.read
+                        id = if (notificationModel.isActive) R.string.read
                         else R.string.unread
                     ),
                     modifier = Modifier.align(Alignment.Top)
@@ -97,7 +96,7 @@ fun NoticeCard(
             }
 
             Text(
-                text = noticeModel.title,
+                text = notificationModel.title,
                 color = CustomTheme.colorScheme.grey400,
                 style = CustomTheme.typography.md16pxRegular,
                 modifier = Modifier

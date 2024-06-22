@@ -1,6 +1,6 @@
-package com.yestms.driver.android.data.remote.response.notices
+package com.yestms.driver.android.data.remote.response.notifications
 
-data class NoticeRemoteModel(
+data class NotificationsRemoteModel(
     val id: Int?,
     val title: String?,
     val isActive: Boolean?,

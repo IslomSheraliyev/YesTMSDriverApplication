@@ -1,9 +1,9 @@
-package com.yestms.driver.android.domain.model.notices
+package com.yestms.driver.android.domain.model.notifications
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class NoticeModel(
+data class NotificationModel(
     val id: Int,
     val title: String,
     val isActive: Boolean,

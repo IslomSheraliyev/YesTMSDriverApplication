@@ -18,14 +18,13 @@ import com.yestms.driver.android.components.card.LoadCard
 import com.yestms.driver.android.components.card.NoResultsFound
 import com.yestms.driver.android.components.loader.ProgressIndicator
 import com.yestms.driver.android.data.mapper.or0
-import com.yestms.driver.android.domain.model.loads.LoadModel
+import com.yestms.driver.android.domain.model.loads.LoadsItemModel
 
 @Composable
 fun LoadsScreenContent(
-    loads: LazyPagingItems<LoadModel>,
+    loads: LazyPagingItems<LoadsItemModel>,
+    onLoadClick: (id: Int) -> Unit
 ) {
-
-
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(16.dp),
@@ -59,20 +58,22 @@ fun LoadsScreenContent(
             }
 
             is LoadState.NotLoading -> {
-                if (loads.itemCount > 0)
-                    items(
-                        count = loads.itemCount,
-                        key = { loads[it]?.id.or0() }
-                    ) { index ->
-                        loads[index]?.let { notNull -> LoadCard(load = notNull) }
+                items(
+                    count = loads.itemCount,
+                    key = { loads[it]?.id.or0() }
+                ) { index ->
+                    loads[index]?.let { notNullLoad ->
+                        LoadCard(
+                            id = notNullLoad.id,
+                            loadId = notNullLoad.loadId,
+                            rate = notNullLoad.rate,
+                            mileage = notNullLoad.mileage,
+                            pickUpLocation = notNullLoad.pickUpLocation,
+                            deliveryLocation = notNullLoad.deliveryLocation,
+                            loadStatus = notNullLoad.loadStatus,
+                            onClick = onLoadClick
+                        )
                     }
-                else item {
-                    NoResultsFound(
-                        painter = R.drawable.ic_no_loads,
-                        title = R.string.no_results_found,
-                        description = R.string.please_try_again
-
-                    )
                 }
             }
         }

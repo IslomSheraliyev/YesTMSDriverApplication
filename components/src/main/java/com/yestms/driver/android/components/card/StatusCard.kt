@@ -1,4 +1,4 @@
-package com.yestms.driver.android.components.prefabs
+package com.yestms.driver.android.components.card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +18,7 @@ import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 
 @Composable
-fun StatusComponent(
+fun StatusCard(
     color: Color,
     text: String,
     modifier: Modifier = Modifier

@@ -1,12 +1,12 @@
-package com.yestms.driver.android.domain.usecase.notices
+package com.yestms.driver.android.domain.usecase.notifications
 
 import com.yestms.driver.android.domain.global.UseCase
-import com.yestms.driver.android.domain.repository.NoticesRepository
+import com.yestms.driver.android.domain.repository.NotificationsRepository
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class GetUnreadCountUseCount @Inject constructor(
-    private val repository: NoticesRepository
+    private val repository: NotificationsRepository
 ) : UseCase<Int>(Dispatchers.IO) {
     override suspend fun execute(): Int {
         return repository.getUnreadCount()

@@ -1,4 +1,4 @@
-package com.yestms.driver.android.data.remote.response.loads.get
+package com.yestms.driver.android.data.remote.response.loads
 
 data class LoadStatusRemoteModel(
     val id: Int?,

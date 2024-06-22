@@ -37,6 +37,12 @@ val typography = CustomFont(
         weight = FontWeight.W500,
         lineHeight = 18.sp
     ),
+    xs24pxMedium = createText(
+        font = medium,
+        size = 24.sp,
+        weight = FontWeight.W500,
+        lineHeight = 32.sp
+    ),
     smMedium = createText(
         font = medium,
         size = 14.sp,
@@ -48,6 +54,12 @@ val typography = CustomFont(
         size = 14.sp,
         weight = FontWeight.W700,
         lineHeight = 20.sp
+    ),
+    lg18pxMedium = createText(
+        font = medium,
+        size = 18.sp,
+        weight = FontWeight.W500,
+        lineHeight = 28.sp
     )
 )
 

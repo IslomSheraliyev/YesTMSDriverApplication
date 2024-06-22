@@ -1,11 +1,13 @@
 package com.yestms.driver.android.ui.navigation
 
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -31,10 +33,11 @@ fun NavController.safePopBackStack() {
     if (canGoBack)
         this.popBackStack()
 }
+
 fun NavGraphBuilder.createScreen(
     route: Screen,
     arguments: List<NamedNavArgument> = emptyList(),
-    content: @Composable () -> Unit
+    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
         route = route.screenName,
@@ -60,6 +63,6 @@ fun NavGraphBuilder.createScreen(
             )
         }
     ) {
-        content()
+        content(this, it)
     }
 }

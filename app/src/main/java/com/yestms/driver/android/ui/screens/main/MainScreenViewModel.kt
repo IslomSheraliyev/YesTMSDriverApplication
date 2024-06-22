@@ -6,7 +6,7 @@ import com.yestms.driver.android.data.enums.auth.AuthLoginDriverExternalIdStatus
 import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.domain.usecase.auth.AuthCheckUseCase
 import com.yestms.driver.android.domain.usecase.auth.AuthLoginDriverUseCase
-import com.yestms.driver.android.domain.usecase.notices.GetUnreadCountUseCount
+import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

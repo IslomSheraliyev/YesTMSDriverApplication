@@ -29,15 +29,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.design.theme.CustomTheme
-import com.yestms.driver.android.components.prefabs.StatusComponent
-import com.yestms.driver.android.domain.model.loads.LoadModel
+import com.yestms.driver.android.domain.model.loads.LoadStatusModel
 import com.yestms.driver.android.components.R.font.helvetica_medium as medium
 import com.yestms.driver.android.components.R.font.helvetica_regular as regular
 
 @Composable
 fun LoadCard(
-    load: LoadModel,
-    modifier: Modifier = Modifier
+    id: Int,
+    loadId: String,
+    rate: Int,
+    mileage: Int,
+    pickUpLocation: String,
+    deliveryLocation: String,
+    loadStatus: LoadStatusModel,
+    modifier: Modifier = Modifier,
+    isDetailed: Boolean = false,
+    onClick: (id: Int) -> Unit = { }
 ) {
     Card(
         modifier = modifier
@@ -50,7 +57,8 @@ fun LoadCard(
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = CustomTheme.colorScheme.neutralColors100
-        )
+        ),
+        onClick = { if (isDetailed.not()) onClick(id) }
     ) {
 
         Column(
@@ -76,9 +84,9 @@ fun LoadCard(
                             )
                         ) {
                             append("$")
-                            append(load.rate.toString())
+                            append(rate.toString())
                             append(" - ")
-                            append(load.mileage.toString())
+                            append(mileage.toString())
                         }
 
                         withStyle(
@@ -108,7 +116,7 @@ fun LoadCard(
                         ) {
                             val decimal = DecimalFormat("#.##")
                             append("$")
-                            append(decimal.format(load.rate / load.mileage.toDouble()))
+                            append(decimal.format(rate / mileage.toDouble()))
                         }
 
                         withStyle(
@@ -132,7 +140,7 @@ fun LoadCard(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
-                    text = load.pickUpLocation,
+                    text = pickUpLocation.ifEmpty { "Unknown" },
                     color = CustomTheme.colorScheme.grey800,
                     style = CustomTheme.typography.smMedium,
                     modifier = Modifier.weight(1f)
@@ -144,16 +152,22 @@ fun LoadCard(
                 )
 
                 Text(
-                    text = load.deliveryLocation,
+                    text = deliveryLocation.ifEmpty { "Unknown" },
                     color = CustomTheme.colorScheme.grey800,
                     style = CustomTheme.typography.smMedium,
                     modifier = Modifier.weight(1f)
                 )
             }
 
-            StatusComponent(
-                color = Color(GraphicsColor.parseColor(load.loadStatus.color)),
-                text = load.loadStatus.name,
+            StatusCard(
+                color = Color(GraphicsColor.parseColor(loadStatus.color)),
+                text = loadStatus.name,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            CopyLoadIdCard(
+                visibility = isDetailed,
+                text = loadId,
                 modifier = Modifier.fillMaxWidth()
             )
         }

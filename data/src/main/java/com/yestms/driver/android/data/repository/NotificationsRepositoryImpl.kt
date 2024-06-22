@@ -3,27 +3,27 @@ package com.yestms.driver.android.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.yestms.driver.android.data.remote.api.NoticesApi
-import com.yestms.driver.android.data.remote.paging.notices.NoticesPagingSource
-import com.yestms.driver.android.domain.model.notices.NoticeModel
-import com.yestms.driver.android.domain.repository.NoticesRepository
+import com.yestms.driver.android.data.remote.api.NotificationsApi
+import com.yestms.driver.android.data.remote.paging.notices.NotificationsPagingSource
+import com.yestms.driver.android.domain.model.notifications.NotificationModel
+import com.yestms.driver.android.domain.repository.NotificationsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class NoticesRepositoryImpl @Inject constructor(
-    private val api: NoticesApi
-) : NoticesRepository {
+class NotificationsRepositoryImpl @Inject constructor(
+    private val api: NotificationsApi
+) : NotificationsRepository {
 
     override suspend fun getNotices(
         search: String?,
         sort: String?,
         dateTo: String?,
         dateFrom: String?
-    ): Flow<PagingData<NoticeModel>> {
+    ): Flow<PagingData<NotificationModel>> {
         return Pager(
             config = PagingConfig(pageSize = 20),
             pagingSourceFactory = {
-                NoticesPagingSource(
+                NotificationsPagingSource(
                     api = api,
                     sort = sort,
                     dateTo = dateTo,
@@ -36,6 +36,10 @@ class NoticesRepositoryImpl @Inject constructor(
 
     override suspend fun getUnreadCount(): Int {
         return api.getUnreadCount()
+    }
+
+    override suspend fun deleteAllNotifications(): Int {
+        return api.deleteAllNotifications()
     }
 
 }

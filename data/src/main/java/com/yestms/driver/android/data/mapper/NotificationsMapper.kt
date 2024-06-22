@@ -1,14 +1,14 @@
 package com.yestms.driver.android.data.mapper
 
-import com.yestms.driver.android.data.remote.response.notices.NoticeRemoteModel
-import com.yestms.driver.android.domain.model.notices.NoticeModel
+import com.yestms.driver.android.data.remote.response.notifications.NotificationsRemoteModel
+import com.yestms.driver.android.domain.model.notifications.NotificationModel
 
-object NoticesMapper {
+object NotificationsMapper {
 
     val noticeMapper:
-            Mapper<NoticeRemoteModel?, NoticeModel> =
+            Mapper<NotificationsRemoteModel?, NotificationModel> =
         { remote ->
-            NoticeModel(
+            NotificationModel(
                 id = remote?.id.or0(),
                 title = remote?.title.orEmpty(),
                 isActive = remote?.isActive.orFalse(),

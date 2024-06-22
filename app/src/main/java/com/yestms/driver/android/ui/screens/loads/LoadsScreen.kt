@@ -7,7 +7,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 
 @Composable
 fun LoadsScreen(
-    viewModel: LoadsViewModel = hiltViewModel()
+    viewModel: LoadsViewModel = hiltViewModel(),
+    onLoadClick: (id: Int) -> Unit
 ) {
 
     LaunchedEffect(key1 = Unit) {
@@ -15,6 +16,7 @@ fun LoadsScreen(
     }
 
     LoadsScreenContent(
-        loads = viewModel.loads.collectAsLazyPagingItems()
+        loads = viewModel.loads.collectAsLazyPagingItems(),
+        onLoadClick = onLoadClick
     )
 }

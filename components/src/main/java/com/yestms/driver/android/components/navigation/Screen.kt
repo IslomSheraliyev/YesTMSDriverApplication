@@ -3,23 +3,26 @@ package com.yestms.driver.android.components.navigation
 sealed class Screen(
     val screenName: String
 ) {
-    data object LoginScreen : Screen("login")
+
+    companion object {
+        const val ID = "id"
+    }
 
     data object Main : Screen("main") {
-        val menu = listOf(
-            Loads,
-            Stats,
-            Notices,
-            DriverDetails,
+        val menu = mapOf(
+            "Loads" to Loads,
+            "Stats" to Stats,
+            "Notifications" to Notifications
         )
 
         data object Loads : Screen("main/loads")
 
         data object Stats : Screen("main/stats")
 
-        data object Notices : Screen("main/notices")
+        data object Notifications : Screen("main/notifications")
 
-        data object DriverDetails : Screen("main/driver_details")
-
+        data object Details : Screen("main/details/{$ID}") {
+            fun add(id: Int) = "main/details/$id"
+        }
     }
 }

@@ -6,20 +6,20 @@ import androidx.paging.PagingState
 import com.yestms.driver.android.data.mapper.orFalse
 import com.yestms.driver.android.data.mapper.LoadsMapper
 import com.yestms.driver.android.data.remote.api.LoadsApi
-import com.yestms.driver.android.domain.model.loads.LoadModel
+import com.yestms.driver.android.domain.model.loads.LoadsItemModel
 import java.io.IOException
 
 class LoadsPagingSource(
     private val api: LoadsApi
-) : PagingSource<Int, LoadModel>() {
-    override fun getRefreshKey(state: PagingState<Int, LoadModel>): Int? {
+) : PagingSource<Int, LoadsItemModel>() {
+    override fun getRefreshKey(state: PagingState<Int, LoadsItemModel>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LoadModel> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LoadsItemModel> {
         return try {
             val nextPageNumber = params.key ?: 1
             val response = api.getLoads(
@@ -31,7 +31,7 @@ class LoadsPagingSource(
                 else nextPageNumber + 1
 
             LoadResult.Page(
-                data = response.rows?.map(LoadsMapper.loadMapper).orEmpty(),
+                data = response.rows?.map(LoadsMapper.loadItemMapper).orEmpty(),
                 prevKey = null,
                 nextKey = nextNumber
             )

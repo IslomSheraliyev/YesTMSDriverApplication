@@ -21,4 +21,8 @@
     <string name="you_do_not_have_notifications">You currently have no notifications</string>
     <string name="date_from">Date from %1$s</string>
     <string name="date_to">Date to %1$s</string>
+    <string name="driver_details">Driver details</string>
+    <string name="notifications">Notifications</string>
+    <string name="delete_all">Delete all</string>
+    <string name="provide_pick_up_location">Your dispatcher will provide pick\nup address soon</string>
 </resources>

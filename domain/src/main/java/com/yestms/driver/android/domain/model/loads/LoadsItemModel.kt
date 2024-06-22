@@ -1,15 +1,16 @@
 package com.yestms.driver.android.domain.model.loads
 
-data class LoadModel(
+import androidx.compose.runtime.Immutable
+
+@Immutable
+data class LoadsItemModel(
     val id: Int,
     val loadId: String,
-    val activationLink: String,
     val rate: Int,
     val mileage: Int,
-    val pickUpNote: String,
     val pickUpLocation: String,
     val pickUpPolitical: String,
     val deliveryLocation: String,
     val deliveryPolitical: String,
-    val loadStatus: LoadStatusModel
+    val loadStatus: LoadStatusModel,
 )

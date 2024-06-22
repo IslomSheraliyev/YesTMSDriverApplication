@@ -2,7 +2,7 @@ package com.yestms.driver.android.data.di
 
 import com.yestms.driver.android.data.remote.api.AuthApi
 import com.yestms.driver.android.data.remote.api.LoadsApi
-import com.yestms.driver.android.data.remote.api.NoticesApi
+import com.yestms.driver.android.data.remote.api.NotificationsApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,8 +25,8 @@ object ApiModule {
     }
 
     @[Provides Singleton]
-    fun provideNoticesApi(retrofit: Retrofit): NoticesApi {
-        return retrofit.create(NoticesApi::class.java)
+    fun provideNoticesApi(retrofit: Retrofit): NotificationsApi {
+        return retrofit.create(NotificationsApi::class.java)
     }
 
 
