@@ -6,7 +6,7 @@ import androidx.compose.runtime.Immutable
 data class LoadsItemModel(
     val id: Int,
     val loadId: String,
-    val rate: Int,
+    val rate: Long,
     val mileage: Int,
     val pickUpLocation: String,
     val pickUpPolitical: String,

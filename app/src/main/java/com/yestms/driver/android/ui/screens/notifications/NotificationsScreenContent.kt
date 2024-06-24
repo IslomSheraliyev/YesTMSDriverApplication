@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.PullRefreshState
+import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -31,7 +34,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.button.SearchButton
 import com.yestms.driver.android.components.card.NoResultsFound
-import com.yestms.driver.android.components.card.NoticeCard
+import com.yestms.driver.android.components.card.NotificationCard
 import com.yestms.driver.android.components.date_picker.DatePickerTextField
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
@@ -42,10 +45,15 @@ import com.yestms.driver.android.components.text_field.SearchTextField
 import com.yestms.driver.android.data.mapper.or0
 import com.yestms.driver.android.domain.model.notifications.NotificationModel
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NotificationsScreenContent(
+    refreshing: Boolean,
+    refreshState: PullRefreshState,
     notifications: LazyPagingItems<NotificationModel>,
     onClickDeleteAll: () -> Unit,
+    onClickDelete: (Int) -> Unit,
+    onClickView: (Int) -> Unit,
     onSearchClick: (
         sortBy: String?,
         dateFrom: String?,
@@ -59,153 +67,175 @@ fun NotificationsScreenContent(
     var dateTo by rememberSaveable { mutableStateOf("") }
     var searchQuery by rememberSaveable { mutableStateOf("") }
 
-
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(16.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pullRefresh(refreshState)
     ) {
 
-        item {
-            SortBySpinner(
-                onSelectOption = {
-                    sortBy = it
-                }
-            )
-        }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(16.dp)
+        ) {
 
-        item {
-            DatePickerTextField(
-                value = dateFrom,
-                prefixTextId = R.string.date_from,
-                onDateSelected = {
-                    dateFrom = it
-                }
-            )
-        }
+            item {
+                SortBySpinner(
+                    onSelectOption = {
+                        sortBy = it
+                    }
+                )
+            }
 
-        item {
-            DatePickerTextField(
-                value = dateTo,
-                prefixTextId = R.string.date_to,
-                onDateSelected = {
-                    dateTo = it
-                }
-            )
-        }
+            item {
+                DatePickerTextField(
+                    value = dateFrom,
+                    prefixTextId = R.string.date_from,
+                    onDateSelected = {
+                        dateFrom = it
+                    }
+                )
+            }
 
-        item {
-            SearchTextField(
-                value = searchQuery,
-                onValueChange = {
-                    searchQuery = it
-                }
-            )
-        }
+            item {
+                DatePickerTextField(
+                    value = dateTo,
+                    prefixTextId = R.string.date_to,
+                    onDateSelected = {
+                        dateTo = it
+                    }
+                )
+            }
 
-        item {
-            SearchButton(
-                onClick = {
-                    onSearchClick(
-                        sortBy.ifEmpty { null },
-                        if (dateFrom.isNotEmpty()) dateFrom
-                            .plus("T00:00:00.000Z") else null,
-                        if (dateTo.isNotEmpty()) dateTo
-                            .plus("T00:00:00.000Z") else null,
-                        searchQuery.ifEmpty { null }
-                    )
-                }
-            )
+            item {
+                SearchTextField(
+                    value = searchQuery,
+                    onValueChange = {
+                        searchQuery = it
+                    }
+                )
+            }
 
-            VerticalSpacer(dp = 24)
-        }
-
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_notification_bell),
-                    contentDescription = null,
-                    tint = Color.Unspecified
+            item {
+                SearchButton(
+                    onClick = {
+                        onSearchClick(
+                            sortBy.ifEmpty { null },
+                            if (dateFrom.isNotEmpty()) dateFrom
+                                .plus("T00:00:00.000Z") else null,
+                            if (dateTo.isNotEmpty()) dateTo
+                                .plus("T00:00:00.000Z") else null,
+                            searchQuery.ifEmpty { null }
+                        )
+                    }
                 )
 
-                HorizontalSpacer(dp = 8)
+                VerticalSpacer(dp = 24)
+            }
 
-                Text(
-                    text = stringResource(id = R.string.notifications),
-                    color = CustomTheme.colorScheme.grey700,
-                    style = CustomTheme.typography.lg18pxMedium
-                )
-
-                HorizontalSpacer(weight = 1f)
-
-                Button(
-                    onClick = onClickDeleteAll,
-                    shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = CustomTheme.colorScheme.grey200
-                    )
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
+
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_notification_bell),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+
+                    HorizontalSpacer(dp = 8)
+
                     Text(
-                        text = stringResource(id = R.string.delete_all),
-                        color = CustomTheme.colorScheme.grey400,
-                        style = CustomTheme.typography.md16pxMedium,
-                        modifier = Modifier
-
+                        text = stringResource(id = R.string.notifications),
+                        color = CustomTheme.colorScheme.grey700,
+                        style = CustomTheme.typography.lg18pxMedium
                     )
-                }
 
-            }
-        }
+                    HorizontalSpacer(weight = 1f)
 
-        item {
-            HorizontalDivider(color = CustomTheme.colorScheme.grey200)
-        }
-
-        when (notifications.loadState.refresh) {
-            is LoadState.Error -> {
-                item {
-                    NoResultsFound(
-                        painter = R.drawable.ic_no_notices,
-                        title = R.string.no_notifications_found,
-                        description = R.string.you_do_not_have_notifications
-                    )
-                }
-            }
-
-            is LoadState.Loading -> {
-                item {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                    Button(
+                        onClick = onClickDeleteAll,
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = CustomTheme.colorScheme.grey200
+                        )
                     ) {
-                        ProgressIndicator(
-                            modifier = Modifier.size(44.dp)
+                        Text(
+                            text = stringResource(id = R.string.delete_all),
+                            color = CustomTheme.colorScheme.grey400,
+                            style = CustomTheme.typography.md16pxMedium,
+                            modifier = Modifier
+
+                        )
+                    }
+
+                }
+            }
+
+            item {
+                HorizontalDivider(color = CustomTheme.colorScheme.grey200)
+            }
+
+            when (notifications.loadState.refresh) {
+                is LoadState.Error -> {
+                    item {
+                        NoResultsFound(
+                            painter = R.drawable.ic_no_notices,
+                            title = R.string.no_notifications_found,
+                            description = R.string.you_do_not_have_notifications
+                        )
+                    }
+                }
+
+                is LoadState.Loading -> {
+                    item {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            ProgressIndicator(modifier = Modifier.size(44.dp))
+                        }
+                    }
+                }
+
+                is LoadState.NotLoading -> {
+                    if (notifications.itemCount > 0)
+                        items(
+                            notifications.itemCount,
+                            key = { notifications[it]?.id.or0() }
+                        ) { index ->
+                            notifications[index]?.let { notNull ->
+                                NotificationCard(
+                                    notificationModel = notNull,
+                                    onDeleteClick = {
+                                        onClickDelete(notifications[index]?.id.or0())
+                                    },
+                                    onViewClick = {
+                                        onClickView(notifications[index]?.id.or0())
+                                    }
+                                )
+                            }
+                        }
+                    else item {
+                        NoResultsFound(
+                            painter = R.drawable.ic_no_notices,
+                            title = R.string.no_notifications_found,
+                            description = R.string.you_do_not_have_notifications
                         )
                     }
                 }
             }
-
-            is LoadState.NotLoading -> {
-                if (notifications.itemCount > 0)
-                    items(
-                        notifications.itemCount,
-                        key = { notifications[it]?.id.or0() }
-                    ) { index ->
-                        notifications[index]?.let { notNull -> NoticeCard(notificationModel = notNull) }
-                    }
-                else item {
-                    NoResultsFound(
-                        painter = R.drawable.ic_no_notices,
-                        title = R.string.no_notifications_found,
-                        description = R.string.you_do_not_have_notifications
-                    )
-                }
-            }
         }
+
+        PullRefreshIndicator(
+            refreshing = refreshing,
+            state = refreshState,
+            modifier = Modifier
+                .align(Alignment.TopCenter),
+            contentColor = CustomTheme.colorScheme.blue500
+        )
     }
 }

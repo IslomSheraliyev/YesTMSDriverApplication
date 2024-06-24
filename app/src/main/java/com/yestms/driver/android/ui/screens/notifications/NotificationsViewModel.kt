@@ -4,8 +4,11 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.domain.model.notifications.NotificationModel
-import com.yestms.driver.android.domain.usecase.notifications.DeleteAllNotificationsUseCase
+import com.yestms.driver.android.domain.usecase.notifications.DeleteNotificationUseCase
+import com.yestms.driver.android.domain.usecase.notifications.DeleteNotificationsUseCase
 import com.yestms.driver.android.domain.usecase.notifications.GetNotificationsUseCase
+import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCase
+import com.yestms.driver.android.domain.usecase.notifications.ViewNotificationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +20,10 @@ import javax.inject.Inject
 @HiltViewModel
 class NotificationsViewModel @Inject constructor(
     private val getNotificationsUseCase: GetNotificationsUseCase,
-    private val deleteAllNotificationsUseCase: DeleteAllNotificationsUseCase
+    private val deleteNotificationsUseCase: DeleteNotificationsUseCase,
+    private val deleteNotificationUseCase: DeleteNotificationUseCase,
+    private val viewNotificationUseCase: ViewNotificationUseCase,
+    private val getUnreadCountUseCase: GetUnreadCountUseCase,
 ) : BaseViewModel() {
 
     private val _notifications = MutableStateFlow<PagingData<NotificationModel>>(PagingData.empty())
@@ -26,13 +32,14 @@ class NotificationsViewModel @Inject constructor(
     private val _notificationsCount = MutableStateFlow(0)
     val notificationsCount = _notificationsCount.asStateFlow()
 
-    fun getNotices(
+    fun getNotifications(
         search: String? = null,
         sort: String? = null,
         dateTo: String? = null,
         dateFrom: String? = null
     ) = vmScope.launch {
         _notifications.emit(PagingData.empty())
+        _isRefreshing.emit(true)
         getNotificationsUseCase(
             GetNotificationsUseCase.Params(
                 search = search,
@@ -41,18 +48,43 @@ class NotificationsViewModel @Inject constructor(
                 dateFrom = dateFrom
             )
         ).onSuccess { result ->
+            _isRefreshing.emit(false)
             result.cachedIn(vmScope)
                 .collectLatest { data ->
                     _notifications.emit(data)
                 }
-        }.onFailure(::errorProcess)
+        }.onFailure {
+            _isRefreshing.emit(false)
+        }
     }
 
-    fun deleteAllNotifications() = vmScope.launch {
-        deleteAllNotificationsUseCase()
+    fun deleteNotifications() = vmScope.launch {
+        getNotificationsCount()
+        deleteNotificationsUseCase()
             .onSuccess { count ->
                 _notificationsCount.emit(count)
+                getNotificationsCount()
             }
             .onFailure(::errorProcess)
+    }
+
+    fun deleteNotification(id: Int) = vmScope.launch {
+        deleteNotificationUseCase(id).onSuccess {
+            getNotificationsCount()
+        }
+    }
+
+    fun viewNotification(id: Int) = vmScope.launch {
+        viewNotificationUseCase(id, false)
+            .onSuccess {
+                getNotificationsCount()
+            }
+    }
+
+    private fun getNotificationsCount() = vmScope.launch {
+        getUnreadCountUseCase()
+            .onSuccess { result ->
+                _notificationsCount.emit(result)
+            }
     }
 }

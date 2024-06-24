@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android.plugin)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.google.crashlytics)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -93,6 +95,7 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.androidx.compose.animation)
@@ -128,4 +131,11 @@ dependencies {
 
     //Lottie
     implementation(libs.lottie.compose)
+
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.google.firebase.analytics)
+    implementation(libs.firebase.messaging.ktx)
 }

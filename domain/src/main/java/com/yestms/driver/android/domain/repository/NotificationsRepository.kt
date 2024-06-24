@@ -14,5 +14,9 @@ interface NotificationsRepository {
 
     suspend fun getUnreadCount(): Int
 
-    suspend fun deleteAllNotifications(): Int
+    suspend fun deleteNotifications(): Int
+
+    suspend fun deleteNotification(id: Int): Int
+
+    suspend fun viewNotification(id: Int, isActive: Boolean): Int
 }

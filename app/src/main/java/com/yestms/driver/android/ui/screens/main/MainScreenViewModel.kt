@@ -1,12 +1,13 @@
 package com.yestms.driver.android.ui.screens.main
 
+import android.util.Log
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.enums.auth.AuthCheckTokenStatus
 import com.yestms.driver.android.data.enums.auth.AuthLoginDriverExternalIdStatus
 import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.domain.usecase.auth.AuthCheckUseCase
 import com.yestms.driver.android.domain.usecase.auth.AuthLoginDriverUseCase
-import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCount
+import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor(
     private val authCheckUseCase: AuthCheckUseCase,
     private val authLoginDriverUseCase: AuthLoginDriverUseCase,
-    private val getUnreadCountUseCount: GetUnreadCountUseCount
+    private val getUnreadCountUseCase: GetUnreadCountUseCase
 ) : BaseViewModel() {
 
     private val _tokenStatus = MutableStateFlow(AuthCheckTokenStatus.IDLE)
@@ -55,6 +56,7 @@ class MainScreenViewModel @Inject constructor(
             authLoginDriverUseCase(externalId).onSuccess { result ->
                 _isUserAuthLoginDriverExternalIdValidStatus.emit(AuthLoginDriverExternalIdStatus.VALID)
                 AppPreferences.accessToken = result.token
+                AppPreferences.currentUserId = result.user.id
                 check()
             }.onFailure {
                 _isRefreshing.emit(false)
@@ -63,8 +65,13 @@ class MainScreenViewModel @Inject constructor(
     }
 
     fun getUnreadCount() = vmScope.launch {
-        getUnreadCountUseCount().onSuccess { count ->
+        getUnreadCountUseCase().onSuccess { count ->
             _unreadCount.emit(count)
         }.onFailure(::errorProcess)
+    }
+
+    fun updateReadCount(count: Int) = vmScope.launch {
+        _unreadCount.emit(count)
+        Log.d("apdeyt", "updateReadCount: $count")
     }
 }

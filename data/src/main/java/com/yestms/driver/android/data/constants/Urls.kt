@@ -15,6 +15,7 @@ internal object LoadsUrl {
 
 internal object NotificationsUrl {
     const val NOTIFICATIONS = "notices"
+    const val NOTIFICATIONS_DELETE_ONE = "$NOTIFICATIONS/{id}"
     const val UNREAD = "$NOTIFICATIONS/unread"
 }
 
@@ -25,5 +26,5 @@ internal object SettingsUrl {
 
 internal object UserUrl {
     const val USER = "user"
-    const val GET_DRIVER_STATS = "$USER/get-driver-stats"
+    const val GET_DRIVER_STATS = "$USER/get-driver-stats/{id}"
 }

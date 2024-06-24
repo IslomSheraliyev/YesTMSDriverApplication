@@ -4,7 +4,7 @@ data class LoadModel(
     val id: Int,
     val loadId: String,
     val activationLink: String,
-    val rate: Int,
+    val rate: Long,
     val mileage: Int,
     val pickUpNote: String,
     val pickUpLocation: String,

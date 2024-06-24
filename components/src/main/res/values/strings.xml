@@ -25,4 +25,5 @@
     <string name="notifications">Notifications</string>
     <string name="delete_all">Delete all</string>
     <string name="provide_pick_up_location">Your dispatcher will provide pick\nup address soon</string>
+    <string name="statistics">Statistics</string>
 </resources>

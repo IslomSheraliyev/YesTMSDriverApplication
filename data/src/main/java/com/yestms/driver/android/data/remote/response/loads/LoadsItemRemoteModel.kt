@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class LoadsItemRemoteModel(
     val id: Int?,
     val loadId: String?,
-    val rate: Int?,
+    val rate: Long?,
     val mileage: Int?,
     val pickUpLocation: String?,
     val pickUpPolitical: String?,

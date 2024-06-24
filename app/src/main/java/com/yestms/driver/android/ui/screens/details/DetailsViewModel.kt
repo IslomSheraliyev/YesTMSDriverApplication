@@ -22,8 +22,6 @@ class DetailsViewModel @Inject constructor(
     fun getDetails(id: Int) = vmScope.launch {
         getLoadUseCase(id).onSuccess { load ->
             _load.emit(load)
-        }.onFailure { exception ->
-            Log.d("nalmi", "getDetails: ${exception.message}")
         }
     }
 }

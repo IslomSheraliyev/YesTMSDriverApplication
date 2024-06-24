@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.spacer.HorizontalSpacer
 import com.yestms.driver.android.domain.model.loads.LoadStatusModel
 import com.yestms.driver.android.components.R.font.helvetica_medium as medium
 import com.yestms.driver.android.components.R.font.helvetica_regular as regular
@@ -37,7 +38,7 @@ import com.yestms.driver.android.components.R.font.helvetica_regular as regular
 fun LoadCard(
     id: Int,
     loadId: String,
-    rate: Int,
+    rate: Long,
     mileage: Int,
     pickUpLocation: String,
     deliveryLocation: String,
@@ -100,8 +101,12 @@ fun LoadCard(
                         ) {
                             append("/ml")
                         }
-                    }
+                    },
+                    modifier = Modifier
+                        .weight(1f)
                 )
+
+                HorizontalSpacer(dp = 16)
 
                 Text(
                     text = buildAnnotatedString {

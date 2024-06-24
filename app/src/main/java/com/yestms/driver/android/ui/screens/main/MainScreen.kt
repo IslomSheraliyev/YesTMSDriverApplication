@@ -33,6 +33,9 @@ fun MainScreen(
             navController = navController,
             topNavController = bottomNavController,
             unreadCount = unreadCount,
+            onUpdate = {
+                viewModel.updateReadCount(it)
+            },
             onDestinationChange = {
                 viewModel.getUnreadCount()
             }

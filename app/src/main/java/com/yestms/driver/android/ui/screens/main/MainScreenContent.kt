@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -16,20 +20,27 @@ import androidx.navigation.navArgument
 import com.yestms.driver.android.components.app_bar.MainAppBar
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.navigation.Screen
+import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.ui.navigation.TabRow
 import com.yestms.driver.android.ui.navigation.createScreen
 import com.yestms.driver.android.ui.navigation.safeNavigate
 import com.yestms.driver.android.ui.screens.details.DetailsScreen
 import com.yestms.driver.android.ui.screens.loads.LoadsScreen
 import com.yestms.driver.android.ui.screens.notifications.NotificationsScreen
+import com.yestms.driver.android.ui.screens.stats.StatsScreen
 
 @Composable
 fun MainScreenContent(
     navController: NavController,
     topNavController: NavHostController,
     unreadCount: Int,
+    onUpdate: (Int) -> Unit,
     onDestinationChange: () -> Unit
 ) {
+
+    var selectedTabIndex by rememberSaveable {
+        mutableIntStateOf(0)
+    }
 
     LaunchedEffect(key1 = Unit) {
         onDestinationChange()
@@ -48,7 +59,8 @@ fun MainScreenContent(
 
         TabRow(
             hasNewNotifications = unreadCount > 0,
-            onItemClicked = { screen ->
+            selectedTabIndex = selectedTabIndex,
+            onItemClicked = { screen, index ->
                 onDestinationChange()
                 topNavController.navigate(screen.screenName) {
                     popUpTo(topNavController.graph.findStartDestination().id) {
@@ -57,6 +69,7 @@ fun MainScreenContent(
                     launchSingleTop = false
                     restoreState = true
                 }
+                selectedTabIndex = index
             }
         )
 
@@ -78,7 +91,19 @@ fun MainScreenContent(
             }
 
             createScreen(route = Screen.Main.Notifications) {
-                NotificationsScreen()
+                NotificationsScreen(
+                    onBackPressed = {
+                        topNavController.navigate(Screen.Main.Loads.screenName) {
+                            popUpTo(topNavController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = false
+                            restoreState = true
+                        }
+                        selectedTabIndex = 0
+                    },
+                    onUpdate = onUpdate
+                )
             }
 
             createScreen(
@@ -92,6 +117,22 @@ fun MainScreenContent(
                 DetailsScreen(
                     id = backStackEntry.arguments?.getInt(Screen.ID) ?: -1,
                     navController = topNavController
+                )
+            }
+
+            createScreen(route = Screen.Main.Stats) {
+                StatsScreen(
+                    id = AppPreferences.currentUserId,
+                    onBackPressed = {
+                        topNavController.navigate(Screen.Main.Loads.screenName) {
+                            popUpTo(topNavController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = false
+                            restoreState = true
+                        }
+                        selectedTabIndex = 0
+                    }
                 )
             }
         }

@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.yestms.driver.android.data.remote.api.NotificationsApi
 import com.yestms.driver.android.data.remote.paging.notices.NotificationsPagingSource
+import com.yestms.driver.android.data.remote.request.notifications.ViewNotificationRequest
 import com.yestms.driver.android.domain.model.notifications.NotificationModel
 import com.yestms.driver.android.domain.repository.NotificationsRepository
 import kotlinx.coroutines.flow.Flow
@@ -38,8 +39,15 @@ class NotificationsRepositoryImpl @Inject constructor(
         return api.getUnreadCount()
     }
 
-    override suspend fun deleteAllNotifications(): Int {
-        return api.deleteAllNotifications()
+    override suspend fun deleteNotifications(): Int {
+        return api.deleteNotifications()
     }
 
+    override suspend fun deleteNotification(id: Int): Int {
+        return api.deleteNotification(id)
+    }
+
+    override suspend fun viewNotification(id: Int, isActive: Boolean): Int {
+        return api.viewNotification(ViewNotificationRequest(id, isActive))
+    }
 }
