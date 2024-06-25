@@ -21,6 +21,8 @@ fun MainScreen(
     val refreshing by viewModel.isRefreshing.collectAsState()
     val externalIdState by viewModel.isUserExternalIdValid.collectAsState()
     val unreadCount by viewModel.unreadCount.collectAsState()
+    val isOnDutyState by viewModel.isOnDuty.collectAsState()
+    val onDutyChange by viewModel.onDutyChange.collectAsState()
 
     val bottomNavController = rememberNavController()
 
@@ -31,8 +33,12 @@ fun MainScreen(
     if (tokenStatus == AuthCheckTokenStatus.VALID || externalIdState == AuthLoginDriverExternalIdStatus.VALID)
         MainScreenContent(
             navController = navController,
+            isOnDuty = isOnDutyState,
             topNavController = bottomNavController,
             unreadCount = unreadCount,
+            onDutyChange = { isOnDuty ->
+                viewModel.update(isOnDuty)
+            },
             onUpdate = {
                 viewModel.updateReadCount(it)
             },

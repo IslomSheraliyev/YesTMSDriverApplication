@@ -14,6 +14,7 @@ import com.yestms.driver.android.domain.usecase.notifications.GetNotificationsUs
 import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCase
 import com.yestms.driver.android.domain.usecase.notifications.ViewNotificationUseCase
 import com.yestms.driver.android.domain.usecase.user.GetDriverDetailsUseCase
+import com.yestms.driver.android.domain.usecase.user.UpdateUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,5 +61,9 @@ object UseCaseModule {
     @[Singleton Provides]
     fun provideGetDriverDetails(repository: UserRepository) =
         GetDriverDetailsUseCase(repository)
+
+    @[Singleton Provides]
+    fun provideUpdateUseCase(repository: UserRepository) =
+        UpdateUseCase(repository)
 
 }

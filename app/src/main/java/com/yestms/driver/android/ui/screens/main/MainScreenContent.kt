@@ -32,6 +32,8 @@ import com.yestms.driver.android.ui.screens.stats.StatsScreen
 @Composable
 fun MainScreenContent(
     navController: NavController,
+    isOnDuty: Boolean,
+    onDutyChange: (Boolean) -> Unit,
     topNavController: NavHostController,
     unreadCount: Int,
     onUpdate: (Int) -> Unit,
@@ -52,6 +54,8 @@ fun MainScreenContent(
             .systemBarsPadding()
     ) {
         MainAppBar(
+            isOnDuty = isOnDuty,
+            onDutyChange = onDutyChange,
             onLogoutClick = {}
         )
 

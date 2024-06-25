@@ -2,8 +2,8 @@ package com.yestms.driver.android.data.mapper
 
 import com.yestms.driver.android.data.remote.response.auth.login_driver.AuthLoginDriverResponse
 import com.yestms.driver.android.data.remote.response.auth.login_driver.AuthLoginDriverUserRemoteModel
-import com.yestms.driver.android.domain.model.auth.AuthLoginDriverModel
-import com.yestms.driver.android.domain.model.auth.AuthLoginDriverUserModel
+import com.yestms.driver.android.domain.model.auth.login.AuthLoginDriverModel
+import com.yestms.driver.android.domain.model.auth.login.AuthLoginDriverUserModel
 
 object LoginDriverMapper {
 

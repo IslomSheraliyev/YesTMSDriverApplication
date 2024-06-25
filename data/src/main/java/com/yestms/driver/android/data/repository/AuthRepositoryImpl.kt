@@ -1,9 +1,12 @@
 package com.yestms.driver.android.data.repository
 
+import com.yestms.driver.android.data.mapper.CheckMapper
 import com.yestms.driver.android.data.mapper.LoginDriverMapper
+import com.yestms.driver.android.data.mapper.orFalse
 import com.yestms.driver.android.data.remote.api.AuthApi
 import com.yestms.driver.android.data.remote.request.auth.AuthLoginDriverRequest
-import com.yestms.driver.android.domain.model.auth.AuthLoginDriverModel
+import com.yestms.driver.android.domain.model.auth.check.AuthCheckModel
+import com.yestms.driver.android.domain.model.auth.login.AuthLoginDriverModel
 import com.yestms.driver.android.domain.repository.AuthRepository
 import javax.inject.Inject
 
@@ -16,7 +19,7 @@ class AuthRepositoryImpl @Inject constructor(
             .let(LoginDriverMapper.loginDriverMapper)
     }
 
-    override suspend fun check() {
-        return api.check()
+    override suspend fun check(): AuthCheckModel {
+        return api.check().let(CheckMapper.checkMapper)
     }
 }

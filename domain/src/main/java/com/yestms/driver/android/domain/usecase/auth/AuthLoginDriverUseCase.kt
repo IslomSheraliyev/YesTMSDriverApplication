@@ -1,7 +1,7 @@
 package com.yestms.driver.android.domain.usecase.auth
 
 import com.yestms.driver.android.domain.global.UseCaseWithParams
-import com.yestms.driver.android.domain.model.auth.AuthLoginDriverModel
+import com.yestms.driver.android.domain.model.auth.login.AuthLoginDriverModel
 import com.yestms.driver.android.domain.repository.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
