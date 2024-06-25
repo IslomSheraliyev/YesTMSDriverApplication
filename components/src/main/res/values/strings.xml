@@ -26,4 +26,8 @@
     <string name="delete_all">Delete all</string>
     <string name="provide_pick_up_location">Your dispatcher will provide pick\nup address soon</string>
     <string name="statistics">Statistics</string>
+    <string name="exit_from_account">Account logout</string>
+    <string name="sure_to_exit">Are you sure you want to log out of your account?</string>
+    <string name="stay">Stay</string>
+    <string name="exit">Log out</string>
 </resources>

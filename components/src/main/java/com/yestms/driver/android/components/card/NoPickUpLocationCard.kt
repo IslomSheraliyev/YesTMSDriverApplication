@@ -49,7 +49,8 @@ fun NoPickUpLocationCard(
         ) {
 
             IconBackgroundCard(
-                if (isApproved) CustomTheme.colorScheme.darkGreen else CustomTheme.colorScheme.blue500,
+                padding = 10.dp,
+                color = if (isApproved) CustomTheme.colorScheme.darkGreen else CustomTheme.colorScheme.blue500,
             ) { modifier, color ->
                 Icon(
                     modifier = modifier,

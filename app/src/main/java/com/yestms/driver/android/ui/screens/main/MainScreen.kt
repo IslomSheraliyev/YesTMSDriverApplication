@@ -4,12 +4,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.rememberNavController
+import com.yestms.driver.android.components.navigation.Screen
 import com.yestms.driver.android.data.enums.auth.AuthCheckTokenStatus
 import com.yestms.driver.android.data.enums.auth.AuthLoginDriverExternalIdStatus
+import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.ui.dialogs.LoadingDialog
+import com.yestms.driver.android.ui.dialogs.LogoutDialog
+import com.yestms.driver.android.ui.navigation.safeNavigate
 import com.yestms.driver.android.ui.screens.login.LoginScreenContent
 
 @Composable
@@ -22,13 +30,28 @@ fun MainScreen(
     val externalIdState by viewModel.isUserExternalIdValid.collectAsState()
     val unreadCount by viewModel.unreadCount.collectAsState()
     val isOnDutyState by viewModel.isOnDuty.collectAsState()
-    val onDutyChange by viewModel.onDutyChange.collectAsState()
+    var logoutDialogVisibility by rememberSaveable { mutableStateOf(false) }
 
     val bottomNavController = rememberNavController()
 
     LaunchedEffect(key1 = Unit) {
         viewModel.check()
     }
+
+    LogoutDialog(
+        visibility = logoutDialogVisibility,
+        onLogoutClick = {
+            logoutDialogVisibility = false
+            AppPreferences.accessToken = ""
+            navController.safeNavigate(
+                Screen.Main.screenName,
+                navOptions = NavOptions.Builder()
+                    .setPopUpTo(Screen.Main.screenName, true)
+                    .build()
+            )
+        },
+        onDismissRequest = { logoutDialogVisibility = false }
+    )
 
     if (tokenStatus == AuthCheckTokenStatus.VALID || externalIdState == AuthLoginDriverExternalIdStatus.VALID)
         MainScreenContent(
@@ -42,6 +65,7 @@ fun MainScreen(
             onUpdate = {
                 viewModel.updateReadCount(it)
             },
+            onLogoutClick = { logoutDialogVisibility = true },
             onDestinationChange = {
                 viewModel.getUnreadCount()
             }

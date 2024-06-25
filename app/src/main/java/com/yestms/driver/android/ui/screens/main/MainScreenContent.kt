@@ -37,6 +37,7 @@ fun MainScreenContent(
     topNavController: NavHostController,
     unreadCount: Int,
     onUpdate: (Int) -> Unit,
+    onLogoutClick: () -> Unit,
     onDestinationChange: () -> Unit
 ) {
 
@@ -56,7 +57,7 @@ fun MainScreenContent(
         MainAppBar(
             isOnDuty = isOnDuty,
             onDutyChange = onDutyChange,
-            onLogoutClick = {}
+            onLogoutClick = onLogoutClick
         )
 
         HorizontalDivider(color = CustomTheme.colorScheme.grey200)
