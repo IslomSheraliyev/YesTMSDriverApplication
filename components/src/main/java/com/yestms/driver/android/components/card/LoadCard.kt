@@ -166,7 +166,7 @@ fun LoadCard(
 
             StatusCard(
                 color = Color(GraphicsColor.parseColor(loadStatus.color)),
-                text = loadStatus.name,
+                text = loadStatus.name.status,
                 modifier = Modifier.fillMaxWidth()
             )
 

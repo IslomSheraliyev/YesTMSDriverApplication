@@ -28,6 +28,7 @@ import com.yestms.driver.android.components.design.theme.CustomTheme
 @Composable
 fun SearchTextField(
     value: String,
+    placeHolder: String,
     onValueChange: (text: String) -> Unit
 ) {
 
@@ -46,7 +47,7 @@ fun SearchTextField(
                 color = CustomTheme.colorScheme.grey200,
                 shape = RoundedCornerShape(8.dp)
             ),
-        textStyle = CustomTheme.typography.md16pxRegular.copy(color = CustomTheme.colorScheme.grey400),
+        textStyle = CustomTheme.typography.md16pxRegular.copy(color = CustomTheme.colorScheme.black),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         singleLine = true,
         decorationBox = { innerTextField ->
@@ -60,7 +61,7 @@ fun SearchTextField(
                 visualTransformation = VisualTransformation.None,
                 placeholder = {
                     Text(
-                        text = stringResource(id = R.string.search_with_dots ),
+                        text = placeHolder,
                         style = CustomTheme.typography.md16pxRegular,
                         color = CustomTheme.colorScheme.grey400
                     )
@@ -73,8 +74,8 @@ fun SearchTextField(
                     )
                 },
                 colors = TextFieldDefaults.colors(
-                    focusedTextColor = CustomTheme.colorScheme.grey500,
-                    unfocusedTextColor = CustomTheme.colorScheme.grey500,
+                    focusedTextColor = CustomTheme.colorScheme.black,
+                    unfocusedTextColor = CustomTheme.colorScheme.black,
                     unfocusedContainerColor = CustomTheme.colorScheme.white,
                     focusedContainerColor = CustomTheme.colorScheme.white,
                     cursorColor = CustomTheme.colorScheme.grey200,

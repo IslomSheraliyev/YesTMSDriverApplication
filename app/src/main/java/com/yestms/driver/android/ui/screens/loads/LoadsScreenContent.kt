@@ -23,6 +23,7 @@ import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 import com.yestms.driver.android.data.mapper.or0
+import com.yestms.driver.android.domain.enums.DriverDetailsLoadStatus
 import com.yestms.driver.android.domain.model.loads.LoadsItemModel
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -31,7 +32,7 @@ fun LoadsScreenContent(
     refreshing: Boolean,
     refreshState: PullRefreshState,
     loads: LazyPagingItems<LoadsItemModel>,
-    onLoadClick: (id: Int) -> Unit
+    onLoadClick: (id: Int, updateToSeen: Boolean) -> Unit
 ) {
 
     Box(
@@ -46,7 +47,7 @@ fun LoadsScreenContent(
                 end = 16.dp,
                 start = 16.dp
             ),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
         ) {
 
             when (loads.loadState.refresh) {
@@ -63,7 +64,7 @@ fun LoadsScreenContent(
                 is LoadState.Loading -> {
                     item {
                         Box(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.fillParentMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             ProgressIndicator(modifier = Modifier.size(44.dp))
@@ -88,7 +89,12 @@ fun LoadsScreenContent(
                                 pickUpLocation = notNullLoad.pickUpLocation,
                                 deliveryLocation = notNullLoad.deliveryLocation,
                                 loadStatus = notNullLoad.loadStatus,
-                                onClick = onLoadClick
+                                onClick = { id ->
+                                    onLoadClick(
+                                        id,
+                                        notNullLoad.loadStatus.name == DriverDetailsLoadStatus.PendingUnseen
+                                    )
+                                }
                             )
                         }
                     }

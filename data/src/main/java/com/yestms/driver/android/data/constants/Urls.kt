@@ -8,20 +8,15 @@ internal object AuthUrl {
 
 internal object LoadsUrl {
     const val LOADS = "loads"
-    const val GET_LOAD = "loads/{id}"
+    const val GET_LOAD = "$LOADS/{id}"
     const val ALERT_STATUSES = "$LOADS/alert-statuses"
-    const val LOADS_UNSEEN_COUNT = "$LOADS/loads-unseen-count"
+
 }
 
 internal object NotificationsUrl {
     const val NOTIFICATIONS = "notices"
     const val NOTIFICATIONS_DELETE_ONE = "$NOTIFICATIONS/{id}"
     const val UNREAD = "$NOTIFICATIONS/unread"
-}
-
-internal object SettingsUrl {
-    const val SETTINGS = "settings"
-    const val COMPANY_SETTINGS = "$SETTINGS/company-settings"
 }
 
 internal object UserUrl {

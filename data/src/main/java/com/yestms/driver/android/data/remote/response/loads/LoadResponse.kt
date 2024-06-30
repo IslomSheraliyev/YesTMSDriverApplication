@@ -14,5 +14,7 @@ data class LoadResponse(
     val deliveryLocation: String?,
     val deliveryPolitical: String?,
     @SerializedName("load_status")
-    val loadStatus: LoadStatusRemoteModel?
+    val loadStatus: LoadStatusRemoteModel?,
+    @SerializedName("load_alerts_logs")
+    val loadAlertsLogs: List<LoadAlertLogsRemoteModel>
 )

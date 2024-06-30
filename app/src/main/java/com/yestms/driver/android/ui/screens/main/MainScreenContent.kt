@@ -38,6 +38,7 @@ fun MainScreenContent(
     unreadCount: Int,
     onUpdate: (Int) -> Unit,
     onLogoutClick: () -> Unit,
+    updateToSeen: (loadId: Int) -> Unit,
     onDestinationChange: () -> Unit
 ) {
 
@@ -89,7 +90,8 @@ fun MainScreenContent(
         ) {
             createScreen(route = Screen.Main.Loads) {
                 LoadsScreen(
-                    onLoadClick = { id ->
+                    onLoadClick = { id, updateToSeen ->
+                        if (updateToSeen) updateToSeen(id)
                         topNavController.safeNavigate(Screen.Main.Details.add(id))
                     }
                 )

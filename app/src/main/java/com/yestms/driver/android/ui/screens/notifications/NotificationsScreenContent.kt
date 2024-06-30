@@ -110,6 +110,7 @@ fun NotificationsScreenContent(
             item {
                 SearchTextField(
                     value = searchQuery,
+                    placeHolder = stringResource(id = R.string.search_with_dots),
                     onValueChange = {
                         searchQuery = it
                     }
@@ -166,9 +167,7 @@ fun NotificationsScreenContent(
                         Text(
                             text = stringResource(id = R.string.delete_all),
                             color = CustomTheme.colorScheme.grey400,
-                            style = CustomTheme.typography.md16pxMedium,
-                            modifier = Modifier
-
+                            style = CustomTheme.typography.md16pxMedium
                         )
                     }
 

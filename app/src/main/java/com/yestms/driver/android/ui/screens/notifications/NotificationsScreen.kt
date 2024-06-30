@@ -24,15 +24,8 @@ fun NotificationsScreen(
     var dateFrom by rememberSaveable { mutableStateOf<String?>(null) }
     var dateTo by rememberSaveable { mutableStateOf<String?>(null) }
     var searchQuery by rememberSaveable { mutableStateOf<String?>(null) }
-
-    BackHandler(
-        onBack = onBackPressed
-    )
-
-    val unreadCount by viewModel.notificationsCount.collectAsState()
-
+    val notifications = viewModel.notifications.collectAsLazyPagingItems()
     val refreshing by viewModel.isRefreshing.collectAsState()
-
     val refreshState = rememberPullRefreshState(
         refreshing = refreshing,
         onRefresh = {
@@ -40,30 +33,29 @@ fun NotificationsScreen(
         }
     )
 
-    val notifications = viewModel.notifications.collectAsLazyPagingItems()
-
     LaunchedEffect(key1 = Unit) {
         viewModel.getNotifications(sortBy, dateFrom, dateTo, searchQuery)
     }
+
+    BackHandler(
+        onBack = onBackPressed
+    )
 
     NotificationsScreenContent(
         refreshing = refreshing,
         refreshState = refreshState,
         notifications = notifications,
         onClickDeleteAll = {
-            viewModel.deleteNotifications()
+            viewModel.deleteNotifications(onUpdate)
             viewModel.getNotifications(sortBy, dateFrom, dateTo, searchQuery)
-            onUpdate(unreadCount)
         },
         onClickDelete = { id ->
-            viewModel.deleteNotification(id)
+            viewModel.deleteNotification(id, onUpdate)
             viewModel.getNotifications(sortBy, dateFrom, dateTo, searchQuery)
-            onUpdate(unreadCount)
         },
         onClickView = { id ->
-            viewModel.viewNotification(id)
+            viewModel.viewNotification(id, onUpdate)
             viewModel.getNotifications(sortBy, dateFrom, dateTo, searchQuery)
-            onUpdate(unreadCount)
         },
         onSearchClick = { sortByParam, dateFromParam, dateToParam, searchQueryParam ->
 
@@ -72,7 +64,7 @@ fun NotificationsScreen(
             dateTo = dateToParam.orEmpty()
             searchQuery = searchQueryParam.orEmpty()
 
-            onUpdate(unreadCount)
+            viewModel.getNotifications(sortBy, dateFrom, dateTo, searchQuery)
         }
     )
 }

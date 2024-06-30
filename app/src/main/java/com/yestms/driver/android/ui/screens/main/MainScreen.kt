@@ -1,5 +1,6 @@
 package com.yestms.driver.android.ui.screens.main
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,8 +13,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.rememberNavController
 import com.yestms.driver.android.components.navigation.Screen
-import com.yestms.driver.android.data.enums.auth.AuthCheckTokenStatus
-import com.yestms.driver.android.data.enums.auth.AuthLoginDriverExternalIdStatus
+import com.yestms.driver.android.data.enums.AuthCheckTokenStatus
+import com.yestms.driver.android.data.enums.AuthLoginDriverExternalIdStatus
 import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.ui.dialogs.LoadingDialog
 import com.yestms.driver.android.ui.dialogs.LogoutDialog
@@ -59,28 +60,20 @@ fun MainScreen(
             isOnDuty = isOnDutyState,
             topNavController = bottomNavController,
             unreadCount = unreadCount,
-            onDutyChange = { isOnDuty ->
-                viewModel.update(isOnDuty)
-            },
-            onUpdate = {
-                viewModel.updateReadCount(it)
-            },
+            onDutyChange = { isOnDuty -> viewModel.update(isOnDuty) },
+            onUpdate = { count -> viewModel.updateUnreadCount(count) },
+            updateToSeen = { id -> viewModel.updateLoadStatus(id) },
             onLogoutClick = { logoutDialogVisibility = true },
-            onDestinationChange = {
-                viewModel.getUnreadCount()
-            }
+            onDestinationChange = { viewModel.getUnreadCount() }
         )
-    else if (tokenStatus == AuthCheckTokenStatus.INVALID)
+    else if (tokenStatus == AuthCheckTokenStatus.INVALID || externalIdState == AuthLoginDriverExternalIdStatus.INVALID)
         LoginScreenContent(
             isError = externalIdState == AuthLoginDriverExternalIdStatus.INVALID,
-            onLoginClicked = { value ->
-                viewModel.loginDriver(value)
-            }
+            onLoginClicked = { value -> viewModel.loginDriver(value) }
         )
     else if (
         refreshing &&
         externalIdState == AuthLoginDriverExternalIdStatus.IDLE
-    ) {
-        LoadingDialog(isVisible = true)
-    }
+    ) LoadingDialog(isVisible = true)
+
 }

@@ -12,7 +12,6 @@ import com.yestms.driver.android.domain.usecase.notifications.ViewNotificationUs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,9 +27,6 @@ class NotificationsViewModel @Inject constructor(
 
     private val _notifications = MutableStateFlow<PagingData<NotificationModel>>(PagingData.empty())
     val notifications: StateFlow<PagingData<NotificationModel>> get() = _notifications
-
-    private val _notificationsCount = MutableStateFlow(0)
-    val notificationsCount = _notificationsCount.asStateFlow()
 
     fun getNotifications(
         search: String? = null,
@@ -58,33 +54,31 @@ class NotificationsViewModel @Inject constructor(
         }
     }
 
-    fun deleteNotifications() = vmScope.launch {
-        getNotificationsCount()
+    fun deleteNotifications(onUpdate: (Int) -> Unit) = vmScope.launch {
         deleteNotificationsUseCase()
-            .onSuccess { count ->
-                _notificationsCount.emit(count)
-                getNotificationsCount()
+            .onSuccess {
+                getNotificationsCount(onUpdate)
             }
             .onFailure(::errorProcess)
     }
 
-    fun deleteNotification(id: Int) = vmScope.launch {
+    fun deleteNotification(id: Int, onUpdate: (Int) -> Unit) = vmScope.launch {
         deleteNotificationUseCase(id).onSuccess {
-            getNotificationsCount()
+            getNotificationsCount(onUpdate)
         }
     }
 
-    fun viewNotification(id: Int) = vmScope.launch {
-        viewNotificationUseCase(id, false)
+    fun viewNotification(id: Int, onUpdate: (Int) -> Unit) = vmScope.launch {
+        viewNotificationUseCase(id, true)
             .onSuccess {
-                getNotificationsCount()
+                getNotificationsCount(onUpdate)
             }
     }
 
-    private fun getNotificationsCount() = vmScope.launch {
+    private fun getNotificationsCount(onUpdate: (Int) -> Unit) = vmScope.launch {
         getUnreadCountUseCase()
             .onSuccess { result ->
-                _notificationsCount.emit(result)
+                onUpdate(result)
             }
     }
 }

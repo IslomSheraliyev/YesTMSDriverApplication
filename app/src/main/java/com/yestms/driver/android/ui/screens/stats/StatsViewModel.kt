@@ -1,6 +1,5 @@
 package com.yestms.driver.android.ui.screens.stats
 
-import android.util.Log
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.domain.usecase.user.GetDriverDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +18,7 @@ class StatsViewModel @Inject constructor(
     internal val uiState = _uiState.asStateFlow()
 
     fun getDetails(id: Int, period: String) = vmScope.launch {
+        _isRefreshing.emit(true)
         getDriverDetailsUseCase(id, period)
             .onSuccess { result ->
                 _uiState.update {
@@ -27,6 +27,10 @@ class StatsViewModel @Inject constructor(
                         miles = result.allMiles
                     )
                 }
+                _isRefreshing.emit(false)
+            }.onFailure {
+                _isRefreshing.emit(false)
+                errorProcess(it)
             }
     }
 }

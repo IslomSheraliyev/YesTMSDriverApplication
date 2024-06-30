@@ -30,4 +30,10 @@
     <string name="sure_to_exit">Are you sure you want to log out of your account?</string>
     <string name="stay">Stay</string>
     <string name="exit">Log out</string>
+    <string name="report_a_problem">Report a problem</string>
+    <string name="search_your_problem">Search your problem</string>
+    <string name="change">Change</string>
+    <string name="cancel">Cancel</string>
+    <string name="report">Report</string>
+    <string name="problems">Problems</string>
 </resources>

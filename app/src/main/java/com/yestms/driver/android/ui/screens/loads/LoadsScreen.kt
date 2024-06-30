@@ -13,7 +13,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 @Composable
 fun LoadsScreen(
     viewModel: LoadsViewModel = hiltViewModel(),
-    onLoadClick: (id: Int) -> Unit
+    onLoadClick: (id: Int, updateToSeen: Boolean) -> Unit
 ) {
 
     val refreshing by viewModel.isRefreshing.collectAsState()

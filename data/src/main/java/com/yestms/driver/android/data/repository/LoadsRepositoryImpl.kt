@@ -6,6 +6,9 @@ import androidx.paging.PagingData
 import com.yestms.driver.android.data.mapper.LoadsMapper
 import com.yestms.driver.android.data.remote.api.LoadsApi
 import com.yestms.driver.android.data.remote.paging.loads.LoadsPagingSource
+import com.yestms.driver.android.data.remote.request.load.ReportProblemRequest
+import com.yestms.driver.android.data.remote.request.load.UpdateLoadStatusRequest
+import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
 import com.yestms.driver.android.domain.model.loads.LoadModel
 import com.yestms.driver.android.domain.model.loads.LoadsItemModel
 import com.yestms.driver.android.domain.repository.LoadsRepository
@@ -26,5 +29,17 @@ class LoadsRepositoryImpl @Inject constructor(
 
     override suspend fun getLoad(id: Int): LoadModel {
         return api.getLoad(id).let(LoadsMapper.loadMapper)
+    }
+
+    override suspend fun updateLoadStatus(id: Int, loadStatusId: Int) {
+        api.updateLoadStatus(UpdateLoadStatusRequest(id, loadStatusId))
+    }
+
+    override suspend fun getAlertStatuses(): List<AlertStatusesItemModel> {
+        return api.alertStatuses().map(LoadsMapper.loadAlertStatusesMapper)
+    }
+
+    override suspend fun reportProblem(id: Int, loadAlertStatusId: Int) {
+        api.reportProblem(ReportProblemRequest(id, loadAlertStatusId))
     }
 }
