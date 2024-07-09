@@ -92,7 +92,7 @@ class MainScreenViewModel @Inject constructor(
             .onFailure(::errorProcess)
     }
 
-    fun resetTokenStatus() = vmScope.launch { _tokenStatus.emit(AuthCheckTokenStatus.IDLE) }
+    fun resetTokenStatus() = vmScope.launch { _tokenStatus.emit(AuthCheckTokenStatus.INVALID) }
 
     fun resetExternalIdStatus() =
         vmScope.launch { _externalIdStatus.emit(AuthLoginDriverExternalIdStatus.IDLE) }
