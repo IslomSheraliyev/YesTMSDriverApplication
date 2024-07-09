@@ -15,8 +15,8 @@ android {
         applicationId = "com.yestms.driver.android"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -82,7 +82,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
 
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
@@ -103,39 +102,42 @@ dependencies {
     // Compose accompanist
     implementation(libs.accompanist.systemuicontroller)
 
-    //Coil
+    // Coil
     implementation(libs.coil.compose)
 
+    // Glide
     implementation(libs.compose)
 
-    //Test
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
-    //Navigation
+    // Navigation
     implementation(libs.androidx.navigation.compose)
 
-    //Hilt
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    //Paging
+    // Paging
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
 
-    //Coroutine
+    // Coroutine
     implementation(libs.kotlinx.coroutines.android)
 
-    //Lottie
+    // Lottie
     implementation(libs.lottie.compose)
-
 
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
     implementation(libs.google.firebase.analytics)
     implementation(libs.firebase.messaging.ktx)
+
+    // Document Scanner Kit
+    implementation(libs.play.services.mlkit.document.scanner)
 }

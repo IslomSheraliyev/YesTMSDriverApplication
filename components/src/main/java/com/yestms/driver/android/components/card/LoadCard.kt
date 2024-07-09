@@ -37,14 +37,12 @@ import com.yestms.driver.android.components.R.font.helvetica_regular as regular
 @Composable
 fun LoadCard(
     id: Int,
-    loadId: String,
     rate: Long,
     mileage: Int,
     pickUpLocation: String,
     deliveryLocation: String,
     loadStatus: LoadStatusModel,
     modifier: Modifier = Modifier,
-    isDetailed: Boolean = false,
     onClick: (id: Int) -> Unit = { }
 ) {
     Card(
@@ -59,7 +57,7 @@ fun LoadCard(
         colors = CardDefaults.cardColors(
             containerColor = CustomTheme.colorScheme.neutralColors100
         ),
-        onClick = { if (isDetailed.not()) onClick(id) }
+        onClick = { onClick(id) }
     ) {
 
         Column(
@@ -115,7 +113,7 @@ fun LoadCard(
                                 color = CustomTheme.colorScheme.grey800,
                                 fontFamily = FontFamily(Font(medium)),
                                 fontSize = 24.sp,
-                                fontWeight = FontWeight.W500,
+                                fontWeight = FontWeight.W700,
                                 fontStyle = FontStyle.Normal
                             )
                         ) {
@@ -167,12 +165,6 @@ fun LoadCard(
             StatusCard(
                 color = Color(GraphicsColor.parseColor(loadStatus.color)),
                 text = loadStatus.name.status,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            CopyLoadIdCard(
-                visibility = isDetailed,
-                text = loadId,
                 modifier = Modifier.fillMaxWidth()
             )
         }

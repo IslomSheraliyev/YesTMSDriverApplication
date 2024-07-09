@@ -54,31 +54,23 @@ class NotificationsViewModel @Inject constructor(
         }
     }
 
-    fun deleteNotifications(onUpdate: (Int) -> Unit) = vmScope.launch {
+    fun deleteNotifications() = vmScope.launch {
         deleteNotificationsUseCase()
             .onSuccess {
-                getNotificationsCount(onUpdate)
+                getNotificationsCount()
             }
             .onFailure(::errorProcess)
     }
 
-    fun deleteNotification(id: Int, onUpdate: (Int) -> Unit) = vmScope.launch {
-        deleteNotificationUseCase(id).onSuccess {
-            getNotificationsCount(onUpdate)
-        }
+    fun deleteNotification(id: Int) = vmScope.launch {
+        deleteNotificationUseCase(id)
     }
 
-    fun viewNotification(id: Int, onUpdate: (Int) -> Unit) = vmScope.launch {
-        viewNotificationUseCase(id, true)
-            .onSuccess {
-                getNotificationsCount(onUpdate)
-            }
+    fun viewNotification(id: Int) = vmScope.launch {
+        viewNotificationUseCase(id, false)
     }
 
-    private fun getNotificationsCount(onUpdate: (Int) -> Unit) = vmScope.launch {
+    private fun getNotificationsCount() = vmScope.launch {
         getUnreadCountUseCase()
-            .onSuccess { result ->
-                onUpdate(result)
-            }
     }
 }

@@ -17,7 +17,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 @Composable
 fun NotificationsScreen(
     onBackPressed: () -> Unit,
-    onUpdate: (Int) -> Unit,
     viewModel: NotificationsViewModel = hiltViewModel()
 ) {
     var sortBy by rememberSaveable { mutableStateOf<String?>(null) }
@@ -46,15 +45,15 @@ fun NotificationsScreen(
         refreshState = refreshState,
         notifications = notifications,
         onClickDeleteAll = {
-            viewModel.deleteNotifications(onUpdate)
+            viewModel.deleteNotifications()
             viewModel.getNotifications(sortBy, dateFrom, dateTo, searchQuery)
         },
         onClickDelete = { id ->
-            viewModel.deleteNotification(id, onUpdate)
+            viewModel.deleteNotification(id)
             viewModel.getNotifications(sortBy, dateFrom, dateTo, searchQuery)
         },
         onClickView = { id ->
-            viewModel.viewNotification(id, onUpdate)
+            viewModel.viewNotification(id)
             viewModel.getNotifications(sortBy, dateFrom, dateTo, searchQuery)
         },
         onSearchClick = { sortByParam, dateFromParam, dateToParam, searchQueryParam ->

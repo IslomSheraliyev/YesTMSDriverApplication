@@ -83,7 +83,6 @@ fun LoadsScreenContent(
 
                             LoadCard(
                                 id = notNullLoad.id,
-                                loadId = notNullLoad.loadId,
                                 rate = notNullLoad.rate,
                                 mileage = notNullLoad.mileage,
                                 pickUpLocation = notNullLoad.pickUpLocation,

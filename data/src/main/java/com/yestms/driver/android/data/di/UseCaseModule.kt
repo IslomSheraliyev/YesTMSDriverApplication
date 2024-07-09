@@ -11,6 +11,7 @@ import com.yestms.driver.android.domain.usecase.loads.GetLoadUseCase
 import com.yestms.driver.android.domain.usecase.loads.GetLoadsUseCase
 import com.yestms.driver.android.domain.usecase.loads.ReportProblemUseCase
 import com.yestms.driver.android.domain.usecase.loads.UpdateLoadStatusUseCase
+import com.yestms.driver.android.domain.usecase.loads.UploadImagesUseCase
 import com.yestms.driver.android.domain.usecase.notifications.DeleteNotificationUseCase
 import com.yestms.driver.android.domain.usecase.notifications.DeleteNotificationsUseCase
 import com.yestms.driver.android.domain.usecase.notifications.GetNotificationsUseCase
@@ -52,6 +53,11 @@ object UseCaseModule {
     @[Singleton Provides]
     fun provideReportProblemUseCase(repository: LoadsRepository) =
         ReportProblemUseCase(repository)
+
+    @[Singleton Provides]
+    fun provideUploadImagesUseCase(repository: LoadsRepository) =
+        UploadImagesUseCase(repository)
+
 
     @[Singleton Provides]
     fun provideGetNoticesUseCase(repository: NotificationsRepository) =

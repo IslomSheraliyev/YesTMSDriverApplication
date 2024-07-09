@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.ui.geometry.android)
     implementation(libs.androidx.constraintlayout.compose)
     implementation(project(":data"))
     implementation(project(":domain"))

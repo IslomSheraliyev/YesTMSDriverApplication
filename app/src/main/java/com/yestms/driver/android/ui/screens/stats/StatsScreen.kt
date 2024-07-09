@@ -32,8 +32,6 @@ fun StatsScreen(
         onBack = onBackPressed,
     )
 
-
-
     LaunchedEffect(key1 = Unit) {
         viewModel.getDetails(id, selectedPeriod)
     }

@@ -9,17 +9,19 @@ sealed class Screen(
     }
 
     data object Main : Screen("main") {
-        val menu = mapOf(
-            "Loads" to Loads,
-            "Stats" to Stats,
-            "Notifications" to Notifications
-        )
+        data object Home : Screen("main/home") {
+            val menu = mapOf(
+                "Loads" to Loads,
+                "Stats" to Stats,
+                "Notifications" to Notifications
+            )
 
-        data object Loads : Screen("main/loads")
+            data object Loads : Screen("main/home/loads")
 
-        data object Stats : Screen("main/stats")
+            data object Stats : Screen("main/home/stats")
 
-        data object Notifications : Screen("main/notifications")
+            data object Notifications : Screen("main/home/notifications")
+        }
 
         data object Details : Screen("main/details/{$ID}") {
             fun add(id: Int) = "main/details/$id"

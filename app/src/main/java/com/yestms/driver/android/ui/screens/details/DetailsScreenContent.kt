@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,36 +23,46 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.app_bar.InnerAppBar
 import com.yestms.driver.android.components.button.PrimaryButton
 import com.yestms.driver.android.components.card.AlertLogItemCard
+import com.yestms.driver.android.components.card.CopyLoadIdCard
 import com.yestms.driver.android.components.card.LoadCard
-import com.yestms.driver.android.components.card.NoPickUpLocationCard
-import com.yestms.driver.android.components.card.PickUpLocationCard
+import com.yestms.driver.android.components.card.LoadDetailsCard
+import com.yestms.driver.android.components.card.LoadStatusLogsCard
+import com.yestms.driver.android.components.card.NoUpLocationCard
+import com.yestms.driver.android.components.card.LocationCard
+import com.yestms.driver.android.components.card.UploadImageComponent
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 import com.yestms.driver.android.data.mapper.or0
 import com.yestms.driver.android.domain.enums.DriverDetailsLoadStatus
 import com.yestms.driver.android.domain.model.loads.LoadModel
-import java.util.Date
 import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun DetailsScreenContent(
     load: LoadModel?,
+    isPdfScanned: Boolean,
+    isLumperPhotoTaken: Boolean,
+    isTrailerPhoto: Boolean,
+    onMediaBolClick: () -> Unit,
+    onLumperClick: () -> Unit,
+    onTrailerPhotosClick: () -> Unit,
     onReportProblem: () -> Unit,
     onUpdateLoadStatus: (Int) -> Unit,
     onBackPressed: () -> Unit,
+    onSubmitPaperWork: () -> Unit
 ) {
 
     val red = CustomTheme.colorScheme.red
     val blue = CustomTheme.colorScheme.blue700
-
     var buttons by remember { mutableStateOf(listOf<ActionButton>()) }
 
     Box(
@@ -67,9 +78,13 @@ fun DetailsScreenContent(
         ) {
 
             InnerAppBar(
-                title = stringResource(id = R.string.driver_details),
                 onBackPressed = onBackPressed
-            )
+            ) { modifier ->
+                CopyLoadIdCard(
+                    text = load?.loadId.orEmpty(),
+                    modifier = modifier
+                )
+            }
 
             VerticalSpacer(dp = 16)
 
@@ -145,6 +160,7 @@ fun DetailsScreenContent(
                                 color = blue,
                                 action = {
                                     onUpdateLoadStatus(9)
+                                    onSubmitPaperWork()
                                 }
                             )
                         )
@@ -155,30 +171,22 @@ fun DetailsScreenContent(
 
                 LoadCard(
                     id = load.id.or0(),
-                    loadId = load.loadId,
                     rate = load.rate.or0(),
                     mileage = load.mileage.or0(),
                     pickUpLocation = load.pickUpLocation,
                     deliveryLocation = load.deliveryLocation,
-                    loadStatus = load.loadStatus,
-                    isDetailed = true
+                    loadStatus = load.loadStatus
                 )
 
                 VerticalSpacer(dp = 16)
 
-                if (load.pickUpLocation.isNotEmpty())
-                    PickUpLocationCard(
-                        title = load.pickUpLocation,
-                        description = load.pickUpNote,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                else NoPickUpLocationCard(
-                    isApproved = false,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
+                LoadDetailsCard(loadModel = load)
 
-                VerticalSpacer(dp = 32)
+                VerticalSpacer(dp = 16)
+
+                if (load.loadStatusLogs.isNotEmpty()) LoadStatusLogsCard(load.loadStatusLogs)
+
+                VerticalSpacer(dp = 16)
 
                 FlowColumn(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -195,29 +203,62 @@ fun DetailsScreenContent(
 
                 VerticalSpacer(weight = 1f)
 
+                VerticalSpacer(dp = 24)
+
+                if (load.loadStatus.name == DriverDetailsLoadStatus.PendingPaperWork) {
+
+                    UploadImageComponent(
+                        onClick = onMediaBolClick,
+                        isUploaded = isPdfScanned,
+                        painter = painterResource(id = R.drawable.ic_media_bol),
+                        title = stringResource(id = R.string.media_bol),
+                        description = stringResource(id = R.string.open_scanner)
+                    )
+
+                    VerticalSpacer(dp = 16)
+
+                    UploadImageComponent(
+                        onClick = onLumperClick,
+                        isUploaded = isLumperPhotoTaken,
+                        painter = painterResource(id = R.drawable.ic_upload),
+                        title = stringResource(id = R.string.lumper),
+                        description = stringResource(id = R.string.open_gallery_or_camera)
+                    )
+
+                    VerticalSpacer(dp = 16)
+
+                    UploadImageComponent(
+                        onClick = onTrailerPhotosClick,
+                        isUploaded = isTrailerPhoto,
+                        painter = painterResource(id = R.drawable.ic_upload),
+                        title = stringResource(id = R.string.trailer_photos),
+                        description = stringResource(id = R.string.open_gallery_or_camera)
+                    )
+                }
+
                 VerticalSpacer(dp = 16)
 
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    maxItemsInEachRow = 2,
-                ) {
-                    buttons.forEach { button ->
-                        PrimaryButton(
-                            cornerRadius = 8,
-                            text = button.text,
-                            color = button.color,
-                            onClick = button.action,
-                            modifier = Modifier.weight(1f)
-                        )
+                if (
+                    load.loadStatus.name != DriverDetailsLoadStatus.PendingPaperWork ||
+                    (load.loadStatus.name == DriverDetailsLoadStatus.PendingPaperWork && isPdfScanned)
+                )
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        maxItemsInEachRow = 2,
+                    ) {
+                        buttons.forEach { button ->
+                            PrimaryButton(
+                                cornerRadius = 8,
+                                text = button.text,
+                                color = button.color,
+                                onClick = button.action,
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
                     }
-                }
-            } else ProgressIndicator(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-            )
+            } else ProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
         }
     }
 }

@@ -5,12 +5,16 @@ import com.yestms.driver.android.data.remote.response.loads.LoadAlertLogRemoteMo
 import com.yestms.driver.android.data.remote.response.loads.LoadAlertLogsRemoteModel
 import com.yestms.driver.android.domain.enums.DriverDetailsLoadStatus
 import com.yestms.driver.android.data.remote.response.loads.LoadResponse
+import com.yestms.driver.android.data.remote.response.loads.LoadStatusLogsRemoteItem
+import com.yestms.driver.android.data.remote.response.loads.LoadStatusLogsRemoteItemLoadStatus
 import com.yestms.driver.android.data.remote.response.loads.LoadsItemRemoteModel
 import com.yestms.driver.android.data.remote.response.loads.LoadStatusRemoteModel
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
 import com.yestms.driver.android.domain.model.loads.LoadAlertStatusModel
 import com.yestms.driver.android.domain.model.loads.LoadAlertsLogsItemModel
 import com.yestms.driver.android.domain.model.loads.LoadModel
+import com.yestms.driver.android.domain.model.loads.LoadStatusLogsItem
+import com.yestms.driver.android.domain.model.loads.LoadStatusLogsItemLoadStatus
 import com.yestms.driver.android.domain.model.loads.LoadsItemModel
 import com.yestms.driver.android.domain.model.loads.LoadStatusModel
 
@@ -41,13 +45,20 @@ object LoadsMapper {
                 activationLink = remote?.activationLink.orEmpty(),
                 rate = remote?.rate.or0(),
                 mileage = remote?.mileage.or0(),
+                commodity = remote?.commodity.orEmpty(),
+                weight = remote?.weight.orEmpty(),
+                height = remote?.height.orEmpty(),
+                length = remote?.length.orEmpty(),
+                notes = remote?.notes.orEmpty(),
                 pickUpNote = remote?.pickUpNote.orEmpty(),
                 pickUpLocation = remote?.pickUpLocation.orEmpty(),
                 pickUpPolitical = remote?.pickUpPolitical.orEmpty(),
+                deliveryNote = remote?.deliveryNote.orEmpty(),
                 deliveryLocation = remote?.deliveryLocation.orEmpty(),
                 deliveryPolitical = remote?.deliveryPolitical.orEmpty(),
                 loadStatus = remote?.loadStatus.let(loadStatusMapper),
-                loadAlertLogs = remote?.loadAlertsLogs?.map(loadAlertLogsMapper).orEmpty()
+                loadAlertLogs = remote?.loadAlertsLogs?.map(loadAlertLogsMapper).orEmpty(),
+                loadStatusLogs = remote?.loadStatusLogs?.map(loadStatusLogsMapper).orEmpty()
             )
         }
 
@@ -55,6 +66,23 @@ object LoadsMapper {
         { remote ->
             AlertStatusesItemModel(
                 id = remote?.id.or0(),
+                name = remote?.name.orEmpty()
+            )
+        }
+
+    private val loadStatusLogsMapper: Mapper<LoadStatusLogsRemoteItem?, LoadStatusLogsItem> =
+        { remote ->
+            LoadStatusLogsItem(
+                createdAt = remote?.createdAt.orEmpty(),
+                loadStatusLogsItemLoadStatus = remote?.loadStatusLogsItemLoadStatus.let(
+                    loadStatusLogsItemLoadStatusMapper
+                )
+            )
+        }
+
+    private val loadStatusLogsItemLoadStatusMapper: Mapper<LoadStatusLogsRemoteItemLoadStatus?, LoadStatusLogsItemLoadStatus> =
+        { remote ->
+            LoadStatusLogsItemLoadStatus(
                 name = remote?.name.orEmpty()
             )
         }

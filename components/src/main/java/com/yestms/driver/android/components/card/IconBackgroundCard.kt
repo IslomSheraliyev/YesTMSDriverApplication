@@ -16,6 +16,7 @@ fun IconBackgroundCard(
     color: Color,
     padding: Dp,
     modifier: Modifier = Modifier,
+    alpha: Float = .12f,
     content: @Composable ColumnScope.(
         modifier: Modifier,
         color: Color
@@ -25,7 +26,7 @@ fun IconBackgroundCard(
     Card(
         shape = CircleShape,
         colors = CardDefaults.cardColors(
-            containerColor = color.copy(alpha = .12f)
+            containerColor = color.copy(alpha = alpha)
         )
     ) {
         content(

@@ -14,14 +14,6 @@ object AppPreferences {
         preferences = context.getSharedPreferences(GAME_PORTAL, Context.MODE_PRIVATE)
     }
 
-    // Device Preference
-    var isDeviceRegistered: Boolean
-        get() = preferences.getBoolean(AppPreferences::isDeviceRegistered.name, false)
-        set(value) {
-            preferences.edit().putBoolean(AppPreferences::isDeviceRegistered.name, value).apply()
-        }
-
-
     var themeMode: ThemeMode
         get() = ThemeMode.getThemeMode(preferences.getInt(AppPreferences::themeMode.name, 0))
         set(value) {
@@ -36,11 +28,5 @@ object AppPreferences {
         get() = preferences.getString(AppPreferences::accessToken.name, "") ?: ""
         set(value) {
             preferences.edit()?.putString(AppPreferences::accessToken.name, value)?.apply()
-        }
-
-    var externalId: String
-        get() = preferences.getString(AppPreferences::externalId.name, "") ?: ""
-        set(value) {
-            preferences.edit()?.putString(AppPreferences::externalId.name, value)?.apply()
         }
 }

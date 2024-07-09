@@ -70,9 +70,14 @@ fun StatsScreenContent(
                 .padding(16.dp)
         ) {
             InnerAppBar(
-                title = stringResource(id = R.string.statistics),
                 onBackPressed = onBackPressed
-            )
+            ) {
+                Text(
+                    text = stringResource(id = R.string.statistics),
+                    color = CustomTheme.colorScheme.grey800,
+                    style = CustomTheme.typography.xs24pxMedium
+                )
+            }
 
             VerticalSpacer(dp = 24)
 

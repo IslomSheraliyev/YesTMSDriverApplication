@@ -1,6 +1,5 @@
 package com.yestms.driver.android.ui.screens.main
 
-import android.util.Log
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.enums.AuthCheckTokenStatus
 import com.yestms.driver.android.data.enums.AuthLoginDriverExternalIdStatus
@@ -28,9 +27,9 @@ class MainScreenViewModel @Inject constructor(
     private val _tokenStatus = MutableStateFlow(AuthCheckTokenStatus.IDLE)
     val tokenStatus = _tokenStatus.asStateFlow()
 
-    private val _isUserAuthLoginDriverExternalIdValidStatus =
+    private val _externalIdStatus =
         MutableStateFlow(AuthLoginDriverExternalIdStatus.IDLE)
-    val isUserExternalIdValid = _isUserAuthLoginDriverExternalIdValidStatus.asStateFlow()
+    val externalIdStatus = _externalIdStatus.asStateFlow()
 
     private val _unreadCount = MutableStateFlow(0)
     val unreadCount = _unreadCount.asStateFlow()
@@ -60,17 +59,17 @@ class MainScreenViewModel @Inject constructor(
         _isRefreshing.emit(true)
 
         if (externalId.isEmpty()) {
-            _isUserAuthLoginDriverExternalIdValidStatus.emit(AuthLoginDriverExternalIdStatus.IDLE)
+            _externalIdStatus.emit(AuthLoginDriverExternalIdStatus.IDLE)
             _isRefreshing.emit(false)
         } else
             authLoginDriverUseCase(externalId).onSuccess { result ->
-                _isUserAuthLoginDriverExternalIdValidStatus.emit(AuthLoginDriverExternalIdStatus.VALID)
+                _externalIdStatus.emit(AuthLoginDriverExternalIdStatus.VALID)
                 AppPreferences.accessToken = result.token
                 AppPreferences.currentUserId = result.user.id
                 check()
             }.onFailure {
                 _isRefreshing.emit(false)
-                _isUserAuthLoginDriverExternalIdValidStatus.emit(AuthLoginDriverExternalIdStatus.INVALID)
+                _externalIdStatus.emit(AuthLoginDriverExternalIdStatus.INVALID)
                 errorProcess(it)
             }
     }
@@ -93,8 +92,9 @@ class MainScreenViewModel @Inject constructor(
             .onFailure(::errorProcess)
     }
 
-    fun updateUnreadCount(count: Int) = vmScope.launch {
-        Log.d("kaunt", "updateUnreadCount: ${count}")
-        _unreadCount.emit(count)
-    }
+    fun resetTokenStatus() = vmScope.launch { _tokenStatus.emit(AuthCheckTokenStatus.IDLE) }
+
+    fun resetExternalIdStatus() =
+        vmScope.launch { _externalIdStatus.emit(AuthLoginDriverExternalIdStatus.IDLE) }
+
 }

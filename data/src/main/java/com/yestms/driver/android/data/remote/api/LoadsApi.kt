@@ -6,9 +6,13 @@ import com.yestms.driver.android.data.remote.request.load.UpdateLoadStatusReques
 import com.yestms.driver.android.data.remote.response.loads.AlertStatusesRemoteItemModel
 import com.yestms.driver.android.data.remote.response.loads.LoadResponse
 import com.yestms.driver.android.data.remote.response.loads.LoadsResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -36,4 +40,13 @@ interface LoadsApi {
 
     @PUT(LoadsUrl.LOADS)
     suspend fun reportProblem(@Body body: ReportProblemRequest)
+
+    @Multipart
+    @PUT(LoadsUrl.LOADS)
+    suspend fun uploadImages(
+        @Part("id") id: RequestBody,
+        @Part mediaBols: MultipartBody.Part,
+        @Part lumpers: MultipartBody.Part?,
+        @Part trailerPhotos: MultipartBody.Part?
+    )
 }

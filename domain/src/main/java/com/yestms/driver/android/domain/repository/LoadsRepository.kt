@@ -1,5 +1,7 @@
 package com.yestms.driver.android.domain.repository
 
+import android.content.ContentResolver
+import android.net.Uri
 import androidx.paging.PagingData
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
 import com.yestms.driver.android.domain.model.loads.LoadsItemModel
@@ -16,4 +18,12 @@ interface LoadsRepository {
     suspend fun getAlertStatuses(): List<AlertStatusesItemModel>
 
     suspend fun reportProblem(id: Int, loadAlertStatusId: Int)
+
+    suspend fun uploadImages(
+        id: Int,
+        mediaBolsUri: Uri,
+        lumpersUri: Uri?,
+        trailerPhotosUri: Uri?,
+        contentResolver: ContentResolver
+    )
 }

@@ -16,7 +16,7 @@ fun TabRow(
     selectedTabIndex: Int,
     modifier: Modifier = Modifier,
     onItemClicked: (Screen, Int) -> Unit,
-    items: Map<String, Screen> = Screen.Main.menu,
+    items: Map<String, Screen> = Screen.Main.Home.menu,
 ) {
 
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,50 +24,44 @@ import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CopyLoadIdCard(
-    visibility: Boolean,
     text: String,
     modifier: Modifier = Modifier
 ) {
 
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
-    if (visibility)
-        Row(
-            modifier = modifier
-                .background(
-                    color = CustomTheme.colorScheme.grey100,
-                    shape = RoundedCornerShape(34.dp)
-                )
-                .padding(
-                    vertical = 4.dp,
-                    horizontal = 14.dp
-                ),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = text,
-                color = CustomTheme.colorScheme.grey400,
-                style = CustomTheme.typography.smMedium,
-                modifier = Modifier.padding(vertical = 4.dp)
+    Row(
+        modifier = modifier
+            .background(
+                color = CustomTheme.colorScheme.grey100,
+                shape = RoundedCornerShape(34.dp)
             )
+            .padding(
+                vertical = 4.dp,
+                horizontal = 14.dp
+            ),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = text,
+            color = CustomTheme.colorScheme.grey400,
+            style = CustomTheme.typography.smMedium,
+            modifier = Modifier.padding(vertical = 4.dp)
+        )
 
-            HorizontalSpacer(dp = 8)
-
-            CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
-                Surface(
-                    onClick = {
-                        clipboardManager.setText(buildAnnotatedString { append(text) })
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_copy),
-                        contentDescription = null
-                    )
-                }
+        IconButton(
+            onClick = {
+                clipboardManager.setText(buildAnnotatedString { append(text) })
             }
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_copy),
+                tint = CustomTheme.colorScheme.grey400,
+                contentDescription = null
+            )
         }
+    }
 }
