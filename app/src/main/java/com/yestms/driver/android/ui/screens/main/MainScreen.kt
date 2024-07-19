@@ -20,11 +20,8 @@ import com.yestms.driver.android.ui.screens.login.LoginScreenContent
 fun MainScreen(
     viewModel: MainScreenViewModel = hiltViewModel()
 ) {
-    val tokenStatus by viewModel.tokenStatus.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     val refreshing by viewModel.isRefreshing.collectAsState()
-    val externalIdState by viewModel.externalIdStatus.collectAsState()
-    val unreadCount by viewModel.unreadCount.collectAsState()
-    val isOnDutyState by viewModel.isOnDuty.collectAsState()
     var logoutDialogVisibility by rememberSaveable { mutableStateOf(false) }
 
     val mainNavController = rememberNavController()
@@ -40,27 +37,28 @@ fun MainScreen(
             AppPreferences.accessToken = ""
             viewModel.resetTokenStatus()
             viewModel.resetExternalIdStatus()
+            viewModel.disconnect()
         },
         onDismissRequest = { logoutDialogVisibility = false }
     )
 
-    if (tokenStatus == AuthCheckTokenStatus.VALID || externalIdState == AuthLoginDriverExternalIdStatus.VALID)
+    if (uiState.tokenStatus == AuthCheckTokenStatus.VALID || uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.VALID)
         MainScreenContent(
-            isOnDuty = isOnDutyState,
+            isOnDuty = uiState.isOnDuty,
             mainNavController = mainNavController,
-            unreadCount = unreadCount,
+            unreadCount = uiState.unreadCount,
             onDutyChange = { isOnDuty -> viewModel.update(isOnDuty) },
-            updateToSeen = { id -> viewModel.updateLoadStatus(id) },
+            updateToSeen = { id -> viewModel.updateLoadStatusToSeen(id) },
             onLogoutClick = { logoutDialogVisibility = true },
             onDestinationChange = { viewModel.getUnreadCount() }
         )
-    else if (tokenStatus == AuthCheckTokenStatus.INVALID || externalIdState == AuthLoginDriverExternalIdStatus.INVALID)
+    else if (uiState.tokenStatus == AuthCheckTokenStatus.INVALID || uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.INVALID)
         LoginScreenContent(
-            isError = externalIdState == AuthLoginDriverExternalIdStatus.INVALID,
+            isError = uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.INVALID,
             onLoginClicked = { value -> viewModel.loginDriver(value) }
         )
     else if (
         refreshing &&
-        externalIdState == AuthLoginDriverExternalIdStatus.IDLE
+        uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.IDLE
     ) LoadingDialog(isVisible = true)
 }

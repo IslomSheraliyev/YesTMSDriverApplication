@@ -133,7 +133,7 @@ fun DetailsScreen(
             }
         },
         onReportProblem = { reportProblemDialogVisibility = true },
-        onUpdateLoadStatus = { loadStatusId -> viewModel.updateLoadStatus(id, loadStatusId) },
+        onUpdateLoadStatus = { loadStatusId -> viewModel.updateLoadStatus(id, loadStatusId, load?.dispatchers.orEmpty()) },
         onBackPressed = navController::safePopBackStack
     )
 }

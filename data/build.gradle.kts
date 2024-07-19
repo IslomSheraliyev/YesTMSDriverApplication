@@ -69,10 +69,11 @@ dependencies {
 
     //Chucker
     implementation(libs.library)
-//    releaseImplementation(libs.library.no.op)
 
     //Paging
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
 
+    //Socket
+    implementation(libs.socket.io.client)
 }

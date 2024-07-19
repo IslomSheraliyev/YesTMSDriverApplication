@@ -140,4 +140,6 @@ dependencies {
 
     // Document Scanner Kit
     implementation(libs.play.services.mlkit.document.scanner)
+    implementation(libs.converter.gson)
+
 }

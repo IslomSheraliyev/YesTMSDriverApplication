@@ -24,5 +24,6 @@ data class LoadResponse(
     @SerializedName("load_alerts_logs")
     val loadAlertsLogs: List<LoadAlertLogsRemoteModel>,
     @SerializedName("load_status_logs")
-    val loadStatusLogs: List<LoadStatusLogsRemoteItem>
+    val loadStatusLogs: List<LoadStatusLogsRemoteItem>,
+    val dispatchers: List<DispatcherRemoteModel>?
 )

@@ -19,5 +19,6 @@ data class LoadModel(
     val deliveryPolitical: String,
     val loadStatus: LoadStatusModel,
     val loadAlertLogs: List<LoadAlertsLogsItemModel>,
-    val loadStatusLogs:List<LoadStatusLogsItem>
+    val loadStatusLogs:List<LoadStatusLogsItem>,
+    val dispatchers:List<DispatcherModel>
 )

@@ -33,6 +33,9 @@ pagingCompose = "3.3.0"
 playServicesAds = "23.1.0"
 playServicesMlkitDocumentScanner = "16.0.0-beta1"
 retrofit = "2.6.0"
+socketIoClient = "2.0.1"
+stetho = "1.6.0"
+stethoOkhttp3 = "1.6.0"
 text-ext = "1.1.5"
 gradle-plugin = "8.2.2"
 composeAnimation = "1.7.0-alpha08"
@@ -96,6 +99,9 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+socket-io-client = { module = "io.socket:socket.io-client", version.ref = "socketIoClient" }
+stetho = { module = "com.facebook.stetho:stetho", version.ref = "stetho" }
+stetho-okhttp3 = { module = "com.facebook.stetho:stetho-okhttp3", version.ref = "stethoOkhttp3" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 

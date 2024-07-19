@@ -60,4 +60,9 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
+    //Socket
+    implementation(libs.socket.io.client)
+    implementation(libs.converter.gson)
+
+
 }

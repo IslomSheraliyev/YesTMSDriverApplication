@@ -4,14 +4,20 @@ import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.enums.AuthCheckTokenStatus
 import com.yestms.driver.android.data.enums.AuthLoginDriverExternalIdStatus
 import com.yestms.driver.android.data.local.AppPreferences
+import com.yestms.driver.android.domain.model.auth.check.AuthCheckUserRoleModel
 import com.yestms.driver.android.domain.usecase.auth.AuthCheckUseCase
 import com.yestms.driver.android.domain.usecase.auth.AuthLoginDriverUseCase
 import com.yestms.driver.android.domain.usecase.loads.UpdateLoadStatusUseCase
 import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCase
+import com.yestms.driver.android.domain.usecase.socket.AddUserUseCase
+import com.yestms.driver.android.domain.usecase.socket.ConnectSocketUseCase
+import com.yestms.driver.android.domain.usecase.socket.DisconnectSocketUseCase
+import com.yestms.driver.android.domain.usecase.socket.KickUserUseCase
 import com.yestms.driver.android.domain.usecase.user.UpdateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,80 +27,111 @@ class MainScreenViewModel @Inject constructor(
     private val authLoginDriverUseCase: AuthLoginDriverUseCase,
     private val getUnreadCountUseCase: GetUnreadCountUseCase,
     private val updateUseCase: UpdateUseCase,
-    private val updateLoadStatusUseCase: UpdateLoadStatusUseCase
+    private val updateLoadStatusUseCase: UpdateLoadStatusUseCase,
+    private val connectSocketUseCase: ConnectSocketUseCase,
+    private val disconnectSocketUseCase: DisconnectSocketUseCase,
+    private val addUserUseCase: AddUserUseCase,
+    private val kickUserUseCase: KickUserUseCase
 ) : BaseViewModel() {
 
-    private val _tokenStatus = MutableStateFlow(AuthCheckTokenStatus.IDLE)
-    val tokenStatus = _tokenStatus.asStateFlow()
+    private val _uiState = MutableStateFlow(MainUIState())
+    val uiState = _uiState.asStateFlow()
 
-    private val _externalIdStatus =
-        MutableStateFlow(AuthLoginDriverExternalIdStatus.IDLE)
-    val externalIdStatus = _externalIdStatus.asStateFlow()
-
-    private val _unreadCount = MutableStateFlow(0)
-    val unreadCount = _unreadCount.asStateFlow()
-
-    private val _isOnDuty = MutableStateFlow(false)
-    val isOnDuty = _isOnDuty.asStateFlow()
+    private val userRole = MutableStateFlow<AuthCheckUserRoleModel?>(null)
 
     fun check() = vmScope.launch {
         _isRefreshing.emit(true)
-
         authCheckUseCase()
             .onSuccess { result ->
-                _tokenStatus.emit(AuthCheckTokenStatus.VALID)
-                _isOnDuty.emit(result.user.isOnDuty)
+                _uiState.update {
+                    it.copy(
+                        tokenStatus = AuthCheckTokenStatus.VALID,
+                        isOnDuty = result.user.isOnDuty
+                    )
+                }
                 AppPreferences.accessToken = result.token
-            }.onFailure {
-                _tokenStatus.emit(AuthCheckTokenStatus.INVALID)
-                errorProcess(it)
+                userRole.emit(result.user.userRole)
+                connect()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        tokenStatus = AuthCheckTokenStatus.INVALID
+                    )
+                }
+                errorProcess(error)
             }
-
         _isRefreshing.emit(false)
     }
 
     fun loginDriver(externalId: String) = vmScope.launch {
-        _tokenStatus.emit(AuthCheckTokenStatus.IDLE)
 
         _isRefreshing.emit(true)
-
+        _uiState.update { it.copy(tokenStatus = AuthCheckTokenStatus.IDLE) }
         if (externalId.isEmpty()) {
-            _externalIdStatus.emit(AuthLoginDriverExternalIdStatus.IDLE)
+            _uiState.update { it.copy(externalIdStatus = AuthLoginDriverExternalIdStatus.IDLE) }
             _isRefreshing.emit(false)
         } else
             authLoginDriverUseCase(externalId).onSuccess { result ->
-                _externalIdStatus.emit(AuthLoginDriverExternalIdStatus.VALID)
+                _uiState.update { it.copy(externalIdStatus = AuthLoginDriverExternalIdStatus.VALID) }
                 AppPreferences.accessToken = result.token
                 AppPreferences.currentUserId = result.user.id
                 check()
-            }.onFailure {
+            }.onFailure { error ->
                 _isRefreshing.emit(false)
-                _externalIdStatus.emit(AuthLoginDriverExternalIdStatus.INVALID)
-                errorProcess(it)
+                _uiState.update { it.copy(externalIdStatus = AuthLoginDriverExternalIdStatus.INVALID) }
+                errorProcess(error)
             }
     }
 
     fun getUnreadCount() = vmScope.launch {
         getUnreadCountUseCase().onSuccess { count ->
-            _unreadCount.emit(count)
+            _uiState.update { it.copy(unreadCount = count) }
         }.onFailure(::errorProcess)
     }
 
     fun update(isOnDuty: Boolean) = vmScope.launch {
         updateUseCase(AppPreferences.currentUserId, isOnDuty)
             .onSuccess {
-                _isOnDuty.emit(!_isOnDuty.value)
+                _uiState.update { it.copy(isOnDuty = !uiState.value.isOnDuty) }
             }.onFailure(::errorProcess)
     }
 
-    fun updateLoadStatus(loadId: Int) = vmScope.launch {
+    fun updateLoadStatusToSeen(loadId: Int) = vmScope.launch {
         updateLoadStatusUseCase(loadId, 2)
             .onFailure(::errorProcess)
     }
 
-    fun resetTokenStatus() = vmScope.launch { _tokenStatus.emit(AuthCheckTokenStatus.INVALID) }
+    fun resetTokenStatus() = vmScope.launch {
+        _uiState.update { it.copy(tokenStatus = AuthCheckTokenStatus.INVALID) }
+    }
 
-    fun resetExternalIdStatus() =
-        vmScope.launch { _externalIdStatus.emit(AuthLoginDriverExternalIdStatus.IDLE) }
+    fun resetExternalIdStatus() = vmScope.launch {
+        _uiState.update { it.copy(externalIdStatus = AuthLoginDriverExternalIdStatus.IDLE) }
+    }
 
+    fun disconnect() = vmScope.launch {
+        kickUserUseCase(
+            parameter = AppPreferences.currentUserId
+        ).onSuccess {
+            disconnectSocketUseCase()
+        }
+    }
+
+    fun connect() = vmScope.launch {
+        connectSocketUseCase().onSuccess {
+            userRole.value?.let {
+                addUserUseCase(
+                    parameter1 = AppPreferences.currentUserId,
+                    parameter2 = it.id
+                )
+            }
+        }
+    }
 }
+
+data class MainUIState(
+    val tokenStatus: AuthCheckTokenStatus = AuthCheckTokenStatus.IDLE,
+    val externalIdStatus: AuthLoginDriverExternalIdStatus = AuthLoginDriverExternalIdStatus.IDLE,
+    val unreadCount: Int = 0,
+    val isOnDuty: Boolean = false
+)

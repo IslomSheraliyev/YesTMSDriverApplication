@@ -1,5 +1,7 @@
 package com.yestms.driver.android.domain.model.auth.check
 
 data class AuthCheckUserModel(
-    val isOnDuty: Boolean
+    val fullName: String,
+    val isOnDuty: Boolean,
+    val userRole: AuthCheckUserRoleModel
 )

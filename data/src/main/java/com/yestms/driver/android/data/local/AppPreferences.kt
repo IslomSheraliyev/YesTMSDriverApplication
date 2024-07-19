@@ -29,4 +29,10 @@ object AppPreferences {
         set(value) {
             preferences.edit()?.putString(AppPreferences::accessToken.name, value)?.apply()
         }
+
+    var fullName: String
+        get() = preferences.getString(AppPreferences::fullName.name, "") ?: ""
+        set(value) {
+            preferences.edit()?.putString(AppPreferences::fullName.name, value)?.apply()
+        }
 }

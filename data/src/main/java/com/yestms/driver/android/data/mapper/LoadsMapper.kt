@@ -1,6 +1,8 @@
 package com.yestms.driver.android.data.mapper
 
 import com.yestms.driver.android.data.remote.response.loads.AlertStatusesRemoteItemModel
+import com.yestms.driver.android.data.remote.response.loads.DispatcherAssignedRemoteModel
+import com.yestms.driver.android.data.remote.response.loads.DispatcherRemoteModel
 import com.yestms.driver.android.data.remote.response.loads.LoadAlertLogRemoteMode
 import com.yestms.driver.android.data.remote.response.loads.LoadAlertLogsRemoteModel
 import com.yestms.driver.android.domain.enums.DriverDetailsLoadStatus
@@ -10,6 +12,8 @@ import com.yestms.driver.android.data.remote.response.loads.LoadStatusLogsRemote
 import com.yestms.driver.android.data.remote.response.loads.LoadsItemRemoteModel
 import com.yestms.driver.android.data.remote.response.loads.LoadStatusRemoteModel
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
+import com.yestms.driver.android.domain.model.loads.DispatcherAssignedModel
+import com.yestms.driver.android.domain.model.loads.DispatcherModel
 import com.yestms.driver.android.domain.model.loads.LoadAlertStatusModel
 import com.yestms.driver.android.domain.model.loads.LoadAlertsLogsItemModel
 import com.yestms.driver.android.domain.model.loads.LoadModel
@@ -58,7 +62,8 @@ object LoadsMapper {
                 deliveryPolitical = remote?.deliveryPolitical.orEmpty(),
                 loadStatus = remote?.loadStatus.let(loadStatusMapper),
                 loadAlertLogs = remote?.loadAlertsLogs?.map(loadAlertLogsMapper).orEmpty(),
-                loadStatusLogs = remote?.loadStatusLogs?.map(loadStatusLogsMapper).orEmpty()
+                loadStatusLogs = remote?.loadStatusLogs?.map(loadStatusLogsMapper).orEmpty(),
+                dispatchers = remote?.dispatchers?.map(dispatcherMapper).orEmpty()
             )
         }
 
@@ -110,6 +115,24 @@ object LoadsMapper {
         { remote ->
             LoadAlertStatusModel(
                 name = remote?.name.orEmpty()
+            )
+        }
+
+    private val dispatcherMapper: Mapper<DispatcherRemoteModel?, DispatcherModel> =
+        { remote ->
+            DispatcherModel(
+                id = remote?.id.or0(),
+                dispatcherAssigned = remote?.dispatcherAssigned.let(dispatcherAssignedMapper)
+            )
+        }
+
+    private val dispatcherAssignedMapper: Mapper<DispatcherAssignedRemoteModel?, DispatcherAssignedModel> =
+        { remote ->
+            DispatcherAssignedModel(
+                id = remote?.id.or0(),
+                userId = remote?.userId.or0(),
+                dispatcherId = remote?.dispatcherId.or0()
+
             )
         }
 }
