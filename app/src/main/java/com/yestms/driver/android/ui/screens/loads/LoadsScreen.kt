@@ -28,10 +28,6 @@ fun LoadsScreen(
         viewModel.connect()
     }
 
-    DisposableEffect(key1 = Unit) {
-        onDispose { viewModel.disconnect() }
-    }
-
     LoadsScreenContent(
         refreshing = refreshing,
         refreshState = refreshState,

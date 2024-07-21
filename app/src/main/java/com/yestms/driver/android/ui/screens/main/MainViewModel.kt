@@ -9,6 +9,7 @@ import com.yestms.driver.android.domain.usecase.auth.AuthLoginDriverUseCase
 import com.yestms.driver.android.domain.usecase.loads.UpdateLoadStatusUseCase
 import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketChangeForDashboardUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketConnectUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketSendNoticeUseCase
 import com.yestms.driver.android.domain.usecase.user.UpdateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +27,8 @@ class MainViewModel @Inject constructor(
     private val updateUseCase: UpdateUseCase,
     private val updateLoadStatusUseCase: UpdateLoadStatusUseCase,
     private val socketChangeForDashboardUseCase: SocketChangeForDashboardUseCase,
-    private val socketSendNoticeUseCase: SocketSendNoticeUseCase
+    private val socketSendNoticeUseCase: SocketSendNoticeUseCase,
+    private val socketConnectUseCase: SocketConnectUseCase,
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(MainUIState())
@@ -45,6 +47,8 @@ class MainViewModel @Inject constructor(
                 }
                 AppPreferences.accessToken = result.token
                 AppPreferences.authCheckModel = result
+                AppPreferences.fullName = result.user.fullName
+                socketConnectUseCase()
             }.onFailure { error ->
                 _uiState.update {
                     it.copy(
@@ -85,16 +89,20 @@ class MainViewModel @Inject constructor(
         updateUseCase(AppPreferences.currentUserId, isOnDuty)
             .onSuccess {
                 _uiState.update { it.copy(isOnDuty = !uiState.value.isOnDuty) }
-                socketSendNoticeUseCase(
-                    parameter1 = AppPreferences.authCheckModel?.user?.dispatchers
+
+//                socketConnectUseCase().onSuccess {
+                    val dispatchers = AppPreferences.authCheckModel?.user?.dispatchers
                         ?.map { it.id }
-                        .orEmpty(),
-                    parameter2 = "Status of driver ${AppPreferences.fullName} changed on ${if (isOnDuty) "On duty" else "Off duty"} by ${AppPreferences.fullName}"
-                )
-                socketChangeForDashboardUseCase(AppPreferences.authCheckModel?.user?.dispatchers
-                    ?.map { it.id }
-                    .orEmpty()
-                )
+                        ?.toMutableList()
+
+                    socketSendNoticeUseCase(
+                        parameter1 = dispatchers.orEmpty(),
+                        parameter2 = "Status of driver ${AppPreferences.fullName} changed on ${if (isOnDuty) "On duty" else "Off duty"} by ${AppPreferences.fullName}",
+                        parameter3 = "info"
+                    )
+                    dispatchers?.add(AppPreferences.currentUserId)
+                    socketChangeForDashboardUseCase(dispatchers.orEmpty())
+//                }
             }.onFailure(::errorProcess)
     }
 

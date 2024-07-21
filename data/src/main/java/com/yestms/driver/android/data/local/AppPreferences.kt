@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.yestms.driver.android.data.enums.ThemeMode
 import com.yestms.driver.android.domain.model.auth.check.AuthCheckModel
-import com.yestms.driver.android.domain.model.auth.check.AuthCheckUserModel
 
 object AppPreferences {
 

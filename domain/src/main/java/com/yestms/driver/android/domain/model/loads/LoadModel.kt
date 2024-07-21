@@ -15,10 +15,12 @@ data class LoadModel(
     val pickUpLocation: String,
     val pickUpPolitical: String,
     val deliveryNote: String,
+    val driverId: Int,
+    val dispatcherId: Int,
     val deliveryLocation: String,
     val deliveryPolitical: String,
     val loadStatus: LoadStatusModel,
     val loadAlertLogs: List<LoadAlertsLogsItemModel>,
-    val loadStatusLogs:List<LoadStatusLogsItem>,
-    val dispatchers:List<DispatcherModel>
+    val loadStatusLogs: List<LoadStatusLogsItem>,
+    val dispatchers: List<DispatcherModel>
 )

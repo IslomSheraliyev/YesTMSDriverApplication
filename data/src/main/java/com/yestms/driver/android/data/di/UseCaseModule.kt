@@ -124,5 +124,4 @@ object UseCaseModule {
     fun provideRenderDispatcherDashboard(repository: SocketRepository) =
         SocketRenderDispatcherDashboardUseCase(repository)
 
-
 }

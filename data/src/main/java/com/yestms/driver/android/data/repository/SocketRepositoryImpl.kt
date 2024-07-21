@@ -33,12 +33,24 @@ class SocketRepositoryImpl @Inject constructor(
     }
 
     override fun sendNotice(event: String, dispatchers: List<Int>, titleNotice: String) {
-        socketManager.emitAll(event = event, dispatchers, titleNotice)
+        socketManager.emitTwo(event = event, dispatchers, titleNotice)
     }
 
     override fun renderDispatcherDashboard(event: String, listener: Emitter.Listener) {
         socketManager.on(event = event, listener = listener)
     }
 
-
+    override fun sendIncident(
+        event: String,
+        dispatchers: List<Int>,
+        titleNotice: String,
+        description: String
+    ) {
+        socketManager.emitThree(
+            event = event,
+            dispatchers,
+            titleNotice,
+            description
+        )
+    }
 }

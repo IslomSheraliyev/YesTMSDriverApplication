@@ -2,8 +2,10 @@ package com.yestms.driver.android.ui.screens.details
 
 import android.content.ContentResolver
 import android.net.Uri
+import android.util.Log
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.local.AppPreferences
+import com.yestms.driver.android.data.mapper.or0
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
 import com.yestms.driver.android.domain.model.loads.DispatcherModel
 import com.yestms.driver.android.domain.model.loads.LoadModel
@@ -71,7 +73,8 @@ class DetailsViewModel @Inject constructor(
                     socketChangeForDashboardUseCase(dispatchers.map { it.id })
                     socketSendNoticeUseCase(
                         parameter1 = dispatchers.map { it.id },
-                        parameter2 = "Load ${load.value?.loadId} changed status on ${load.value?.loadStatus?.name} by driver ${AppPreferences.fullName}"
+                        parameter2 = "Load ${load.value?.loadId} changed status on ${load.value?.loadStatus?.name} by driver ${AppPreferences.fullName}",
+                        parameter3 = "warning"
                     )
                 }.onFailure(::errorProcess)
         }
@@ -83,9 +86,18 @@ class DetailsViewModel @Inject constructor(
             }.onFailure(::errorProcess)
     }
 
-    fun reportProblem(loadId: Int, loadAlertStatusId: Int) = vmScope.launch {
-        reportProblemUseCase(loadId, loadAlertStatusId)
+    fun reportProblem(loadId: Int, alertStatusModel: AlertStatusesItemModel) = vmScope.launch {
+        reportProblemUseCase(loadId, alertStatusModel.id)
             .onSuccess {
+                Log.d(
+                    "helllo",
+                    "reportProblem: ${load.value?.dispatcherId.or0()} ${load.value?.driverId.or0()}"
+                )
+                socketSendNoticeUseCase(
+                    parameter1 = listOf(load.value?.dispatcherId.or0(), load.value?.driverId.or0()),
+                    parameter2 = "There is an incident ${alertStatusModel.name} with the load $loadId",
+                    parameter3 = "warning"
+                )
                 getDetails(loadId)
             }
     }
@@ -112,12 +124,12 @@ class DetailsViewModel @Inject constructor(
         socketRenderDispatcherDashboardUseCase {
             getDetails(id)
         }.onSuccess {
-            socketConnectUseCase().onSuccess {
+//            socketConnectUseCase().onSuccess {
                 socketAddUserUseCase(
                     parameter1 = AppPreferences.currentUserId,
                     parameter2 = AppPreferences.currentRoleId
                 )
-            }
+//            }
         }
     }
 

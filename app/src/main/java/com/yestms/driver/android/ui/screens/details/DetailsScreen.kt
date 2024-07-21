@@ -2,7 +2,6 @@ package com.yestms.driver.android.ui.screens.details
 
 import android.app.Activity.RESULT_OK
 import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.PickVisualMediaRequest
@@ -27,7 +26,6 @@ import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.yestms.driver.android.ui.activity.MainActivity
 import com.yestms.driver.android.ui.dialogs.ReportProblemDialog
 import com.yestms.driver.android.ui.navigation.safePopBackStack
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun DetailsScreen(
@@ -112,7 +110,7 @@ fun DetailsScreen(
     ReportProblemDialog(
         visibility = reportProblemDialogVisibility,
         problems = problems,
-        onReport = { viewModel.reportProblem(id, it.id) },
+        onReport = { viewModel.reportProblem(id, it) },
         onDismissRequest = { reportProblemDialogVisibility = false }
     )
 

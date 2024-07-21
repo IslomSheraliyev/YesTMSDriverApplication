@@ -19,6 +19,8 @@ data class LoadResponse(
     val deliveryNote: String?,
     val deliveryLocation: String?,
     val deliveryPolitical: String?,
+    val dispatcherId: Int?,
+    val driverId: Int?,
     @SerializedName("load_status")
     val loadStatus: LoadStatusRemoteModel?,
     @SerializedName("load_alerts_logs")

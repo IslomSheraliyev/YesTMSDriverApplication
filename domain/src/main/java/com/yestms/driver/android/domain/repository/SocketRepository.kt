@@ -11,4 +11,10 @@ interface SocketRepository {
     fun changeForDashboard(event: String, dispatchers: List<Int>)
     fun sendNotice(event: String, dispatchers: List<Int>, titleNotice: String)
     fun renderDispatcherDashboard(event: String, listener: Emitter.Listener)
+    fun sendIncident(
+        event: String,
+        dispatchers: List<Int>,
+        titleNotice: String,
+        description: String
+    )
 }

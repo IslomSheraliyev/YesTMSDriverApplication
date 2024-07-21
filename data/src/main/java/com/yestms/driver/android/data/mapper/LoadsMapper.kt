@@ -61,6 +61,8 @@ object LoadsMapper {
                 deliveryLocation = remote?.deliveryLocation.orEmpty(),
                 deliveryPolitical = remote?.deliveryPolitical.orEmpty(),
                 loadStatus = remote?.loadStatus.let(loadStatusMapper),
+                driverId = remote?.driverId.or0(),
+                dispatcherId = remote?.dispatcherId.or0(),
                 loadAlertLogs = remote?.loadAlertsLogs?.map(loadAlertLogsMapper).orEmpty(),
                 loadStatusLogs = remote?.loadStatusLogs?.map(loadStatusLogsMapper).orEmpty(),
                 dispatchers = remote?.dispatchers?.map(dispatcherMapper).orEmpty()

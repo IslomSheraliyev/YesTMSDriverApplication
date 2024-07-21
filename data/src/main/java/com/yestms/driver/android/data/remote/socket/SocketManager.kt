@@ -36,7 +36,16 @@ class SocketManager @Inject constructor() {
         socket.emit(event, data)
     }
 
-    fun emitAll(event: String, vararg data: Any) {
-        socket.emit(event, data)
+    fun emitTwo(event: String, parameter1: Any, parameter2: Any) {
+        socket.emit(event, parameter1, parameter2)
+    }
+
+    fun emitThree(
+        event: String,
+        parameter1: Any,
+        parameter2: Any,
+        parameter3: Any
+    ) {
+        socket.emit(event, parameter1, parameter2, parameter3)
     }
 }
