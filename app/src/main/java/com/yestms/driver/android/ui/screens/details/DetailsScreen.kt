@@ -2,11 +2,13 @@ package com.yestms.driver.android.ui.screens.details
 
 import android.app.Activity.RESULT_OK
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,6 +27,7 @@ import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.yestms.driver.android.ui.activity.MainActivity
 import com.yestms.driver.android.ui.dialogs.ReportProblemDialog
 import com.yestms.driver.android.ui.navigation.safePopBackStack
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun DetailsScreen(
@@ -89,8 +92,21 @@ fun DetailsScreen(
     )
 
     LaunchedEffect(key1 = Unit) {
+
+        viewModel.connect(id)
+
         viewModel.getDetails(id)
         viewModel.getProblems()
+
+        viewModel.updateLoadState.collect {
+            viewModel.getDetails(id)
+        }
+    }
+
+    DisposableEffect(key1 = Unit) {
+        onDispose {
+            viewModel.disconnect()
+        }
     }
 
     ReportProblemDialog(
@@ -128,12 +144,20 @@ fun DetailsScreen(
         },
         onSubmitPaperWork = {
             pdfUri?.let {
-                viewModel.uploadImages(id,
-                    it, lumperUri, trailerPhotoUri, context.contentResolver)
+                viewModel.uploadImages(
+                    id,
+                    it, lumperUri, trailerPhotoUri, context.contentResolver
+                )
             }
         },
         onReportProblem = { reportProblemDialogVisibility = true },
-        onUpdateLoadStatus = { loadStatusId -> viewModel.updateLoadStatus(id, loadStatusId, load?.dispatchers.orEmpty()) },
+        onUpdateLoadStatus = { loadStatusId ->
+            viewModel.updateLoadStatus(
+                id,
+                loadStatusId,
+                load?.dispatchers.orEmpty()
+            )
+        },
         onBackPressed = navController::safePopBackStack
     )
 }

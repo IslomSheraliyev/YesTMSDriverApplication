@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,8 +33,6 @@ import com.yestms.driver.android.components.card.CopyLoadIdCard
 import com.yestms.driver.android.components.card.LoadCard
 import com.yestms.driver.android.components.card.LoadDetailsCard
 import com.yestms.driver.android.components.card.LoadStatusLogsCard
-import com.yestms.driver.android.components.card.NoUpLocationCard
-import com.yestms.driver.android.components.card.LocationCard
 import com.yestms.driver.android.components.card.UploadImageComponent
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
@@ -203,9 +200,8 @@ fun DetailsScreenContent(
 
                 VerticalSpacer(weight = 1f)
 
-                VerticalSpacer(dp = 24)
-
                 if (load.loadStatus.name == DriverDetailsLoadStatus.PendingPaperWork) {
+                    VerticalSpacer(dp = 24)
 
                     UploadImageComponent(
                         onClick = onMediaBolClick,
@@ -236,30 +232,32 @@ fun DetailsScreenContent(
                     )
                 }
 
-                VerticalSpacer(dp = 16)
-
-                if (
-                    load.loadStatus.name != DriverDetailsLoadStatus.PendingPaperWork ||
-                    (load.loadStatus.name == DriverDetailsLoadStatus.PendingPaperWork && isPdfScanned)
-                )
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        maxItemsInEachRow = 2,
-                    ) {
-                        buttons.forEach { button ->
-                            PrimaryButton(
-                                cornerRadius = 8,
-                                text = button.text,
-                                color = button.color,
-                                onClick = button.action,
-                                modifier = Modifier.weight(1f)
-                            )
-                        }
-                    }
+                if (buttons.isNotEmpty()) VerticalSpacer(dp = 48)
             } else ProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
         }
+
+        if ((load != null) &&
+            (load.loadStatus.name != DriverDetailsLoadStatus.PendingPaperWork ||
+                    (load.loadStatus.name == DriverDetailsLoadStatus.PendingPaperWork && isPdfScanned))
+        )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp),
+                maxItemsInEachRow = 2,
+            ) {
+                buttons.forEach { button ->
+                    PrimaryButton(
+                        cornerRadius = 8,
+                        text = button.text,
+                        color = button.color,
+                        onClick = button.action,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
     }
 }
 

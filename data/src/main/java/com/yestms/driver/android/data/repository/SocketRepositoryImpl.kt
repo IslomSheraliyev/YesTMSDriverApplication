@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.yestms.driver.android.data.remote.socket.SocketManager
 import com.yestms.driver.android.domain.model.socket.AddUserSocketModel
 import com.yestms.driver.android.domain.repository.SocketRepository
+import io.socket.emitter.Emitter
 import org.json.JSONObject
 import javax.inject.Inject
 
@@ -35,8 +36,8 @@ class SocketRepositoryImpl @Inject constructor(
         socketManager.emitAll(event = event, dispatchers, titleNotice)
     }
 
-    override fun renderDispatcherDashboard(event: String, onFetchData: () -> Unit) {
-        socketManager.on(event = event, listener = { onFetchData() })
+    override fun renderDispatcherDashboard(event: String, listener: Emitter.Listener) {
+        socketManager.on(event = event, listener = listener)
     }
 
 

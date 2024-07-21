@@ -142,4 +142,6 @@ dependencies {
     implementation(libs.play.services.mlkit.document.scanner)
     implementation(libs.converter.gson)
 
+    //Socket
+    implementation(libs.socket.io.client)
 }

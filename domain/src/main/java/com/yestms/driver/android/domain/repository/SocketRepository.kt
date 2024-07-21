@@ -10,5 +10,5 @@ interface SocketRepository {
     fun kickUser(event: String, userId: Int)
     fun changeForDashboard(event: String, dispatchers: List<Int>)
     fun sendNotice(event: String, dispatchers: List<Int>, titleNotice: String)
-    fun renderDispatcherDashboard(event: String, onFetchData: () -> Unit)
+    fun renderDispatcherDashboard(event: String, listener: Emitter.Listener)
 }

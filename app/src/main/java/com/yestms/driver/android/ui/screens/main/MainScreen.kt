@@ -18,7 +18,7 @@ import com.yestms.driver.android.ui.screens.login.LoginScreenContent
 
 @Composable
 fun MainScreen(
-    viewModel: MainScreenViewModel = hiltViewModel()
+    viewModel: MainViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val refreshing by viewModel.isRefreshing.collectAsState()
@@ -37,7 +37,6 @@ fun MainScreen(
             AppPreferences.accessToken = ""
             viewModel.resetTokenStatus()
             viewModel.resetExternalIdStatus()
-            viewModel.disconnect()
         },
         onDismissRequest = { logoutDialogVisibility = false }
     )
