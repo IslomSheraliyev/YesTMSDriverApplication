@@ -5,7 +5,7 @@ import com.yestms.driver.android.domain.repository.SocketRepository
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
-class KickUserUseCase @Inject constructor(
+class SocketKickUserUseCase @Inject constructor(
     private val repository: SocketRepository
 ) : UseCaseWithParams<Int, Unit>(Dispatchers.IO) {
     override suspend fun execute(parameter: Int) {

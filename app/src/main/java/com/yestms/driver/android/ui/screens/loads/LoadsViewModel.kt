@@ -6,11 +6,11 @@ import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.domain.model.loads.LoadsItemModel
 import com.yestms.driver.android.domain.usecase.loads.GetLoadsUseCase
-import com.yestms.driver.android.domain.usecase.socket.AddUserUseCase
-import com.yestms.driver.android.domain.usecase.socket.ConnectSocketUseCase
-import com.yestms.driver.android.domain.usecase.socket.DisconnectSocketUseCase
-import com.yestms.driver.android.domain.usecase.socket.KickUserUseCase
-import com.yestms.driver.android.domain.usecase.socket.RenderDispatcherDashboardUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketAddUserUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketConnectUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketDisconnectUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketKickUserUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketRenderDispatcherDashboardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,11 +21,11 @@ import javax.inject.Inject
 @HiltViewModel
 class LoadsViewModel @Inject constructor(
     private val getLoadsUseCase: GetLoadsUseCase,
-    private val connectSocketUseCase: ConnectSocketUseCase,
-    private val disconnectSocketUseCase: DisconnectSocketUseCase,
-    private val addUserUseCase: AddUserUseCase,
-    private val kickUserUseCase: KickUserUseCase,
-    private val renderDispatcherDashboardUseCase: RenderDispatcherDashboardUseCase
+    private val socketConnectUseCase: SocketConnectUseCase,
+    private val socketDisconnectUseCase: SocketDisconnectUseCase,
+    private val socketAddUserUseCase: SocketAddUserUseCase,
+    private val socketKickUserUseCase: SocketKickUserUseCase,
+    private val socketRenderDispatcherDashboardUseCase: SocketRenderDispatcherDashboardUseCase
 ) : BaseViewModel() {
 
     private val _loads = MutableStateFlow<PagingData<LoadsItemModel>>(PagingData.empty())
@@ -45,19 +45,19 @@ class LoadsViewModel @Inject constructor(
     }
 
     fun disconnect() = vmScope.launch {
-        kickUserUseCase(
+        socketKickUserUseCase(
             parameter = AppPreferences.currentUserId
         ).onSuccess {
-            disconnectSocketUseCase()
+            socketDisconnectUseCase()
         }
     }
 
     fun connect() = vmScope.launch {
-        renderDispatcherDashboardUseCase {
+        socketRenderDispatcherDashboardUseCase {
             getLoads()
         }.onSuccess {
-            connectSocketUseCase().onSuccess {
-                addUserUseCase(
+            socketConnectUseCase().onSuccess {
+                socketAddUserUseCase(
                     parameter1 = AppPreferences.currentUserId,
                     parameter2 = AppPreferences.currentRoleId
                 )

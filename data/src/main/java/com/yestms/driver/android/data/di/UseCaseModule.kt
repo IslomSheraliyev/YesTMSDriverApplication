@@ -18,13 +18,13 @@ import com.yestms.driver.android.domain.usecase.notifications.DeleteNotification
 import com.yestms.driver.android.domain.usecase.notifications.GetNotificationsUseCase
 import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCase
 import com.yestms.driver.android.domain.usecase.notifications.ViewNotificationUseCase
-import com.yestms.driver.android.domain.usecase.socket.AddUserUseCase
-import com.yestms.driver.android.domain.usecase.socket.ChangeForDashboardUseCase
-import com.yestms.driver.android.domain.usecase.socket.ConnectSocketUseCase
-import com.yestms.driver.android.domain.usecase.socket.DisconnectSocketUseCase
-import com.yestms.driver.android.domain.usecase.socket.KickUserUseCase
-import com.yestms.driver.android.domain.usecase.socket.RenderDispatcherDashboardUseCase
-import com.yestms.driver.android.domain.usecase.socket.SendNoticeUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketAddUserUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketChangeForDashboardUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketConnectUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketDisconnectUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketKickUserUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketRenderDispatcherDashboardUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketSendNoticeUseCase
 import com.yestms.driver.android.domain.usecase.user.GetDriverDetailsUseCase
 import com.yestms.driver.android.domain.usecase.user.UpdateUseCase
 import dagger.Module
@@ -97,32 +97,32 @@ object UseCaseModule {
 
     @[Singleton Provides]
     fun provideConnectSocketUseCase(repository: SocketRepository) =
-        ConnectSocketUseCase(repository)
+        SocketConnectUseCase(repository)
 
     @[Singleton Provides]
     fun provideDisconnectSocketUseCase(repository: SocketRepository) =
-        DisconnectSocketUseCase(repository)
+        SocketDisconnectUseCase(repository)
 
 
     @[Singleton Provides]
     fun provideAddUserUseCase(repository: SocketRepository) =
-        AddUserUseCase(repository)
+        SocketAddUserUseCase(repository)
 
     @[Singleton Provides]
     fun provideKickUserUseCase(repository: SocketRepository) =
-        KickUserUseCase(repository)
+        SocketKickUserUseCase(repository)
 
     @[Singleton Provides]
     fun provideChangeForDashboardUseCase(repository: SocketRepository) =
-        ChangeForDashboardUseCase(repository)
+        SocketChangeForDashboardUseCase(repository)
 
     @[Singleton Provides]
     fun provideSendNoticeUseCase(repository: SocketRepository) =
-        SendNoticeUseCase(repository)
+        SocketSendNoticeUseCase(repository)
 
     @[Singleton Provides]
     fun provideRenderDispatcherDashboard(repository: SocketRepository) =
-        RenderDispatcherDashboardUseCase(repository)
+        SocketRenderDispatcherDashboardUseCase(repository)
 
 
 }

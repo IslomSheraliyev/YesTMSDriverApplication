@@ -12,13 +12,13 @@ import com.yestms.driver.android.domain.usecase.loads.GetLoadUseCase
 import com.yestms.driver.android.domain.usecase.loads.ReportProblemUseCase
 import com.yestms.driver.android.domain.usecase.loads.UpdateLoadStatusUseCase
 import com.yestms.driver.android.domain.usecase.loads.UploadImagesUseCase
-import com.yestms.driver.android.domain.usecase.socket.AddUserUseCase
-import com.yestms.driver.android.domain.usecase.socket.ChangeForDashboardUseCase
-import com.yestms.driver.android.domain.usecase.socket.ConnectSocketUseCase
-import com.yestms.driver.android.domain.usecase.socket.DisconnectSocketUseCase
-import com.yestms.driver.android.domain.usecase.socket.KickUserUseCase
-import com.yestms.driver.android.domain.usecase.socket.RenderDispatcherDashboardUseCase
-import com.yestms.driver.android.domain.usecase.socket.SendNoticeUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketAddUserUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketChangeForDashboardUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketConnectUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketDisconnectUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketKickUserUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketRenderDispatcherDashboardUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketSendNoticeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,13 +35,13 @@ class DetailsViewModel @Inject constructor(
     private val getAlertStatusesUseCase: GetAlertStatusesUseCase,
     private val reportProblemUseCase: ReportProblemUseCase,
     private val uploadImagesUseCase: UploadImagesUseCase,
-    private val changeForDashboardUseCase: ChangeForDashboardUseCase,
-    private val sendNoticeUseCase: SendNoticeUseCase,
-    private val connectSocketUseCase: ConnectSocketUseCase,
-    private val disconnectSocketUseCase: DisconnectSocketUseCase,
-    private val addUserUseCase: AddUserUseCase,
-    private val kickUserUseCase: KickUserUseCase,
-    private val renderDispatcherDashboardUseCase: RenderDispatcherDashboardUseCase
+    private val socketChangeForDashboardUseCase: SocketChangeForDashboardUseCase,
+    private val socketSendNoticeUseCase: SocketSendNoticeUseCase,
+    private val socketConnectUseCase: SocketConnectUseCase,
+    private val socketDisconnectUseCase: SocketDisconnectUseCase,
+    private val socketAddUserUseCase: SocketAddUserUseCase,
+    private val socketKickUserUseCase: SocketKickUserUseCase,
+    private val socketRenderDispatcherDashboardUseCase: SocketRenderDispatcherDashboardUseCase
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(DetailsUIState())
@@ -68,8 +68,8 @@ class DetailsViewModel @Inject constructor(
             updateLoadStatusUseCase(id, loadStatusId)
                 .onSuccess {
                     getDetails(id)
-                    changeForDashboardUseCase(dispatchers.map { it.id })
-                    sendNoticeUseCase(
+                    socketChangeForDashboardUseCase(dispatchers.map { it.id })
+                    socketSendNoticeUseCase(
                         parameter1 = dispatchers.map { it.id },
                         parameter2 = "Load ${load.value?.loadId} changed status on ${load.value?.loadStatus?.name} by driver ${AppPreferences.fullName}"
                     )
@@ -101,19 +101,19 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun disconnect() = vmScope.launch {
-        kickUserUseCase(
+        socketKickUserUseCase(
             parameter = AppPreferences.currentUserId
         ).onSuccess {
-            disconnectSocketUseCase()
+            socketDisconnectUseCase()
         }
     }
 
     fun connect(id: Int) = vmScope.launch {
-        renderDispatcherDashboardUseCase {
+        socketRenderDispatcherDashboardUseCase {
             getDetails(id)
         }.onSuccess {
-            connectSocketUseCase().onSuccess {
-                addUserUseCase(
+            socketConnectUseCase().onSuccess {
+                socketAddUserUseCase(
                     parameter1 = AppPreferences.currentUserId,
                     parameter2 = AppPreferences.currentRoleId
                 )

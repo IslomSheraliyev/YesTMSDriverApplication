@@ -8,6 +8,8 @@ import com.yestms.driver.android.domain.usecase.auth.AuthCheckUseCase
 import com.yestms.driver.android.domain.usecase.auth.AuthLoginDriverUseCase
 import com.yestms.driver.android.domain.usecase.loads.UpdateLoadStatusUseCase
 import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketChangeForDashboardUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketSendNoticeUseCase
 import com.yestms.driver.android.domain.usecase.user.UpdateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +25,8 @@ class MainViewModel @Inject constructor(
     private val getUnreadCountUseCase: GetUnreadCountUseCase,
     private val updateUseCase: UpdateUseCase,
     private val updateLoadStatusUseCase: UpdateLoadStatusUseCase,
+    private val socketChangeForDashboardUseCase: SocketChangeForDashboardUseCase,
+    private val socketSendNoticeUseCase: SocketSendNoticeUseCase
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(MainUIState())
@@ -40,7 +44,7 @@ class MainViewModel @Inject constructor(
                     )
                 }
                 AppPreferences.accessToken = result.token
-                AppPreferences.currentRoleId = result.user.userRole.id
+                AppPreferences.authCheckModel = result
             }.onFailure { error ->
                 _uiState.update {
                     it.copy(
@@ -53,7 +57,6 @@ class MainViewModel @Inject constructor(
     }
 
     fun loginDriver(externalId: String) = vmScope.launch {
-
         _isRefreshing.emit(true)
         _uiState.update { it.copy(tokenStatus = AuthCheckTokenStatus.IDLE) }
         if (externalId.isEmpty()) {
@@ -82,6 +85,16 @@ class MainViewModel @Inject constructor(
         updateUseCase(AppPreferences.currentUserId, isOnDuty)
             .onSuccess {
                 _uiState.update { it.copy(isOnDuty = !uiState.value.isOnDuty) }
+                socketSendNoticeUseCase(
+                    parameter1 = AppPreferences.authCheckModel?.user?.dispatchers
+                        ?.map { it.id }
+                        .orEmpty(),
+                    parameter2 = "Status of driver ${AppPreferences.fullName} changed on ${if (isOnDuty) "On duty" else "Off duty"} by ${AppPreferences.fullName}"
+                )
+                socketChangeForDashboardUseCase(AppPreferences.authCheckModel?.user?.dispatchers
+                    ?.map { it.id }
+                    .orEmpty()
+                )
             }.onFailure(::errorProcess)
     }
 
@@ -97,8 +110,6 @@ class MainViewModel @Inject constructor(
     fun resetExternalIdStatus() = vmScope.launch {
         _uiState.update { it.copy(externalIdStatus = AuthLoginDriverExternalIdStatus.IDLE) }
     }
-
-
 }
 
 data class MainUIState(

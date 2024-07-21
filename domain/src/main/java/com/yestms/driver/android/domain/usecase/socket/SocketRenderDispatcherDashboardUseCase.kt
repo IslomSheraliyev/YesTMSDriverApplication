@@ -6,7 +6,7 @@ import io.socket.emitter.Emitter
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
-class RenderDispatcherDashboardUseCase @Inject constructor(
+class SocketRenderDispatcherDashboardUseCase @Inject constructor(
     private val repository: SocketRepository
 ) : UseCaseWithParams<Emitter.Listener, Unit>(Dispatchers.IO) {
     override suspend fun execute(parameter: Emitter.Listener) {
