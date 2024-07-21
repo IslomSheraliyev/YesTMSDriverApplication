@@ -1,28 +1,17 @@
 package com.yestms.driver.android.ui.screens.main
 
-import android.util.Log
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.enums.AuthCheckTokenStatus
 import com.yestms.driver.android.data.enums.AuthLoginDriverExternalIdStatus
 import com.yestms.driver.android.data.local.AppPreferences
-import com.yestms.driver.android.domain.model.auth.check.AuthCheckUserRoleModel
 import com.yestms.driver.android.domain.usecase.auth.AuthCheckUseCase
 import com.yestms.driver.android.domain.usecase.auth.AuthLoginDriverUseCase
 import com.yestms.driver.android.domain.usecase.loads.UpdateLoadStatusUseCase
 import com.yestms.driver.android.domain.usecase.notifications.GetUnreadCountUseCase
-import com.yestms.driver.android.domain.usecase.socket.AddUserUseCase
-import com.yestms.driver.android.domain.usecase.socket.ConnectSocketUseCase
-import com.yestms.driver.android.domain.usecase.socket.DisconnectSocketUseCase
-import com.yestms.driver.android.domain.usecase.socket.KickUserUseCase
-import com.yestms.driver.android.domain.usecase.socket.RenderDispatcherDashboardUseCase
 import com.yestms.driver.android.domain.usecase.user.UpdateUseCase
-import com.yestms.driver.android.ui.screens.details.DetailsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,13 +25,9 @@ class MainViewModel @Inject constructor(
     private val updateLoadStatusUseCase: UpdateLoadStatusUseCase,
 ) : BaseViewModel() {
 
-    private val _updateLoad = Channel<Unit>(Channel.BUFFERED)
-    val updateLoad = _updateLoad.receiveAsFlow()
-
     private val _uiState = MutableStateFlow(MainUIState())
     val uiState = _uiState.asStateFlow()
 
-    private val userRole = MutableStateFlow<AuthCheckUserRoleModel?>(null)
 
     fun check() = vmScope.launch {
         _isRefreshing.emit(true)
@@ -55,7 +40,7 @@ class MainViewModel @Inject constructor(
                     )
                 }
                 AppPreferences.accessToken = result.token
-                userRole.emit(result.user.userRole)
+                AppPreferences.currentRoleId = result.user.userRole.id
             }.onFailure { error ->
                 _uiState.update {
                     it.copy(

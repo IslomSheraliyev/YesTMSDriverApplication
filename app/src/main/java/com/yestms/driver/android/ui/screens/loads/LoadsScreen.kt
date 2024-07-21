@@ -3,6 +3,7 @@ package com.yestms.driver.android.ui.screens.loads
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,6 +25,11 @@ fun LoadsScreen(
     )
     LaunchedEffect(key1 = Unit) {
         viewModel.getLoads()
+        viewModel.connect()
+    }
+
+    DisposableEffect(key1 = Unit) {
+        onDispose { viewModel.disconnect() }
     }
 
     LoadsScreenContent(

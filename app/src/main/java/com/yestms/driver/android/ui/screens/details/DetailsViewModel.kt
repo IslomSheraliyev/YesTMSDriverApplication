@@ -2,7 +2,6 @@ package com.yestms.driver.android.ui.screens.details
 
 import android.content.ContentResolver
 import android.net.Uri
-import android.util.Log
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
@@ -23,9 +22,7 @@ import com.yestms.driver.android.domain.usecase.socket.SendNoticeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -116,12 +113,10 @@ class DetailsViewModel @Inject constructor(
             getDetails(id)
         }.onSuccess {
             connectSocketUseCase().onSuccess {
-//                userRole.value?.let {
-                    addUserUseCase(
-                        parameter1 = AppPreferences.currentUserId,
-                        parameter2 = 3
-                    )
-//                }
+                addUserUseCase(
+                    parameter1 = AppPreferences.currentUserId,
+                    parameter2 = AppPreferences.currentRoleId
+                )
             }
         }
     }

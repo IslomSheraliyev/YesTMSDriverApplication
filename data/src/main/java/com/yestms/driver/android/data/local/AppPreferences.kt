@@ -35,4 +35,12 @@ object AppPreferences {
         set(value) {
             preferences.edit()?.putString(AppPreferences::fullName.name, value)?.apply()
         }
+
+    var currentRoleId: Int
+        get() = preferences.getInt(AppPreferences::currentRoleId.name, -1)
+        set(value) {
+            preferences.edit()?.putInt(AppPreferences::currentRoleId.name, value)?.apply()
+        }
+
+
 }
