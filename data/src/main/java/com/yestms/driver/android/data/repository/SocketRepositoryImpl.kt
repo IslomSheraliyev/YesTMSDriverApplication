@@ -40,6 +40,10 @@ class SocketRepositoryImpl @Inject constructor(
         socketManager.on(event = event, listener = listener)
     }
 
+    override fun receiveNotice(event: String, listener: Emitter.Listener) {
+        socketManager.on(event = event, listener = listener)
+    }
+
     override fun sendIncident(
         event: String,
         dispatchers: List<Int>,

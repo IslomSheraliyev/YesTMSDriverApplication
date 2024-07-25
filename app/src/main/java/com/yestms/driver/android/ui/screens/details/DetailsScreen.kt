@@ -7,7 +7,6 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -90,20 +89,11 @@ fun DetailsScreen(
     )
 
     LaunchedEffect(key1 = Unit) {
-
         viewModel.connect(id)
-
         viewModel.getDetails(id)
         viewModel.getProblems()
-
         viewModel.updateLoadState.collect {
             viewModel.getDetails(id)
-        }
-    }
-
-    DisposableEffect(key1 = Unit) {
-        onDispose {
-            viewModel.disconnect()
         }
     }
 
@@ -141,19 +131,18 @@ fun DetailsScreen(
             )
         },
         onSubmitPaperWork = {
-            pdfUri?.let {
+            pdfUri?.let { pdfUri ->
                 viewModel.uploadImages(
-                    id,
-                    it, lumperUri, trailerPhotoUri, context.contentResolver
+                    id, pdfUri, lumperUri, trailerPhotoUri, context.contentResolver
                 )
             }
         },
         onReportProblem = { reportProblemDialogVisibility = true },
         onUpdateLoadStatus = { loadStatusId ->
             viewModel.updateLoadStatus(
-                id,
-                loadStatusId,
-                load?.dispatchers.orEmpty()
+                id = id,
+                loadStatusId = loadStatusId,
+                dispatchers = load?.dispatchers.orEmpty()
             )
         },
         onBackPressed = navController::safePopBackStack

@@ -47,7 +47,6 @@ fun StatsScreen(
         onPeriodSelected = { selectedPeriodParam ->
             selectedPeriod = selectedPeriodParam
             viewModel.getDetails(id, selectedPeriodParam)
-        },
-        onBackPressed = onBackPressed
+        }
     )
 }

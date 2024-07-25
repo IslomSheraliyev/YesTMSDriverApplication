@@ -124,6 +124,7 @@ fun ReportProblemDialog(
                 SearchTextField(
                     value = searchQuery,
                     placeHolder = stringResource(id = R.string.search_your_problem),
+                    leadingIcon = painterResource(id = R.drawable.ic_search),
                     onValueChange = {
                         searchQuery = it
                         isValidProblem = false

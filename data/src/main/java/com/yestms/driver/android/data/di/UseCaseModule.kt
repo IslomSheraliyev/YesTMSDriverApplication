@@ -23,6 +23,7 @@ import com.yestms.driver.android.domain.usecase.socket.SocketChangeForDashboardU
 import com.yestms.driver.android.domain.usecase.socket.SocketConnectUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketDisconnectUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketKickUserUseCase
+import com.yestms.driver.android.domain.usecase.socket.SocketReceiveNoticeUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketRenderDispatcherDashboardUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketSendNoticeUseCase
 import com.yestms.driver.android.domain.usecase.user.GetDriverDetailsUseCase
@@ -123,5 +124,9 @@ object UseCaseModule {
     @[Singleton Provides]
     fun provideRenderDispatcherDashboard(repository: SocketRepository) =
         SocketRenderDispatcherDashboardUseCase(repository)
+
+    @[Singleton Provides]
+    fun provideSocketReceiveNoticeUseCase(repository: SocketRepository) =
+        SocketReceiveNoticeUseCase(repository)
 
 }

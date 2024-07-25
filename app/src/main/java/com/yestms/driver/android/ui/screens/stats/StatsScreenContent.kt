@@ -26,10 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.app_bar.InnerAppBar
 import com.yestms.driver.android.components.check_box.StatsPeriodCheckBox
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
@@ -43,8 +41,7 @@ fun StatsScreenContent(
     earnings: Int,
     miles: Int,
     selectedPeriod: String,
-    onPeriodSelected: (String) -> Unit,
-    onBackPressed: () -> Unit
+    onPeriodSelected: (String) -> Unit
 ) {
 
     val format by rememberSaveable { mutableStateOf(DecimalFormat("#.##")) }
@@ -69,18 +66,6 @@ fun StatsScreenContent(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            InnerAppBar(
-                onBackPressed = onBackPressed
-            ) {
-                Text(
-                    text = stringResource(id = R.string.statistics),
-                    color = CustomTheme.colorScheme.grey800,
-                    style = CustomTheme.typography.xs24pxMedium
-                )
-            }
-
-            VerticalSpacer(dp = 24)
-
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),

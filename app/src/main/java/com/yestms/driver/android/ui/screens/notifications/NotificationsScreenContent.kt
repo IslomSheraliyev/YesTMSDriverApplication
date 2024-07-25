@@ -111,6 +111,7 @@ fun NotificationsScreenContent(
                 SearchTextField(
                     value = searchQuery,
                     placeHolder = stringResource(id = R.string.search_with_dots),
+                    trailingIcon = painterResource(id = R.drawable.ic_search),
                     onValueChange = {
                         searchQuery = it
                     }

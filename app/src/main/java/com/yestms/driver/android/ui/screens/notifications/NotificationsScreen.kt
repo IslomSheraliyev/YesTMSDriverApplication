@@ -34,6 +34,10 @@ fun NotificationsScreen(
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getNotifications(sortBy, dateFrom, dateTo, searchQuery)
+        viewModel.connect()
+        viewModel.shouldUpdate.collect {
+            viewModel.getNotifications()
+        }
     }
 
     BackHandler(

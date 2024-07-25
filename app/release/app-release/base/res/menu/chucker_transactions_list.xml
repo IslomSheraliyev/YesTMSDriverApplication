@@ -1,44 +1,0 @@
-
-ï
-;
-android*http://schemas.android.com/apk/res/android9
-4
-app'http://schemas.android.com/apk/res-auto9menu*Â
-¹item"b
-'http://schemas.android.com/apk/res-autoshowAsActioncollapseActionView|ifRoom"	(ê‡Œø2:8	"w
-*http://schemas.android.com/apk/res/androidtitle@string/chucker_search"	(áƒ„2!
-Ü€Èøstring/chucker_search0"f
-'http://schemas.android.com/apk/res-autoactionViewClass$androidx.appcompat.widget.SearchView(¦€Œø"Œ
-*http://schemas.android.com/apk/res/androidicon!@drawable/chucker_ic_search_white"	(‚€„2,
-*œø drawable/chucker_ic_search_white0"]
-*http://schemas.android.com/apk/res/androidid@+id/search"	(Ğ„2
-µƒ¤ø	id/search0	8*è
-ßitem"O
-'http://schemas.android.com/apk/res-autoshowAsActionifRoom"(ê‡Œø2:8"w
-*http://schemas.android.com/apk/res/androidtitle@string/chucker_export"(áƒ„2!
-»€Èøstring/chucker_export0"Š
-*http://schemas.android.com/apk/res/androidicon @drawable/chucker_ic_share_white"(‚€„2+
-)œødrawable/chucker_ic_share_white0"]
-*http://schemas.android.com/apk/res/androidid@+id/export"(Ğ„2
-Ğ¤ø	id/export0* 
-—menu*
-…group*ş
-õitem"…
-*http://schemas.android.com/apk/res/androidtitle@string/chucker_share_as_text"(áƒ„2(
-&å€Èøstring/chucker_share_as_text0"e
-*http://schemas.android.com/apk/res/androidid@+id/share_text"(Ğ„2
-Éƒ¤øid/share_text0E*ú
-ñitem"ƒ
-*http://schemas.android.com/apk/res/androidtitle@string/chucker_share_as_har"(áƒ„2'
-%ä€Èøstring/chucker_share_as_har0"c
-*http://schemas.android.com/apk/res/androidid@+id/share_har"(Ğ„2
-Èƒ¤øid/share_har0D#*Ã
-ºitem"O
-'http://schemas.android.com/apk/res-autoshowAsActionifRoom"(ê‡Œø2:8"u
-*http://schemas.android.com/apk/res/androidtitle@string/chucker_clear"(áƒ„2 
-·€Èøstring/chucker_clear0"Œ
-*http://schemas.android.com/apk/res/androidicon!@drawable/chucker_ic_delete_white"(‚€„2,
-*‡œø drawable/chucker_ic_delete_white0"[
-*http://schemas.android.com/apk/res/androidid
-@+id/clear"(Ğ„2
-¤øid/clear0%9

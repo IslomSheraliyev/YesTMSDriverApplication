@@ -198,9 +198,11 @@ fun DetailsScreenContent(
                     }
                 }
 
-                VerticalSpacer(weight = 1f)
+                if (buttons.isNotEmpty()) VerticalSpacer(weight = 1f)
 
-                if (load.loadStatus.name == DriverDetailsLoadStatus.PendingPaperWork) {
+                if (load.loadStatus.name == DriverDetailsLoadStatus.PendingPaperWork ||
+                    load.loadStatus.name == DriverDetailsLoadStatus.PaperWorkFailed
+                ) {
                     VerticalSpacer(dp = 24)
 
                     UploadImageComponent(
@@ -232,13 +234,19 @@ fun DetailsScreenContent(
                     )
                 }
 
-                if (buttons.isNotEmpty()) VerticalSpacer(dp = 48)
+                if (buttons.isNotEmpty()) VerticalSpacer(dp = 64)
             } else ProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
         }
 
         if ((load != null) &&
-            (load.loadStatus.name != DriverDetailsLoadStatus.PendingPaperWork ||
-                    (load.loadStatus.name == DriverDetailsLoadStatus.PendingPaperWork && isPdfScanned))
+            (load.loadStatus.name !in listOf(
+                DriverDetailsLoadStatus.PendingPaperWork,
+                DriverDetailsLoadStatus.PaperWorkFailed
+            ) ||
+                    (load.loadStatus.name in listOf(
+                        DriverDetailsLoadStatus.PendingPaperWork,
+                        DriverDetailsLoadStatus.PaperWorkFailed
+                    ) && isPdfScanned))
         )
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),

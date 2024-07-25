@@ -6,6 +6,7 @@ import android.util.Log
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.data.mapper.or0
+import com.yestms.driver.android.domain.enums.DriverDetailsLoadStatus
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
 import com.yestms.driver.android.domain.model.loads.DispatcherModel
 import com.yestms.driver.android.domain.model.loads.LoadModel
@@ -16,9 +17,6 @@ import com.yestms.driver.android.domain.usecase.loads.UpdateLoadStatusUseCase
 import com.yestms.driver.android.domain.usecase.loads.UploadImagesUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketAddUserUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketChangeForDashboardUseCase
-import com.yestms.driver.android.domain.usecase.socket.SocketConnectUseCase
-import com.yestms.driver.android.domain.usecase.socket.SocketDisconnectUseCase
-import com.yestms.driver.android.domain.usecase.socket.SocketKickUserUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketRenderDispatcherDashboardUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketSendNoticeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,10 +37,7 @@ class DetailsViewModel @Inject constructor(
     private val uploadImagesUseCase: UploadImagesUseCase,
     private val socketChangeForDashboardUseCase: SocketChangeForDashboardUseCase,
     private val socketSendNoticeUseCase: SocketSendNoticeUseCase,
-    private val socketConnectUseCase: SocketConnectUseCase,
-    private val socketDisconnectUseCase: SocketDisconnectUseCase,
     private val socketAddUserUseCase: SocketAddUserUseCase,
-    private val socketKickUserUseCase: SocketKickUserUseCase,
     private val socketRenderDispatcherDashboardUseCase: SocketRenderDispatcherDashboardUseCase
 ) : BaseViewModel() {
 
@@ -61,7 +56,22 @@ class DetailsViewModel @Inject constructor(
     fun getDetails(id: Int) = vmScope.launch {
         _uiState.update { it.copy(loadId = id) }
         getLoadUseCase(id).onSuccess { load ->
-            _load.emit(load)
+            when (load.loadStatus.name) {
+                DriverDetailsLoadStatus.PendingUnseen -> {
+                    updateLoadStatusUseCase(id, 2).onSuccess {
+                        getLoadUseCase(id).onSuccess { load ->
+                            _load.emit(load)
+                        }
+                    }
+                }
+                DriverDetailsLoadStatus.PaperWorkFailed -> {
+                    changeMediaBolUploadedState(false)
+                    changeLumperUploadedState(false)
+                    changeTrailerPhotoUploadedState(false)
+                    _load.emit(load)
+                }
+                else -> _load.emit(load)
+            }
         }
     }
 
@@ -112,24 +122,14 @@ class DetailsViewModel @Inject constructor(
         uploadImagesUseCase(id, pdf, lumper, trailerPhoto, contentResolver)
     }
 
-    fun disconnect() = vmScope.launch {
-        socketKickUserUseCase(
-            parameter = AppPreferences.currentUserId
-        ).onSuccess {
-            socketDisconnectUseCase()
-        }
-    }
-
     fun connect(id: Int) = vmScope.launch {
         socketRenderDispatcherDashboardUseCase {
             getDetails(id)
         }.onSuccess {
-//            socketConnectUseCase().onSuccess {
-                socketAddUserUseCase(
-                    parameter1 = AppPreferences.currentUserId,
-                    parameter2 = AppPreferences.currentRoleId
-                )
-//            }
+            socketAddUserUseCase(
+                parameter1 = AppPreferences.currentUserId,
+                parameter2 = AppPreferences.currentRoleId
+            )
         }
     }
 
