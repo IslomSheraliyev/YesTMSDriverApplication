@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.yestms.driver.android.components.design.color.blue700Light
 import com.yestms.driver.android.components.design.color.tmsLightColorScheme
 import com.yestms.driver.android.components.design.font.typography
 import com.yestms.driver.android.data.enums.ThemeMode
@@ -18,13 +19,13 @@ import com.yestms.driver.android.data.local.AppPreferences
 private val lightColorScheme = tmsLightColorScheme()
 
 private val colorPalette = lightColorScheme(
-    primary = Color.Blue,
-    secondary = Color.Blue,
-    tertiary = Color.Blue,
-    background = Color.Blue,
-    surface = Color.Transparent,
-    onPrimary = Color.Transparent,
-    onError = Color.Transparent,
+    primary = blue700Light,
+    secondary = Color.Yellow,
+    tertiary = Color.Green,
+    background = Color.Gray,
+    surface = Color.Yellow,
+    onPrimary = Color.Green,
+    onError = Color.Magenta,
 )
 
 private val darkColorPalette = darkColorScheme(
@@ -32,9 +33,9 @@ private val darkColorPalette = darkColorScheme(
     secondary = Color.Blue,
     tertiary = Color.Blue,
     background = Color.Blue,
-    surface = Color.Transparent,
-    onPrimary = Color.Transparent,
-    onError = Color.Transparent,
+    surface = Color.Yellow,
+    onPrimary = Color.Green,
+    onError = Color.Magenta,
 )
 
 @Composable
@@ -59,7 +60,7 @@ fun YesTMSDriverApplicationTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> darkColorPalette
+        darkTheme -> colorPalette
         else -> colorPalette
     }
 

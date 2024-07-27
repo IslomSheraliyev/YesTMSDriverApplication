@@ -10,11 +10,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.Surface
@@ -22,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -31,19 +31,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.button.PrimaryButton
+import com.yestms.driver.android.components.card.DropDownSelectedItemCard
 import com.yestms.driver.android.components.card.IconBackgroundCard
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.spacer.VerticalSpacer
-import com.yestms.driver.android.components.text_field.SearchTextField
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,9 +58,18 @@ fun ReportProblemDialog(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var searchQuery by rememberSaveable { mutableStateOf("") }
-    var selectedProblemId by rememberSaveable { mutableIntStateOf(-1) }
-    var isValidProblem by rememberSaveable { mutableStateOf(false) }
+
+    val defaultSelectedProblemText = stringResource(id = R.string.search_your_problem)
+    var selectedProblem by remember {
+        mutableStateOf(
+            AlertStatusesItemModel(
+                id = -1,
+                name = defaultSelectedProblemText
+            )
+        )
+    }
+    var dropDownExpanded by rememberSaveable { mutableStateOf(false) }
+    var dropDownSize by remember { mutableStateOf(IntSize(0, 0)) }
 
     if (visibility)
         Dialog(
@@ -70,7 +82,6 @@ fun ReportProblemDialog(
         ) {
             Column(
                 modifier = modifier
-                    .fillMaxWidth()
                     .background(
                         color = CustomTheme.colorScheme.white,
                         shape = RoundedCornerShape(12.dp)
@@ -84,8 +95,7 @@ fun ReportProblemDialog(
                 ) {
                     Surface(
                         onClick = onDismissRequest,
-                        modifier = Modifier
-                            .align(Alignment.End),
+                        modifier = Modifier.align(Alignment.End),
                         color = Color.Unspecified,
                         shape = CircleShape
                     ) {
@@ -99,8 +109,7 @@ fun ReportProblemDialog(
                 IconBackgroundCard(
                     padding = 18.dp,
                     color = CustomTheme.colorScheme.red,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) { modifier, color ->
                     Icon(
                         painter = painterResource(id = R.drawable.ic_alert),
@@ -121,49 +130,46 @@ fun ReportProblemDialog(
 
                 VerticalSpacer(dp = 24)
 
-                SearchTextField(
-                    value = searchQuery,
-                    placeHolder = stringResource(id = R.string.search_your_problem),
-                    leadingIcon = painterResource(id = R.drawable.ic_search),
-                    onValueChange = {
-                        searchQuery = it
-                        isValidProblem = false
-                    }
+                DropDownSelectedItemCard(
+                    modifier = Modifier.onSizeChanged { dropDownSize = it },
+                    text = selectedProblem.name,
+                    onClick = { dropDownExpanded = !dropDownExpanded }
                 )
 
-                VerticalSpacer(dp = 8)
-
-                LazyColumn(
+                if (dropDownExpanded) LazyColumn(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp))
+                        .padding(top = 8.dp)
+                        .background(
+                            color = CustomTheme.colorScheme.white,
+                            shape = RoundedCornerShape(12.dp)
+                        )
                         .border(
                             width = 1.dp,
                             color = CustomTheme.colorScheme.grey200,
                             shape = RoundedCornerShape(12.dp)
                         )
                 ) {
-                    val filteredOptions = problems.filter {
-                        it.name.lowercase().contains(searchQuery.lowercase())
-                    }
-                    val isOptionsVisible = searchQuery.isNotBlank() && filteredOptions.size > 1
-
-                    items(
-                        if (isOptionsVisible) filteredOptions else emptyList()
-                    ) { problem ->
+                    itemsIndexed(problems) { index, problem ->
                         Text(
                             text = problem.name,
-                            color = CustomTheme.colorScheme.grey300,
-                            textAlign = TextAlign.Start,
+                            style = CustomTheme.typography.md16pxRegular,
+                            color = CustomTheme.colorScheme.black,
                             modifier = Modifier
-                                .fillParentMaxWidth()
+                                .fillMaxWidth()
+                                .clip(
+                                    RoundedCornerShape(
+                                        topStart = (if (index == 0) 12 else 0).dp,
+                                        topEnd = (if (index == 0) 12 else 0).dp,
+                                        bottomStart = (if (index == problems.lastIndex) 12 else 0).dp,
+                                        bottomEnd = (if (index == problems.lastIndex) 12 else 0).dp
+                                    )
+                                )
                                 .clickable(
-                                    onClick = {
-                                        selectedProblemId = problem.id
-                                        searchQuery = problem.name
-                                        isValidProblem = true
-                                    },
+                                    onClick = { selectedProblem = problem },
+                                    role = Role.DropdownList,
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = rememberRipple(
+                                        bounded = true,
                                         color = CustomTheme.colorScheme.blue500
                                     )
                                 )
@@ -171,6 +177,11 @@ fun ReportProblemDialog(
                                     vertical = 10.dp,
                                     horizontal = 14.dp
                                 )
+                        )
+
+                        if (index != problems.lastIndex) HorizontalDivider(
+                            color = CustomTheme.colorScheme.grey200,
+                            thickness = 1.dp
                         )
                     }
                 }
@@ -192,12 +203,12 @@ fun ReportProblemDialog(
                     PrimaryButton(
                         text = stringResource(id = R.string.report),
                         cornerRadius = 8,
-                        enabled = isValidProblem,
+                        enabled = selectedProblem.id != -1,
                         color = CustomTheme.colorScheme.red,
                         textColor = CustomTheme.colorScheme.white,
                         modifier = Modifier.weight(1f),
                         onClick = {
-                            onReport(problems.first { it.id == selectedProblemId })
+                            onReport(selectedProblem)
                             onDismissRequest()
                         }
                     )
