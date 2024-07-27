@@ -2,7 +2,6 @@ package com.yestms.driver.android.ui.screens.details
 
 import android.content.ContentResolver
 import android.net.Uri
-import android.util.Log
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.data.mapper.or0
@@ -99,10 +98,6 @@ class DetailsViewModel @Inject constructor(
     fun reportProblem(loadId: Int, alertStatusModel: AlertStatusesItemModel) = vmScope.launch {
         reportProblemUseCase(loadId, alertStatusModel.id)
             .onSuccess {
-                Log.d(
-                    "helllo",
-                    "reportProblem: ${load.value?.dispatcherId.or0()} ${load.value?.driverId.or0()}"
-                )
                 socketSendNoticeUseCase(
                     parameter1 = listOf(load.value?.dispatcherId.or0(), load.value?.driverId.or0()),
                     parameter2 = "There is an incident ${alertStatusModel.name} with the load $loadId",

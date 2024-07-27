@@ -33,6 +33,8 @@ import com.yestms.driver.android.components.card.CopyLoadIdCard
 import com.yestms.driver.android.components.card.LoadCard
 import com.yestms.driver.android.components.card.LoadDetailsCard
 import com.yestms.driver.android.components.card.LoadStatusLogsCard
+import com.yestms.driver.android.components.card.LocationCard
+import com.yestms.driver.android.components.card.NoLocationCard
 import com.yestms.driver.android.components.card.UploadImageComponent
 import com.yestms.driver.android.components.design.theme.CustomTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
@@ -178,6 +180,33 @@ fun DetailsScreenContent(
                 VerticalSpacer(dp = 16)
 
                 LoadDetailsCard(loadModel = load)
+
+                VerticalSpacer(dp = 16)
+
+                if (load.loadStatus.name in setOf(
+                        DriverDetailsLoadStatus.PendingUnseen,
+                        DriverDetailsLoadStatus.PendingSeen,
+                        DriverDetailsLoadStatus.Approved,
+                        DriverDetailsLoadStatus.Rejected,
+                        DriverDetailsLoadStatus.PendingPickUp
+                    )
+                ) {
+                    if (load.pickUpLocation.isNotBlank()) LocationCard(
+                        title = load.pickUpLocation,
+                        description = load.pickUpNote
+                    ) else NoLocationCard(
+                        isApproved = load.loadStatus.name == DriverDetailsLoadStatus.Approved,
+                        isPickUp = true
+                    )
+                } else {
+                    if (load.deliveryLocation.isNotBlank()) LocationCard(
+                        title = load.deliveryLocation,
+                        description = load.deliveryNote
+                    ) else NoLocationCard(
+                        isApproved = load.loadStatus.name == DriverDetailsLoadStatus.PendingDropOff,
+                        isPickUp = false
+                    )
+                }
 
                 VerticalSpacer(dp = 16)
 

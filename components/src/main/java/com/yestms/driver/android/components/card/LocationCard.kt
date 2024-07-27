@@ -3,6 +3,7 @@ package com.yestms.driver.android.components.card
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ fun LocationCard(
 ) {
     Card(
         modifier = modifier
+            .fillMaxWidth()
             .border(
                 width = 1.dp,
                 color = CustomTheme.colorScheme.grey200,

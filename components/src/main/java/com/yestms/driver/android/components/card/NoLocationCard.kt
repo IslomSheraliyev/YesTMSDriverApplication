@@ -20,7 +20,7 @@ import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.design.theme.CustomTheme
 
 @Composable
-fun NoUpLocationCard(
+fun NoLocationCard(
     isApproved: Boolean,
     isPickUp: Boolean,
     modifier: Modifier = Modifier
