@@ -165,7 +165,10 @@ fun ReportProblemDialog(
                                     )
                                 )
                                 .clickable(
-                                    onClick = { selectedProblem = problem },
+                                    onClick = {
+                                        selectedProblem = problem
+                                        dropDownExpanded = false
+                                    },
                                     role = Role.DropdownList,
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = rememberRipple(
