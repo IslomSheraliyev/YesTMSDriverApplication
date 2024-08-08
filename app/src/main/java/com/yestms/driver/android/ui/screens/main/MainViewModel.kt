@@ -48,6 +48,7 @@ class MainViewModel @Inject constructor(
                 AppPreferences.accessToken = result.token
                 AppPreferences.authCheckModel = result
                 AppPreferences.fullName = result.user.fullName
+                AppPreferences.currentRoleId = result.user.userRole.id
                 socketConnectUseCase()
             }.onFailure { error ->
                 _uiState.update {
@@ -91,17 +92,17 @@ class MainViewModel @Inject constructor(
                 _uiState.update { it.copy(isOnDuty = !uiState.value.isOnDuty) }
 
 //                socketConnectUseCase().onSuccess {
-                    val dispatchers = AppPreferences.authCheckModel?.user?.dispatchers
-                        ?.map { it.id }
-                        ?.toMutableList()
+                val dispatchers = AppPreferences.authCheckModel?.user?.dispatchers
+                    ?.map { it.id }
+                    ?.toMutableList()
 
-                    socketSendNoticeUseCase(
-                        parameter1 = dispatchers.orEmpty(),
-                        parameter2 = "Status of driver ${AppPreferences.fullName} changed on ${if (isOnDuty) "On duty" else "Off duty"} by ${AppPreferences.fullName}",
-                        parameter3 = "info"
-                    )
-                    dispatchers?.add(AppPreferences.currentUserId)
-                    socketChangeForDashboardUseCase(dispatchers.orEmpty())
+                socketSendNoticeUseCase(
+                    parameter1 = dispatchers.orEmpty(),
+                    parameter2 = "Status of driver ${AppPreferences.fullName} changed on ${if (isOnDuty) "On duty" else "Off duty"} by ${AppPreferences.fullName}",
+                    parameter3 = "info"
+                )
+                dispatchers?.add(AppPreferences.currentUserId)
+                socketChangeForDashboardUseCase(dispatchers.orEmpty())
 //                }
             }.onFailure(::errorProcess)
     }

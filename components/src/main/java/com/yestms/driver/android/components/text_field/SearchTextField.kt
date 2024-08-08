@@ -66,24 +66,24 @@ fun SearchTextField(
                         color = CustomTheme.colorScheme.grey400
                     )
                 },
-                leadingIcon = {
-                    leadingIcon?.let {
+                leadingIcon = if (leadingIcon != null) {
+                    {
                         Icon(
-                            painter = it,
+                            painter = leadingIcon,
                             contentDescription = null,
                             tint = Color.Unspecified
                         )
                     }
-                },
-                trailingIcon = {
-                    trailingIcon?.let {
+                } else null,
+                trailingIcon = if (trailingIcon != null) {
+                    {
                         Icon(
-                            painter = it,
+                            painter = trailingIcon,
                             contentDescription = null,
                             tint = Color.Unspecified
                         )
                     }
-                },
+                } else null,
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = CustomTheme.colorScheme.black,
                     unfocusedTextColor = CustomTheme.colorScheme.black,
