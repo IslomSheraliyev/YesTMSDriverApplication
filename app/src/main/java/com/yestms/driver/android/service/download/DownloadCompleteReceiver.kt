@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 
-class DownloadCompletedReceiver : BroadcastReceiver() {
+class DownloadCompleteReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == "android.intent.action.DOWNLOAD_COMPLETE") {
