@@ -29,7 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.check_box.StatsPeriodCheckBox
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 
@@ -120,23 +120,23 @@ fun StatsScreenContent(
 
                                 Text(
                                     text = title,
-                                    style = CustomTheme.typography.lg18pxMedium,
-                                    color = CustomTheme.colorScheme.grey700
+                                    style = YesTMSTheme.typography.lg18pxMedium,
+                                    color = YesTMSTheme.color.grey700
                                 )
 
                                 HorizontalSpacer(weight = 1f)
 
                                 Text(
                                     text = value,
-                                    style = CustomTheme.typography.lg18pxMedium,
-                                    color = CustomTheme.colorScheme.grey700
+                                    style = YesTMSTheme.typography.lg18pxMedium,
+                                    color = YesTMSTheme.color.grey700
                                 )
                             }
                         }
 
                         if (index != this.lastIndex) {
                             item {
-                                HorizontalDivider(color = CustomTheme.colorScheme.grey200)
+                                HorizontalDivider(color = YesTMSTheme.color.grey200)
                             }
                         }
                     }
@@ -149,7 +149,7 @@ fun StatsScreenContent(
             state = refreshState,
             modifier = Modifier
                 .align(Alignment.TopCenter),
-            contentColor = CustomTheme.colorScheme.blue500
+            contentColor = YesTMSTheme.color.blue500
         )
     }
 }

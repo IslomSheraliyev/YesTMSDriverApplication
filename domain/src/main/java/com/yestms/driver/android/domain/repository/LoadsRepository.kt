@@ -4,8 +4,8 @@ import android.content.ContentResolver
 import android.net.Uri
 import androidx.paging.PagingData
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
-import com.yestms.driver.android.domain.model.loads.LoadsItemModel
 import com.yestms.driver.android.domain.model.loads.LoadModel
+import com.yestms.driver.android.domain.model.loads.LoadsItemModel
 import kotlinx.coroutines.flow.Flow
 
 interface LoadsRepository {

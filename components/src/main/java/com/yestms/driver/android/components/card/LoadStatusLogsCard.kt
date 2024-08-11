@@ -23,7 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 import com.yestms.driver.android.components.utils.DateConverter
 import com.yestms.driver.android.components.utils.DottedShape
@@ -41,12 +41,12 @@ fun LoadStatusLogsCard(
             .fillMaxWidth()
             .border(
                 width = 1.dp,
-                color = CustomTheme.colorScheme.grey200,
+                color = YesTMSTheme.color.grey200,
                 shape = RoundedCornerShape(12.dp)
             ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = CustomTheme.colorScheme.neutralColors100
+            containerColor = YesTMSTheme.color.neutralColors100
         )
     ) {
 
@@ -63,7 +63,7 @@ fun LoadStatusLogsCard(
                             .padding(horizontal = 7.5.dp)
                             .width(1.dp)
                             .background(
-                                color = CustomTheme.colorScheme.blue300,
+                                color = YesTMSTheme.color.blue300,
                                 shape = DottedShape(6.dp)
                             )
                     )
@@ -76,7 +76,7 @@ fun LoadStatusLogsCard(
                         modifier = Modifier
                             .size(16.dp)
                             .background(
-                                color = CustomTheme.colorScheme.blue700,
+                                color = YesTMSTheme.color.blue700,
                                 shape = CircleShape
                             )
                     )
@@ -88,14 +88,14 @@ fun LoadStatusLogsCard(
                     ) {
                         Text(
                             text = log.loadStatusLogsItemLoadStatus.name,
-                            color = CustomTheme.colorScheme.grey800,
-                            style = CustomTheme.typography.smBold
+                            color = YesTMSTheme.color.grey800,
+                            style = YesTMSTheme.typography.smBold
                         )
 
                         Text(
                             text = DateConverter.getNoticeDate(log.createdAt),
-                            color = CustomTheme.colorScheme.grey300,
-                            style = CustomTheme.typography.xsMedium
+                            color = YesTMSTheme.color.grey300,
+                            style = YesTMSTheme.typography.xsMedium
                         )
                     }
 
@@ -103,8 +103,8 @@ fun LoadStatusLogsCard(
 
                     Text(
                         text = DateConverter.getNoticeTime(log.createdAt),
-                        color = CustomTheme.colorScheme.grey300,
-                        style = CustomTheme.typography.xsMedium
+                        color = YesTMSTheme.color.grey300,
+                        style = YesTMSTheme.typography.xsMedium
                     )
                 }
 
@@ -115,7 +115,7 @@ fun LoadStatusLogsCard(
                             .padding(horizontal = 7.5.dp)
                             .width(1.dp)
                             .background(
-                                color = CustomTheme.colorScheme.blue300,
+                                color = YesTMSTheme.color.blue300,
                                 shape = DottedShape(6.dp)
                             )
                     )

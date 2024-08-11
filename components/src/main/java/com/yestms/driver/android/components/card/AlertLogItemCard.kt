@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 
 @Composable
@@ -30,11 +30,11 @@ fun AlertLogItemCard(
         shape = RoundedCornerShape(12.dp),
         modifier = modifier.border(
             width = 1.dp,
-            color = CustomTheme.colorScheme.grey200,
+            color = YesTMSTheme.color.grey200,
             shape = RoundedCornerShape(12.dp)
         ),
         colors = CardDefaults.cardColors(
-            containerColor = CustomTheme.colorScheme.white
+            containerColor = YesTMSTheme.color.white
         )
     ) {
         Row(
@@ -44,7 +44,7 @@ fun AlertLogItemCard(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             IconBackgroundCard(
-                color = CustomTheme.colorScheme.red,
+                color = YesTMSTheme.color.red,
                 padding = 10.dp
             ) { modifier, color ->
                 Icon(
@@ -59,16 +59,16 @@ fun AlertLogItemCard(
 
                 Text(
                     text = title,
-                    color = CustomTheme.colorScheme.grey800,
-                    style = CustomTheme.typography.smMedium
+                    color = YesTMSTheme.color.grey800,
+                    style = YesTMSTheme.typography.smMedium
                 )
 
                 VerticalSpacer(weight = 1f)
 
                 Text(
                     text = date,
-                    color = CustomTheme.colorScheme.grey400,
-                    style = CustomTheme.typography.xsMedium
+                    color = YesTMSTheme.color.grey400,
+                    style = YesTMSTheme.typography.xsMedium
                 )
             }
         }

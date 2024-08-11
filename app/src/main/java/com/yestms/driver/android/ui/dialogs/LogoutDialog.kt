@@ -10,7 +10,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,7 +28,7 @@ import androidx.compose.ui.window.SecureFlagPolicy
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.button.PrimaryButton
 import com.yestms.driver.android.components.card.IconBackgroundCard
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +52,7 @@ fun LogoutDialog(
                 modifier = modifier
                     .fillMaxWidth()
                     .background(
-                        color = CustomTheme.colorScheme.white,
+                        color = YesTMSTheme.color.white,
                         shape = RoundedCornerShape(12.dp)
                     )
                     .padding(20.dp),
@@ -79,7 +78,7 @@ fun LogoutDialog(
 
                 IconBackgroundCard(
                     padding = 18.dp,
-                    color = CustomTheme.colorScheme.red,
+                    color = YesTMSTheme.color.red,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                 ) { modifier, color ->
@@ -95,8 +94,8 @@ fun LogoutDialog(
 
                 Text(
                     text = stringResource(id = R.string.exit_from_account),
-                    style = CustomTheme.typography.xs24pxMedium,
-                    color = CustomTheme.colorScheme.black,
+                    style = YesTMSTheme.typography.xs24pxMedium,
+                    color = YesTMSTheme.color.black,
                     textAlign = TextAlign.Center
                 )
 
@@ -104,8 +103,8 @@ fun LogoutDialog(
 
                 Text(
                     text = stringResource(id = R.string.sure_to_exit),
-                    style = CustomTheme.typography.md16pxRegular,
-                    color = CustomTheme.colorScheme.grey400,
+                    style = YesTMSTheme.typography.md16pxRegular,
+                    color = YesTMSTheme.color.grey400,
                     textAlign = TextAlign.Center
                 )
 
@@ -117,8 +116,8 @@ fun LogoutDialog(
                     PrimaryButton(
                         text = stringResource(id = R.string.stay),
                         cornerRadius = 8,
-                        color = CustomTheme.colorScheme.grey100,
-                        textColor = CustomTheme.colorScheme.grey400,
+                        color = YesTMSTheme.color.grey100,
+                        textColor = YesTMSTheme.color.grey400,
                         modifier = Modifier.weight(1f),
                         onClick = onDismissRequest
                     )
@@ -126,8 +125,8 @@ fun LogoutDialog(
                     PrimaryButton(
                         text = stringResource(id = R.string.exit),
                         cornerRadius = 8,
-                        color = CustomTheme.colorScheme.red,
-                        textColor = CustomTheme.colorScheme.white,
+                        color = YesTMSTheme.color.red,
+                        textColor = YesTMSTheme.color.white,
                         modifier = Modifier.weight(1f),
                         onClick = onLogoutClick
                     )

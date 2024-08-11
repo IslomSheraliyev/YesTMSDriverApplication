@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,10 +44,10 @@ fun SearchTextField(
             )
             .border(
                 width = 1.dp,
-                color = CustomTheme.colorScheme.grey200,
+                color = YesTMSTheme.color.grey200,
                 shape = RoundedCornerShape(8.dp)
             ),
-        textStyle = CustomTheme.typography.md16pxRegular.copy(color = CustomTheme.colorScheme.black),
+        textStyle = YesTMSTheme.typography.md16pxRegular.copy(color = YesTMSTheme.color.black),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         singleLine = true,
         decorationBox = { innerTextField ->
@@ -62,8 +62,8 @@ fun SearchTextField(
                 placeholder = {
                     Text(
                         text = placeHolder,
-                        style = CustomTheme.typography.md16pxRegular,
-                        color = CustomTheme.colorScheme.grey400
+                        style = YesTMSTheme.typography.md16pxRegular,
+                        color = YesTMSTheme.color.grey400
                     )
                 },
                 leadingIcon = if (leadingIcon != null) {
@@ -85,11 +85,11 @@ fun SearchTextField(
                     }
                 } else null,
                 colors = TextFieldDefaults.colors(
-                    focusedTextColor = CustomTheme.colorScheme.black,
-                    unfocusedTextColor = CustomTheme.colorScheme.black,
-                    unfocusedContainerColor = CustomTheme.colorScheme.white,
-                    focusedContainerColor = CustomTheme.colorScheme.white,
-                    cursorColor = CustomTheme.colorScheme.grey200,
+                    focusedTextColor = YesTMSTheme.color.black,
+                    unfocusedTextColor = YesTMSTheme.color.black,
+                    unfocusedContainerColor = YesTMSTheme.color.white,
+                    focusedContainerColor = YesTMSTheme.color.white,
+                    cursorColor = YesTMSTheme.color.grey200,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent

@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 
 @Composable
 fun NoLocationCard(
@@ -35,11 +35,11 @@ fun NoLocationCard(
         modifier = modifier
             .border(
                 width = 1.dp,
-                color = CustomTheme.colorScheme.grey200,
+                color = YesTMSTheme.color.grey200,
                 shape = RoundedCornerShape(12.dp)
             ),
         colors = CardDefaults.cardColors(
-            containerColor = CustomTheme.colorScheme.white
+            containerColor = YesTMSTheme.color.white
         )
     ) {
 
@@ -56,7 +56,7 @@ fun NoLocationCard(
 
             IconBackgroundCard(
                 padding = 10.dp,
-                color = if (isApproved) CustomTheme.colorScheme.darkGreen else CustomTheme.colorScheme.blue500,
+                color = if (isApproved) YesTMSTheme.color.darkGreen else YesTMSTheme.color.blue500,
             ) { modifier, color ->
                 Icon(
                     modifier = modifier,
@@ -68,9 +68,9 @@ fun NoLocationCard(
 
             Text(
                 text = text,
-                color = if (isApproved) CustomTheme.colorScheme.darkGreen else CustomTheme.colorScheme.grey800,
+                color = if (isApproved) YesTMSTheme.color.darkGreen else YesTMSTheme.color.grey800,
                 textAlign = TextAlign.Center,
-                style = CustomTheme.typography.md16pxMedium
+                style = YesTMSTheme.typography.md16pxMedium
             )
         }
     }

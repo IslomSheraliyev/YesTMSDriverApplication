@@ -13,7 +13,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 
 @Composable
 fun LocationCard(
@@ -26,12 +26,12 @@ fun LocationCard(
             .fillMaxWidth()
             .border(
                 width = 1.dp,
-                color = CustomTheme.colorScheme.grey200,
+                color = YesTMSTheme.color.grey200,
                 shape = RoundedCornerShape(12.dp)
             ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = CustomTheme.colorScheme.white
+            containerColor = YesTMSTheme.color.white
         )
     ) {
         Column(
@@ -40,18 +40,18 @@ fun LocationCard(
         ) {
             Text(
                 text = title,
-                color = CustomTheme.colorScheme.grey500,
-                style = CustomTheme.typography.smBold
+                color = YesTMSTheme.color.grey500,
+                style = YesTMSTheme.typography.smBold
             )
 
             if (description.isNotEmpty()) {
 
-                HorizontalDivider(color = CustomTheme.colorScheme.grey200)
+                HorizontalDivider(color = YesTMSTheme.color.grey200)
 
                 Text(
                     text = description,
-                    color = CustomTheme.colorScheme.grey500,
-                    style = CustomTheme.typography.md16pxRegular
+                    color = YesTMSTheme.color.grey500,
+                    style = YesTMSTheme.typography.md16pxRegular
                 )
             }
         }

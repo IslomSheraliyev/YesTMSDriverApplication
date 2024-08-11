@@ -52,7 +52,7 @@ object NetworkModule {
             .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
             .addInterceptor(JsonParseInterceptor(context))
 
-//        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             val logging = HttpLoggingInterceptor {
                 Log.d("RRR", "provideOkhttpClient: $it")
             }
@@ -61,7 +61,7 @@ object NetworkModule {
             clientBuilder.addInterceptor(
                 ChuckerInterceptor(context)
             )
-//        }
+        }
         return clientBuilder.build()
     }
 }

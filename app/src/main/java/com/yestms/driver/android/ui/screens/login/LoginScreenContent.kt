@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.button.LoginButton
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 import com.yestms.driver.android.components.text_field.UserIDTextField
 
@@ -39,7 +39,7 @@ fun LoginScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(CustomTheme.colorScheme.blue50)
+            .background(YesTMSTheme.color.blue50)
             .systemBarsPadding()
             .padding(16.dp)
             .imePadding(),
@@ -63,8 +63,8 @@ fun LoginScreenContent(
 
         Text(
             text = stringResource(id = R.string.title_enter_user_id),
-            color = CustomTheme.colorScheme.grey400,
-            style = CustomTheme.typography.md16pxRegular
+            color = YesTMSTheme.color.grey400,
+            style = YesTMSTheme.typography.md16pxRegular
         )
 
         VerticalSpacer(weight = 1f)

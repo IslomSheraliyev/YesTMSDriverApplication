@@ -10,6 +10,7 @@ internal object LoadsUrl {
     const val LOADS = "loads"
     const val GET_LOAD = "$LOADS/{id}"
     const val ALERT_STATUSES = "$LOADS/alert-statuses"
+    const val DOWNLOAD = "$LOADS/download-zip"
 
 }
 

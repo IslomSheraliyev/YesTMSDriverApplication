@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 
 @Composable
 fun SearchButton(
@@ -21,14 +21,14 @@ fun SearchButton(
         modifier = Modifier.fillMaxWidth(),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = CustomTheme.colorScheme.blue700
+            containerColor = YesTMSTheme.color.blue700
         ),
         shape = RoundedCornerShape(8.dp)
     ) {
         Text(
             text = stringResource(id = R.string.search),
-            color = CustomTheme.colorScheme.neutralColors100,
-            style = CustomTheme.typography.md16pxMedium,
+            color = YesTMSTheme.color.neutralColors100,
+            style = YesTMSTheme.typography.md16pxMedium,
             modifier = Modifier
                 .padding(
                     horizontal = 28.dp,

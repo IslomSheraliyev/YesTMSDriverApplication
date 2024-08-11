@@ -19,7 +19,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.card.LoadCard
 import com.yestms.driver.android.components.card.NoResultsFound
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 import com.yestms.driver.android.data.mapper.or0
@@ -106,7 +106,7 @@ fun LoadsScreenContent(
             state = refreshState,
             modifier = Modifier
                 .align(Alignment.TopCenter),
-            contentColor = CustomTheme.colorScheme.blue500
+            contentColor = YesTMSTheme.color.blue500
         )
     }
 }

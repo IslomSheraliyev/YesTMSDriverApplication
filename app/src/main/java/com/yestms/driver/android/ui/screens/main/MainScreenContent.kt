@@ -10,10 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.yestms.driver.android.components.app_bar.MainAppBar
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.navigation.Screen
 import com.yestms.driver.android.ui.navigation.createScreen
 import com.yestms.driver.android.ui.screens.details.DetailsScreen
@@ -45,7 +44,7 @@ fun MainScreenContent(
             onLogoutClick = onLogoutClick
         )
 
-        HorizontalDivider(color = CustomTheme.colorScheme.grey200)
+        HorizontalDivider(color = YesTMSTheme.color.grey200)
 
         NavHost(
             navController = mainNavController,

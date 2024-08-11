@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 
 @Composable
 fun StatsPeriodCheckBox(
@@ -28,7 +28,7 @@ fun StatsPeriodCheckBox(
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
-        color = if (isChecked) CustomTheme.colorScheme.blue100 else CustomTheme.colorScheme.white,
+        color = if (isChecked) YesTMSTheme.color.blue100 else YesTMSTheme.color.white,
         onClick = onCheck
     ) {
 
@@ -45,19 +45,19 @@ fun StatsPeriodCheckBox(
             Icon(
                 painter = painterResource(id = R.drawable.ic_checked),
                 contentDescription = null,
-                tint = if (isChecked) Color.Unspecified else CustomTheme.colorScheme.white,
+                tint = if (isChecked) Color.Unspecified else YesTMSTheme.color.white,
                 modifier = Modifier
                     .border(
                         shape = CircleShape,
                         width = 1.dp,
-                        color = if (isChecked) Color.Unspecified else CustomTheme.colorScheme.grey200
+                        color = if (isChecked) Color.Unspecified else YesTMSTheme.color.grey200
                     )
             )
 
             Text(
                 text = text,
-                style = CustomTheme.typography.md16pxMedium,
-                color = if (isChecked) CustomTheme.colorScheme.blue700 else CustomTheme.colorScheme.grey400
+                style = YesTMSTheme.typography.md16pxMedium,
+                color = if (isChecked) YesTMSTheme.color.blue700 else YesTMSTheme.color.grey400
             )
         }
     }

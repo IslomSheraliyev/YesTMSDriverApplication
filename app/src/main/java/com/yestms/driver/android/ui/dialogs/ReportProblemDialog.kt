@@ -45,7 +45,7 @@ import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.button.PrimaryButton
 import com.yestms.driver.android.components.card.DropDownSelectedItemCard
 import com.yestms.driver.android.components.card.IconBackgroundCard
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
 
@@ -77,13 +77,13 @@ fun ReportProblemDialog(
             properties = DialogProperties(
                 dismissOnBackPress = true,
                 dismissOnClickOutside = true,
-                securePolicy = SecureFlagPolicy.SecureOn
+                securePolicy = SecureFlagPolicy.SecureOff
             ),
         ) {
             Column(
                 modifier = modifier
                     .background(
-                        color = CustomTheme.colorScheme.white,
+                        color = YesTMSTheme.color.white,
                         shape = RoundedCornerShape(12.dp)
                     )
                     .padding(20.dp),
@@ -108,7 +108,7 @@ fun ReportProblemDialog(
 
                 IconBackgroundCard(
                     padding = 18.dp,
-                    color = CustomTheme.colorScheme.red,
+                    color = YesTMSTheme.color.red,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) { modifier, color ->
                     Icon(
@@ -123,8 +123,8 @@ fun ReportProblemDialog(
 
                 Text(
                     text = stringResource(id = R.string.report_a_problem),
-                    style = CustomTheme.typography.xs24pxMedium,
-                    color = CustomTheme.colorScheme.black,
+                    style = YesTMSTheme.typography.xs24pxMedium,
+                    color = YesTMSTheme.color.black,
                     textAlign = TextAlign.Center
                 )
 
@@ -140,20 +140,20 @@ fun ReportProblemDialog(
                     modifier = Modifier
                         .padding(top = 8.dp)
                         .background(
-                            color = CustomTheme.colorScheme.white,
+                            color = YesTMSTheme.color.white,
                             shape = RoundedCornerShape(12.dp)
                         )
                         .border(
                             width = 1.dp,
-                            color = CustomTheme.colorScheme.grey200,
+                            color = YesTMSTheme.color.grey200,
                             shape = RoundedCornerShape(12.dp)
                         )
                 ) {
                     itemsIndexed(problems) { index, problem ->
                         Text(
                             text = problem.name,
-                            style = CustomTheme.typography.md16pxRegular,
-                            color = CustomTheme.colorScheme.black,
+                            style = YesTMSTheme.typography.md16pxRegular,
+                            color = YesTMSTheme.color.black,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clip(
@@ -173,7 +173,7 @@ fun ReportProblemDialog(
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = rememberRipple(
                                         bounded = true,
-                                        color = CustomTheme.colorScheme.blue500
+                                        color = YesTMSTheme.color.blue500
                                     )
                                 )
                                 .padding(
@@ -183,7 +183,7 @@ fun ReportProblemDialog(
                         )
 
                         if (index != problems.lastIndex) HorizontalDivider(
-                            color = CustomTheme.colorScheme.grey200,
+                            color = YesTMSTheme.color.grey200,
                             thickness = 1.dp
                         )
                     }
@@ -197,8 +197,8 @@ fun ReportProblemDialog(
                     PrimaryButton(
                         text = stringResource(id = R.string.cancel),
                         cornerRadius = 8,
-                        color = CustomTheme.colorScheme.grey100,
-                        textColor = CustomTheme.colorScheme.grey400,
+                        color = YesTMSTheme.color.grey100,
+                        textColor = YesTMSTheme.color.grey400,
                         modifier = Modifier.weight(1f),
                         onClick = onDismissRequest
                     )
@@ -207,8 +207,8 @@ fun ReportProblemDialog(
                         text = stringResource(id = R.string.report),
                         cornerRadius = 8,
                         enabled = selectedProblem.id != -1,
-                        color = CustomTheme.colorScheme.red,
-                        textColor = CustomTheme.colorScheme.white,
+                        color = YesTMSTheme.color.red,
+                        textColor = YesTMSTheme.color.white,
                         modifier = Modifier.weight(1f),
                         onClick = {
                             onReport(selectedProblem)

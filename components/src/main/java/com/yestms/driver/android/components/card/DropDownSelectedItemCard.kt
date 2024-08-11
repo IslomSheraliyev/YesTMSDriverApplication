@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 
 @Composable
 fun DropDownSelectedItemCard(
@@ -28,9 +28,9 @@ fun DropDownSelectedItemCard(
     Card(
         modifier = modifier,
         onClick = onClick,
-        colors = CardDefaults.cardColors(containerColor = CustomTheme.colorScheme.white),
+        colors = CardDefaults.cardColors(containerColor = YesTMSTheme.color.white),
         shape = RoundedCornerShape(8.dp),
-        border = BorderStroke(1.dp, color = CustomTheme.colorScheme.grey400)
+        border = BorderStroke(1.dp, color = YesTMSTheme.color.grey400)
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -50,8 +50,8 @@ fun DropDownSelectedItemCard(
 
             Text(
                 text = text,
-                style = CustomTheme.typography.md16pxRegular,
-                color = CustomTheme.colorScheme.grey400
+                style = YesTMSTheme.typography.md16pxRegular,
+                color = YesTMSTheme.color.grey400
             )
         }
     }

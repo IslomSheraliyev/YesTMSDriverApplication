@@ -67,7 +67,6 @@ object UseCaseModule {
     fun provideUploadImagesUseCase(repository: LoadsRepository) =
         UploadImagesUseCase(repository)
 
-
     @[Singleton Provides]
     fun provideGetNoticesUseCase(repository: NotificationsRepository) =
         GetNotificationsUseCase(repository)
@@ -100,10 +99,10 @@ object UseCaseModule {
     fun provideConnectSocketUseCase(repository: SocketRepository) =
         SocketConnectUseCase(repository)
 
+
     @[Singleton Provides]
     fun provideDisconnectSocketUseCase(repository: SocketRepository) =
         SocketDisconnectUseCase(repository)
-
 
     @[Singleton Provides]
     fun provideAddUserUseCase(repository: SocketRepository) =
@@ -128,5 +127,6 @@ object UseCaseModule {
     @[Singleton Provides]
     fun provideSocketReceiveNoticeUseCase(repository: SocketRepository) =
         SocketReceiveNoticeUseCase(repository)
+
 
 }

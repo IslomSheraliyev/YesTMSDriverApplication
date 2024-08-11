@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 
 @Composable
@@ -50,7 +50,7 @@ fun StatusCard(
         Text(
             text = text,
             color = color,
-            style = CustomTheme.typography.smMedium,
+            style = YesTMSTheme.typography.smMedium,
             modifier = Modifier.padding(vertical = 4.dp)
         )
     }

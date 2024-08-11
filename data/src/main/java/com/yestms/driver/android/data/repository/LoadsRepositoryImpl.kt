@@ -76,7 +76,7 @@ class LoadsRepositoryImpl @Inject constructor(
         inputStream?.close()
 
         val requestBody = fileBytes?.toRequestBody("application/octet-stream".toMediaTypeOrNull())
-        return MultipartBody.Part.createFormData(name, "filename", requestBody!!)
+        return MultipartBody.Part.createFormData(name, name, requestBody!!)
     }
 
 }

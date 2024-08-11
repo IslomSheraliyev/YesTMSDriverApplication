@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.design.color.blue300Light
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 
 @Composable
@@ -40,12 +40,12 @@ fun UploadImageComponent(
 ) {
 
     val color =
-        if (isError) CustomTheme.colorScheme.red else if (isUploaded) CustomTheme.colorScheme.green else CustomTheme.colorScheme.blue700
+        if (isError) YesTMSTheme.color.red else if (isUploaded) YesTMSTheme.color.green else YesTMSTheme.color.blue700
     Card(
         onClick = onClick,
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = CustomTheme.colorScheme.blue6
+            containerColor = YesTMSTheme.color.blue6
         ),
         modifier = modifier
             .fillMaxWidth()
@@ -68,7 +68,7 @@ fun UploadImageComponent(
             ) { modifier, _ ->
                 Icon(
                     modifier = modifier,
-                    tint = CustomTheme.colorScheme.white,
+                    tint = YesTMSTheme.color.white,
                     painter = if (isUploaded) painterResource(id = R.drawable.ic_check) else painter,
                     contentDescription = null
                 )
@@ -79,15 +79,15 @@ fun UploadImageComponent(
             Text(
                 text = title,
                 color = color,
-                style = CustomTheme.typography.smBold
+                style = YesTMSTheme.typography.smBold
             )
 
             VerticalSpacer(dp = 8)
 
             Text(
                 text = description,
-                style = CustomTheme.typography.xsMedium,
-                color = CustomTheme.colorScheme.grey400
+                style = YesTMSTheme.typography.xsMedium,
+                color = YesTMSTheme.color.grey400
             )
         }
     }

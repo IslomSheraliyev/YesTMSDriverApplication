@@ -22,5 +22,6 @@ data class LoadModel(
     val loadStatus: LoadStatusModel,
     val loadAlertLogs: List<LoadAlertsLogsItemModel>,
     val loadStatusLogs: List<LoadStatusLogsItem>,
-    val dispatchers: List<DispatcherModel>
+    val dispatchers: List<DispatcherModel>,
+    val mediaBOLModels: List<MediaBOLModel>
 )

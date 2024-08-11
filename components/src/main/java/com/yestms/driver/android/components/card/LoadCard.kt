@@ -28,7 +28,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 import com.yestms.driver.android.domain.model.loads.LoadStatusModel
 import com.yestms.driver.android.components.R.font.helvetica_medium as medium
@@ -43,21 +43,24 @@ fun LoadCard(
     deliveryLocation: String,
     loadStatus: LoadStatusModel,
     modifier: Modifier = Modifier,
-    onClick: (id: Int) -> Unit = { }
+    enabled: Boolean = true,
+    onClick: (id: Int) -> Unit = { },
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .border(
                 width = 1.dp,
-                color = CustomTheme.colorScheme.grey200,
+                color = YesTMSTheme.color.grey200,
                 shape = RoundedCornerShape(12.dp)
             ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = CustomTheme.colorScheme.neutralColors100
+            containerColor = YesTMSTheme.color.neutralColors100,
+            disabledContainerColor = YesTMSTheme.color.neutralColors100
         ),
-        onClick = { onClick(id) }
+        onClick = { onClick(id) },
+        enabled = enabled
     ) {
 
         Column(
@@ -75,7 +78,7 @@ fun LoadCard(
                     text = buildAnnotatedString {
                         withStyle(
                             SpanStyle(
-                                color = CustomTheme.colorScheme.grey800,
+                                color = YesTMSTheme.color.grey800,
                                 fontFamily = FontFamily(Font(medium)),
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.W500,
@@ -90,7 +93,7 @@ fun LoadCard(
 
                         withStyle(
                             SpanStyle(
-                                color = CustomTheme.colorScheme.grey800,
+                                color = YesTMSTheme.color.grey800,
                                 fontFamily = FontFamily(Font(regular)),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.W400,
@@ -110,7 +113,7 @@ fun LoadCard(
                     text = buildAnnotatedString {
                         withStyle(
                             SpanStyle(
-                                color = CustomTheme.colorScheme.grey800,
+                                color = YesTMSTheme.color.grey800,
                                 fontFamily = FontFamily(Font(medium)),
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.W700,
@@ -124,7 +127,7 @@ fun LoadCard(
 
                         withStyle(
                             SpanStyle(
-                                color = CustomTheme.colorScheme.grey800,
+                                color = YesTMSTheme.color.grey800,
                                 fontFamily = FontFamily(Font(regular)),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.W400,
@@ -144,8 +147,8 @@ fun LoadCard(
             ) {
                 Text(
                     text = pickUpLocation.ifEmpty { "Unknown" },
-                    color = CustomTheme.colorScheme.grey800,
-                    style = CustomTheme.typography.smMedium,
+                    color = YesTMSTheme.color.grey800,
+                    style = YesTMSTheme.typography.smMedium,
                     modifier = Modifier.weight(1f)
                 )
 
@@ -156,8 +159,8 @@ fun LoadCard(
 
                 Text(
                     text = deliveryLocation.ifEmpty { "Unknown" },
-                    color = CustomTheme.colorScheme.grey800,
-                    style = CustomTheme.typography.smMedium,
+                    color = YesTMSTheme.color.grey800,
+                    style = YesTMSTheme.typography.smMedium,
                     modifier = Modifier.weight(1f)
                 )
             }

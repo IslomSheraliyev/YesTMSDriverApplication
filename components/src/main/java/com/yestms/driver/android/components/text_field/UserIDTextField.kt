@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,10 +48,10 @@ fun UserIDTextField(
                 )
                 .border(
                     width = 1.dp,
-                    color = if (isError) CustomTheme.colorScheme.red else CustomTheme.colorScheme.grey200,
+                    color = if (isError) YesTMSTheme.color.red else YesTMSTheme.color.grey200,
                     shape = RoundedCornerShape(8.dp)
                 ),
-            textStyle = CustomTheme.typography.md16pxRegular.copy(color = CustomTheme.colorScheme.grey500),
+            textStyle = YesTMSTheme.typography.md16pxRegular.copy(color = YesTMSTheme.color.grey500),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             singleLine = true,
             decorationBox = { innerTextField ->
@@ -66,8 +66,8 @@ fun UserIDTextField(
                     placeholder = {
                         Text(
                             text = stringResource(id = R.string.enter_user_id),
-                            style = CustomTheme.typography.md16pxRegular,
-                            color = CustomTheme.colorScheme.grey400
+                            style = YesTMSTheme.typography.md16pxRegular,
+                            color = YesTMSTheme.color.grey400
                         )
                     },
                     trailingIcon = {
@@ -77,15 +77,15 @@ fun UserIDTextField(
                                     .size(20.dp),
                                 painter = painterResource(id = R.drawable.ic_alert_circle),
                                 contentDescription = null,
-                                tint = CustomTheme.colorScheme.red
+                                tint = YesTMSTheme.color.red
                             )
                     },
                     colors = TextFieldDefaults.colors(
-                        focusedTextColor = CustomTheme.colorScheme.grey500,
-                        unfocusedTextColor = CustomTheme.colorScheme.grey500,
-                        unfocusedContainerColor = CustomTheme.colorScheme.white,
-                        focusedContainerColor = CustomTheme.colorScheme.white,
-                        cursorColor = CustomTheme.colorScheme.grey200,
+                        focusedTextColor = YesTMSTheme.color.grey500,
+                        unfocusedTextColor = YesTMSTheme.color.grey500,
+                        unfocusedContainerColor = YesTMSTheme.color.white,
+                        focusedContainerColor = YesTMSTheme.color.white,
+                        cursorColor = YesTMSTheme.color.grey200,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent
@@ -99,8 +99,8 @@ fun UserIDTextField(
 
             Text(
                 text = stringResource(id = R.string.user_not_found),
-                color = CustomTheme.colorScheme.red,
-                style = CustomTheme.typography.sm14pxRegular
+                color = YesTMSTheme.color.red,
+                style = YesTMSTheme.typography.sm14pxRegular
             )
         }
     }

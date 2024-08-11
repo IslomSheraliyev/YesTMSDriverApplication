@@ -36,7 +36,7 @@ import com.yestms.driver.android.components.button.SearchButton
 import com.yestms.driver.android.components.card.NoResultsFound
 import com.yestms.driver.android.components.card.NotificationCard
 import com.yestms.driver.android.components.date_picker.DatePickerTextField
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 import com.yestms.driver.android.components.spacer.VerticalSpacer
@@ -152,8 +152,8 @@ fun NotificationsScreenContent(
 
                     Text(
                         text = stringResource(id = R.string.notifications),
-                        color = CustomTheme.colorScheme.grey700,
-                        style = CustomTheme.typography.lg18pxMedium
+                        color = YesTMSTheme.color.grey700,
+                        style = YesTMSTheme.typography.lg18pxMedium
                     )
 
                     HorizontalSpacer(weight = 1f)
@@ -162,13 +162,13 @@ fun NotificationsScreenContent(
                         onClick = onClickDeleteAll,
                         shape = RoundedCornerShape(8.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = CustomTheme.colorScheme.grey200
+                            containerColor = YesTMSTheme.color.grey200
                         )
                     ) {
                         Text(
                             text = stringResource(id = R.string.delete_all),
-                            color = CustomTheme.colorScheme.grey400,
-                            style = CustomTheme.typography.md16pxMedium
+                            color = YesTMSTheme.color.grey400,
+                            style = YesTMSTheme.typography.md16pxMedium
                         )
                     }
 
@@ -176,7 +176,7 @@ fun NotificationsScreenContent(
             }
 
             item {
-                HorizontalDivider(color = CustomTheme.colorScheme.grey200)
+                HorizontalDivider(color = YesTMSTheme.color.grey200)
             }
 
             when (notifications.loadState.refresh) {
@@ -235,7 +235,7 @@ fun NotificationsScreenContent(
             state = refreshState,
             modifier = Modifier
                 .align(Alignment.TopCenter),
-            contentColor = CustomTheme.colorScheme.blue500
+            contentColor = YesTMSTheme.color.blue500
         )
     }
 }

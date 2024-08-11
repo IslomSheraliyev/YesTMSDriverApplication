@@ -9,11 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
 
 
@@ -39,7 +38,7 @@ fun LoadingDialog(
                     modifier = Modifier
                         .size(120.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(CustomTheme.colorScheme.grey200),
+                        .background(YesTMSTheme.color.grey200),
                     contentAlignment = Alignment.Center
                 ) {
                     ProgressIndicator()

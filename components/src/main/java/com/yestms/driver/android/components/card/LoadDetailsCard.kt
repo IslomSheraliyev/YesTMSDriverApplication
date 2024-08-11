@@ -24,7 +24,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.domain.model.loads.LoadModel
 
 @Composable
@@ -33,7 +33,7 @@ fun LoadDetailsCard(
     modifier: Modifier = Modifier
 ) {
 
-    val grey500 = CustomTheme.colorScheme.grey500
+    val grey500 = YesTMSTheme.color.grey500
 
     val boldStyle by remember {
         mutableStateOf(
@@ -62,12 +62,12 @@ fun LoadDetailsCard(
             .fillMaxWidth()
             .border(
                 width = 1.dp,
-                color = CustomTheme.colorScheme.grey200,
+                color = YesTMSTheme.color.grey200,
                 shape = RoundedCornerShape(12.dp)
             ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = CustomTheme.colorScheme.neutralColors100
+            containerColor = YesTMSTheme.color.neutralColors100
         )
     ) {
 
@@ -79,11 +79,11 @@ fun LoadDetailsCard(
         ) {
             Text(
                 text = stringResource(id = R.string.load_details),
-                style = CustomTheme.typography.smBold,
-                color = CustomTheme.colorScheme.grey500
+                style = YesTMSTheme.typography.smBold,
+                color = YesTMSTheme.color.grey500
             )
 
-            HorizontalDivider(color = CustomTheme.colorScheme.grey200)
+            HorizontalDivider(color = YesTMSTheme.color.grey200)
 
             Text(
                 text = buildAnnotatedString {

@@ -1,6 +1,7 @@
 package com.yestms.driver.android.ui.screens.details
 
 import android.content.ContentResolver
+import android.content.Context
 import android.net.Uri
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.local.AppPreferences
@@ -18,6 +19,7 @@ import com.yestms.driver.android.domain.usecase.socket.SocketAddUserUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketChangeForDashboardUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketRenderDispatcherDashboardUseCase
 import com.yestms.driver.android.domain.usecase.socket.SocketSendNoticeUseCase
+import com.yestms.driver.android.service.download.AndroidDownloader
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -63,12 +65,14 @@ class DetailsViewModel @Inject constructor(
                         }
                     }
                 }
+
                 DriverDetailsLoadStatus.PaperWorkFailed -> {
                     changeMediaBolUploadedState(false)
                     changeLumperUploadedState(false)
                     changeTrailerPhotoUploadedState(false)
                     _load.emit(load)
                 }
+
                 else -> _load.emit(load)
             }
         }
@@ -116,6 +120,15 @@ class DetailsViewModel @Inject constructor(
     ) = vmScope.launch {
         uploadImagesUseCase(id, pdf, lumper, trailerPhoto, contentResolver)
     }
+
+    fun downloadData(context: Context, loadLink: String, folderLink: String, loadId: String) =
+        vmScope.launch {
+            val downloadManager = AndroidDownloader(context)
+            downloadManager.downloadFile(
+                url = "https://odmin.yes-tms.com/api/loads/download-zip-app?loadLink=$loadLink&folderLink=$folderLink",
+                name = "${loadId}_media_bols.zip"
+            )
+        }
 
     fun connect(id: Int) = vmScope.launch {
         socketRenderDispatcherDashboardUseCase {

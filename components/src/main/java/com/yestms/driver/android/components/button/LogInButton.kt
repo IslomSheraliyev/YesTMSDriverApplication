@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 
 @Composable
 fun LoginButton(
@@ -20,7 +20,7 @@ fun LoginButton(
 ) {
     OutlinedButton(
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = CustomTheme.colorScheme.blue700
+            containerColor = YesTMSTheme.color.blue700
         ),
         shape = RoundedCornerShape(8.dp),
         contentPadding = PaddingValues(0.dp),
@@ -29,8 +29,8 @@ fun LoginButton(
     ) {
         Text(
             text = stringResource(R.string.login),
-            color = CustomTheme.colorScheme.neutralColors100,
-            style = CustomTheme.typography.md16pxMedium,
+            color = YesTMSTheme.color.neutralColors100,
+            style = YesTMSTheme.typography.md16pxMedium,
             modifier = Modifier.padding(
                 horizontal = 28.dp,
                 vertical = 16.dp

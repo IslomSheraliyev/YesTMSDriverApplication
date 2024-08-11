@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.button.NoticeButton
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 import com.yestms.driver.android.components.utils.DateConverter
 import com.yestms.driver.android.domain.model.notifications.NotificationModel
@@ -35,14 +35,14 @@ fun NotificationCard(
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = CustomTheme.colorScheme.neutralColors100
+            containerColor = YesTMSTheme.color.neutralColors100
         ),
         shape = RoundedCornerShape(12.dp),
         modifier = modifier
             .fillMaxWidth()
             .border(
                 width = 1.dp,
-                color = CustomTheme.colorScheme.grey200,
+                color = YesTMSTheme.color.grey200,
                 shape = RoundedCornerShape(12.dp)
             )
     ) {
@@ -72,22 +72,22 @@ fun NotificationCard(
                 ) {
                     Text(
                         text = DateConverter.getNoticeDate(notificationModel.createdAt),
-                        color = CustomTheme.colorScheme.grey800,
-                        style = CustomTheme.typography.smMedium
+                        color = YesTMSTheme.color.grey800,
+                        style = YesTMSTheme.typography.smMedium
                     )
 
                     Text(
                         text = DateConverter.getNoticeTime(notificationModel.createdAt),
-                        color = CustomTheme.colorScheme.grey400,
-                        style = CustomTheme.typography.xsMedium
+                        color = YesTMSTheme.color.grey400,
+                        style = YesTMSTheme.typography.xsMedium
                     )
                 }
 
                 HorizontalSpacer(weight = 1f)
 
                 StatusCard(
-                    color = if (notificationModel.isActive) CustomTheme.colorScheme.green
-                    else CustomTheme.colorScheme.orange,
+                    color = if (notificationModel.isActive) YesTMSTheme.color.green
+                    else YesTMSTheme.color.orange,
 
                     text = stringResource(
                         id = if (notificationModel.isActive.not()) R.string.read
@@ -99,8 +99,8 @@ fun NotificationCard(
 
             Text(
                 text = notificationModel.title,
-                color = CustomTheme.colorScheme.grey400,
-                style = CustomTheme.typography.md16pxRegular,
+                color = YesTMSTheme.color.grey400,
+                style = YesTMSTheme.typography.md16pxRegular,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -111,7 +111,7 @@ fun NotificationCard(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 NoticeButton(
-                    color = CustomTheme.colorScheme.blue700,
+                    color = YesTMSTheme.color.blue700,
                     painter = R.drawable.ic_eye,
                     text = stringResource(id = R.string.view),
                     modifier = Modifier.weight(1f),
@@ -119,7 +119,7 @@ fun NotificationCard(
                 )
 
                 NoticeButton(
-                    color = CustomTheme.colorScheme.red,
+                    color = YesTMSTheme.color.red,
                     painter = R.drawable.ic_trash,
                     text = stringResource(id = R.string.delete),
                     modifier = Modifier.weight(1f),

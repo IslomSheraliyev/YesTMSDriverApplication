@@ -15,7 +15,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,9 +32,9 @@ fun SegmentItem(
         Surface(
             modifier = modifier,
             color = if (isChecked)
-                CustomTheme.colorScheme.blue100
+                YesTMSTheme.color.blue100
             else
-                CustomTheme.colorScheme.grey100,
+                YesTMSTheme.color.grey100,
             shape = RoundedCornerShape(34.dp),
             onClick = onSelect
         ) {
@@ -42,8 +42,8 @@ fun SegmentItem(
             Box {
                 Text(
                     text = text,
-                    color = if (isChecked) CustomTheme.colorScheme.blue500 else CustomTheme.colorScheme.grey400,
-                    style = CustomTheme.typography.md16pxRegular,
+                    color = if (isChecked) YesTMSTheme.color.blue500 else YesTMSTheme.color.grey400,
+                    style = YesTMSTheme.typography.md16pxRegular,
                     modifier = Modifier
                         .padding(
                             horizontal = 14.dp,
@@ -58,7 +58,7 @@ fun SegmentItem(
                             .padding(top = 8.dp, end = 8.dp)
                             .size(6.dp)
                             .background(
-                                color = CustomTheme.colorScheme.red,
+                                color = YesTMSTheme.color.red,
                                 shape = CircleShape
                             )
                     )

@@ -64,7 +64,7 @@ fun YesTMSDriverApplicationTheme(
         else -> colorPalette
     }
 
-    CustomTheme(
+    YesTMSTheme(
         colorScheme = customColorScheme,
         typography = typography
     ) {

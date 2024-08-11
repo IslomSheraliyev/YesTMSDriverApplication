@@ -11,6 +11,7 @@ import com.yestms.driver.android.data.remote.response.loads.LoadStatusLogsRemote
 import com.yestms.driver.android.data.remote.response.loads.LoadStatusLogsRemoteItemLoadStatus
 import com.yestms.driver.android.data.remote.response.loads.LoadsItemRemoteModel
 import com.yestms.driver.android.data.remote.response.loads.LoadStatusRemoteModel
+import com.yestms.driver.android.data.remote.response.loads.MediaBOLRemoteModel
 import com.yestms.driver.android.domain.model.loads.AlertStatusesItemModel
 import com.yestms.driver.android.domain.model.loads.DispatcherAssignedModel
 import com.yestms.driver.android.domain.model.loads.DispatcherModel
@@ -21,6 +22,7 @@ import com.yestms.driver.android.domain.model.loads.LoadStatusLogsItem
 import com.yestms.driver.android.domain.model.loads.LoadStatusLogsItemLoadStatus
 import com.yestms.driver.android.domain.model.loads.LoadsItemModel
 import com.yestms.driver.android.domain.model.loads.LoadStatusModel
+import com.yestms.driver.android.domain.model.loads.MediaBOLModel
 
 object LoadsMapper {
 
@@ -65,7 +67,8 @@ object LoadsMapper {
                 dispatcherId = remote?.dispatcherId.or0(),
                 loadAlertLogs = remote?.loadAlertsLogs?.map(loadAlertLogsMapper).orEmpty(),
                 loadStatusLogs = remote?.loadStatusLogs?.map(loadStatusLogsMapper).orEmpty(),
-                dispatchers = remote?.dispatchers?.map(dispatcherMapper).orEmpty()
+                dispatchers = remote?.dispatchers?.map(dispatcherMapper).orEmpty(),
+                mediaBOLModels = remote?.mediaBOLs?.map(mediaBOLModelMapper).orEmpty()
             )
         }
 
@@ -135,6 +138,15 @@ object LoadsMapper {
                 userId = remote?.userId.or0(),
                 dispatcherId = remote?.dispatcherId.or0()
 
+            )
+        }
+
+    private val mediaBOLModelMapper: Mapper<MediaBOLRemoteModel?, MediaBOLModel> =
+        { remote ->
+            MediaBOLModel(
+                id = remote?.id.or0(),
+                name = remote?.name.orEmpty(),
+                loadId = remote?.loadId.or0()
             )
         }
 }

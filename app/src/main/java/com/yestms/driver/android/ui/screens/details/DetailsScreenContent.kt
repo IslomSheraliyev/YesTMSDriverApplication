@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.app_bar.InnerAppBar
+import com.yestms.driver.android.components.button.DownloadBOLButton
 import com.yestms.driver.android.components.button.PrimaryButton
 import com.yestms.driver.android.components.card.AlertLogItemCard
 import com.yestms.driver.android.components.card.CopyLoadIdCard
@@ -36,7 +38,7 @@ import com.yestms.driver.android.components.card.LoadStatusLogsCard
 import com.yestms.driver.android.components.card.LocationCard
 import com.yestms.driver.android.components.card.NoLocationCard
 import com.yestms.driver.android.components.card.UploadImageComponent
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.loader.ProgressIndicator
 import com.yestms.driver.android.components.spacer.VerticalSpacer
 import com.yestms.driver.android.data.mapper.or0
@@ -50,18 +52,19 @@ fun DetailsScreenContent(
     load: LoadModel?,
     isPdfScanned: Boolean,
     isLumperPhotoTaken: Boolean,
-    isTrailerPhoto: Boolean,
+    isTrailerPhotoTaken: Boolean,
     onMediaBolClick: () -> Unit,
     onLumperClick: () -> Unit,
     onTrailerPhotosClick: () -> Unit,
     onReportProblem: () -> Unit,
     onUpdateLoadStatus: (Int) -> Unit,
     onBackPressed: () -> Unit,
-    onSubmitPaperWork: () -> Unit
+    onSubmitPaperWork: () -> Unit,
+    onDownloadBOLClick: (String, String, String) -> Unit
 ) {
 
-    val red = CustomTheme.colorScheme.red
-    val blue = CustomTheme.colorScheme.blue700
+    val red = YesTMSTheme.color.red
+    val blue = YesTMSTheme.color.blue700
     var buttons by remember { mutableStateOf(listOf<ActionButton>()) }
 
     Box(
@@ -72,7 +75,7 @@ fun DetailsScreenContent(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .background(CustomTheme.colorScheme.grey100)
+                .background(YesTMSTheme.color.grey100)
                 .padding(16.dp)
         ) {
 
@@ -174,10 +177,23 @@ fun DetailsScreenContent(
                     mileage = load.mileage.or0(),
                     pickUpLocation = load.pickUpLocation,
                     deliveryLocation = load.deliveryLocation,
-                    loadStatus = load.loadStatus
+                    loadStatus = load.loadStatus,
+                    enabled = false
                 )
 
                 VerticalSpacer(dp = 16)
+
+                if (load.mediaBOLModels.isNotEmpty()) {
+                    DownloadBOLButton(onClick = {
+                        onDownloadBOLClick(
+                            load.activationLink,
+                            "media_bols",
+                            load.loadId
+                        )
+                    })
+
+                    VerticalSpacer(dp = 16)
+                }
 
                 LoadDetailsCard(loadModel = load)
 
@@ -256,7 +272,7 @@ fun DetailsScreenContent(
 
                     UploadImageComponent(
                         onClick = onTrailerPhotosClick,
-                        isUploaded = isTrailerPhoto,
+                        isUploaded = isTrailerPhotoTaken,
                         painter = painterResource(id = R.drawable.ic_upload),
                         title = stringResource(id = R.string.trailer_photos),
                         description = stringResource(id = R.string.open_gallery_or_camera)
@@ -287,10 +303,14 @@ fun DetailsScreenContent(
             ) {
                 buttons.forEach { button ->
                     PrimaryButton(
-                        cornerRadius = 8,
                         text = button.text,
                         color = button.color,
                         onClick = button.action,
+                        cornerRadius = 8,
+                        paddingValues = PaddingValues(
+                            horizontal = 28.dp,
+                            vertical = 16.dp
+                        ),
                         modifier = Modifier.weight(1f)
                     )
                 }

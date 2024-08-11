@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
 import com.yestms.driver.android.components.toggle.OnDutySwitch
 
@@ -46,8 +46,8 @@ fun MainAppBar(
 
             Text(
                 text = stringResource(id = R.string.on_duty),
-                color = CustomTheme.colorScheme.grey500,
-                style = CustomTheme.typography.md16pxMedium
+                color = YesTMSTheme.color.grey500,
+                style = YesTMSTheme.typography.md16pxMedium
             )
 
             HorizontalSpacer(dp = 8)

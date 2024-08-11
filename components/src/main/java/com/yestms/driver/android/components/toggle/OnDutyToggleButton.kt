@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.design.color.blue700Light
 import com.yestms.driver.android.components.design.color.grey100Light
 import com.yestms.driver.android.components.design.color.grey200Light
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -90,7 +90,7 @@ fun OnDutySwitch(
                 .size(handleSize)
                 .offset(x = (switchWidth - handleSize - handlePadding * 2f) * offset.value)
                 .background(
-                    if (checked) CustomTheme.colorScheme.white else CustomTheme.colorScheme.grey300,
+                    if (checked) YesTMSTheme.color.white else YesTMSTheme.color.grey300,
                     CircleShape
                 )
         )
@@ -104,8 +104,8 @@ fun OnDutySwitch(
         ) {
             Text(
                 text = if (checked) "ON" else "OFF",
-                color = if (checked) CustomTheme.colorScheme.white else CustomTheme.colorScheme.grey300,
-                style = CustomTheme.typography.xsMedium
+                color = if (checked) YesTMSTheme.color.white else YesTMSTheme.color.grey300,
+                style = YesTMSTheme.typography.xsMedium
             )
         }
     }

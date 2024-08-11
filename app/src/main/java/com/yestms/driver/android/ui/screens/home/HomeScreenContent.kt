@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.yestms.driver.android.components.design.theme.CustomTheme
+import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.navigation.Screen
 import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.ui.navigation.TabRow
@@ -54,7 +54,7 @@ fun HomeScreenContent(
             }
         )
 
-        HorizontalDivider(color = CustomTheme.colorScheme.grey200)
+        HorizontalDivider(color = YesTMSTheme.color.grey200)
 
         NavHost(
             navController = navHostController,

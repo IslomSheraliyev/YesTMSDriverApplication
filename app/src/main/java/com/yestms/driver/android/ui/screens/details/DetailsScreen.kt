@@ -68,7 +68,6 @@ fun DetailsScreen(
             }
         }
 
-
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { imageUri ->
@@ -108,7 +107,7 @@ fun DetailsScreen(
         load = load,
         isPdfScanned = uiState.isMediaBolUploaded,
         isLumperPhotoTaken = uiState.isLumperUploaded,
-        isTrailerPhoto = uiState.isTrailerPhotoUploaded,
+        isTrailerPhotoTaken = uiState.isTrailerPhotoUploaded,
         onMediaBolClick = {
             scanner.getStartScanIntent(context)
                 .addOnSuccessListener { intentSender ->
@@ -145,7 +144,10 @@ fun DetailsScreen(
                 dispatchers = load?.dispatchers.orEmpty()
             )
         },
-        onBackPressed = navController::safePopBackStack
+        onBackPressed = navController::safePopBackStack,
+        onDownloadBOLClick = { loadLink, folderLink, loadId ->
+            viewModel.downloadData(context, loadLink, folderLink, loadId)
+        }
     )
 }
 
