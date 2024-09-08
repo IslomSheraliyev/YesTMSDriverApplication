@@ -65,7 +65,7 @@ class MainViewModel @Inject constructor(
         _isRefreshing.emit(true)
         _uiState.update { it.copy(tokenStatus = AuthCheckTokenStatus.IDLE) }
         if (externalId.isEmpty()) {
-            _uiState.update { it.copy(externalIdStatus = AuthLoginDriverExternalIdStatus.IDLE) }
+            _uiState.update { it.copy(externalIdStatus = AuthLoginDriverExternalIdStatus.INVALID) }
             _isRefreshing.emit(false)
         } else
             authLoginDriverUseCase(externalId).onSuccess { result ->

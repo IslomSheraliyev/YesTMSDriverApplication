@@ -1,7 +1,6 @@
 [versions]
 
 compose = "1.0.0-beta01"
-gson = "2.11.0"
 kotlin = "1.9.0"
 firebaseBom = "33.1.0"
 
@@ -20,7 +19,6 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 kotlinxCoroutinesAndroid = "1.8.0"
 library = "4.0.0"
-libraryNoOp = "4.0.0"
 lifecycleRuntimeKtx = "2.8.2"
 loggingInterceptor = "4.12.0"
 lottieCompose = "4.0.0"
@@ -30,19 +28,13 @@ navigationCompose = "2.7.7"
 espresso = "3.5.1"
 okhttp = "4.12.0"
 pagingCompose = "3.3.0"
-playServicesAds = "23.1.0"
 playServicesMlkitDocumentScanner = "16.0.0-beta1"
 retrofit = "2.6.0"
 socketIoClient = "2.0.1"
-stetho = "1.6.0"
-stethoOkhttp3 = "1.6.0"
 text-ext = "1.1.5"
 gradle-plugin = "8.2.2"
 composeAnimation = "1.7.0-alpha08"
 constraintlayout = "2.1.4"
-navigationFragmentKtx = "2.7.7"
-navigationUiKtx = "2.7.7"
-timber = "5.0.1"
 googleServices = "4.4.2"
 googleCrashlytics = "3.0.2"
 uiGeometryAndroid = "1.6.8"
@@ -83,29 +75,20 @@ androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "composeAnimation" }
-
 androidx-compose-material = { module = "androidx.compose.material:material" }
 
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 library = { module = "com.github.chuckerteam.chucker:library", version.ref = "library" }
-library-no-op = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "libraryNoOp" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
-play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 play-services-mlkit-document-scanner = { module = "com.google.android.gms:play-services-mlkit-document-scanner", version.ref = "playServicesMlkitDocumentScanner" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
-androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 socket-io-client = { module = "io.socket:socket.io-client", version.ref = "socketIoClient" }
-stetho = { module = "com.facebook.stetho:stetho", version.ref = "stetho" }
-stetho-okhttp3 = { module = "com.facebook.stetho:stetho-okhttp3", version.ref = "stethoOkhttp3" }
-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }

@@ -41,21 +41,25 @@ fun MainScreen(
         onDismissRequest = { logoutDialogVisibility = false }
     )
 
-    if (uiState.tokenStatus == AuthCheckTokenStatus.VALID || uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.VALID)
-        MainScreenContent(
-            isOnDuty = uiState.isOnDuty,
-            mainNavController = mainNavController,
-            unreadCount = uiState.unreadCount,
-            onDutyChange = { isOnDuty -> viewModel.update(isOnDuty) },
-            updateToSeen = { id -> viewModel.updateLoadStatusToSeen(id) },
-            onLogoutClick = { logoutDialogVisibility = true },
-            onDestinationChange = { viewModel.getUnreadCount() }
-        )
-    else if (uiState.tokenStatus == AuthCheckTokenStatus.INVALID || uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.INVALID)
-        LoginScreenContent(
-            isError = uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.INVALID,
-            onLoginClicked = { value -> viewModel.loginDriver(value) }
-        )
+    if (
+        uiState.tokenStatus == AuthCheckTokenStatus.VALID ||
+        uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.VALID
+    ) MainScreenContent(
+        isOnDuty = uiState.isOnDuty,
+        mainNavController = mainNavController,
+        unreadCount = uiState.unreadCount,
+        onDutyChange = { isOnDuty -> viewModel.update(isOnDuty) },
+        updateToSeen = { id -> viewModel.updateLoadStatusToSeen(id) },
+        onLogoutClick = { logoutDialogVisibility = true },
+        onDestinationChange = { viewModel.getUnreadCount() }
+    )
+    else if (
+        uiState.tokenStatus == AuthCheckTokenStatus.INVALID ||
+        uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.INVALID
+    ) LoginScreenContent(
+        isError = uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.INVALID,
+        onLoginClicked = { value -> viewModel.loginDriver(value) }
+    )
     else if (
         refreshing &&
         uiState.externalIdStatus == AuthLoginDriverExternalIdStatus.IDLE

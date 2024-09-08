@@ -48,7 +48,7 @@
             </intent-filter>
         </service>
         <receiver
-            android:name=".service.download.DownloadCompletedReceiver"
+            android:name=".service.download.DownloadCompleteReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />

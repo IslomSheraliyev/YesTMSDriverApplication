@@ -53,6 +53,4 @@ object AppPreferences {
             val jsonString = Gson().toJson(value)
             preferences.edit()?.putString(AppPreferences::authCheckModel.name, jsonString)?.apply()
         }
-
-
 }
