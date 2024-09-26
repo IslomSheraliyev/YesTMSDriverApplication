@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -161,7 +162,8 @@ fun LoadCard(
                     text = deliveryLocation.ifEmpty { "Unknown" },
                     color = YesTMSTheme.color.grey800,
                     style = YesTMSTheme.typography.smMedium,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.End
                 )
             }
 

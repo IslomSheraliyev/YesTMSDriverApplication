@@ -41,7 +41,7 @@ class NotificationsViewModel @Inject constructor(
 
     fun getNotifications(
         search: String? = null,
-        sort: String? = null,
+        sort: String = "new",
         dateTo: String? = null,
         dateFrom: String? = null
     ) = vmScope.launch {

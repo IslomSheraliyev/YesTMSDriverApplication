@@ -1,15 +1,9 @@
 package com.yestms.driver.android.ui.screens.stats
 
 import android.icu.text.DecimalFormat
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -31,7 +25,6 @@ import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.check_box.StatsPeriodCheckBox
 import com.yestms.driver.android.components.design.theme.YesTMSTheme
 import com.yestms.driver.android.components.spacer.HorizontalSpacer
-import com.yestms.driver.android.components.spacer.VerticalSpacer
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -45,7 +38,6 @@ fun StatsScreenContent(
 ) {
 
     val format by rememberSaveable { mutableStateOf(DecimalFormat("#.##")) }
-
     val periods = rememberSaveable {
         mapOf(
             "last_7_days" to "Last 7 Days",
@@ -61,54 +53,50 @@ fun StatsScreenContent(
             .pullRefresh(refreshState)
     ) {
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(8.dp)
         ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
 
-                periods.forEach { (key, value) ->
-                    item {
-                        StatsPeriodCheckBox(
-                            text = value,
-                            isChecked = key == selectedPeriod,
-                            onCheck = {
-                                onPeriodSelected(key)
-                            }
-                        )
-                    }
+            periods.forEach { (key, value) ->
+                item {
+                    StatsPeriodCheckBox(
+                        text = value,
+                        isChecked = key == selectedPeriod,
+                        onCheck = { onPeriodSelected(key) },
+                        modifier = Modifier.padding(8.dp)
+                    )
                 }
             }
 
-            VerticalSpacer(dp = 32)
+            item(span = { GridItemSpan(2) }) {
+                Spacer(modifier = Modifier.height(32.dp))
+            }
 
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            listOf(
+                Triple(R.drawable.ic_earnings, "Earnings:", "$$earnings"),
+                Triple(R.drawable.ic_miles, "Miles:", "$miles/ml"),
+                Triple(
+                    R.drawable.ic_cost, "Cost per mile:", "$${
+                        format.format(
+                            if (earnings != 0 && miles != 0) earnings / miles.toDouble()
+                            else 0
+                        )
+                    }/ml"
+                ),
+            ).apply {
+                forEachIndexed { index, (id, title, value) ->
+                    item(span = { GridItemSpan(2) }) {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        ) {
 
-                listOf(
-                    Triple(R.drawable.ic_earnings, "Earnings:", "$$earnings"),
-                    Triple(R.drawable.ic_miles, "Miles:", "$miles/ml"),
-                    Triple(
-                        R.drawable.ic_cost, "Cost per mile:", "$${
-                            format.format(
-                                if (earnings != 0 && miles != 0) earnings / miles.toDouble()
-                                else 0
-                            )
-                        }/ml"
-                    ),
-                ).apply {
-                    forEachIndexed { index, (id, title, value) ->
-                        item {
+                            if (index != 0) Spacer(modifier = Modifier.height(8.dp))
+
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.fillParentMaxWidth()
+                                modifier = Modifier.fillMaxWidth()
                             ) {
                                 Icon(
                                     painter = painterResource(id = id),
@@ -132,23 +120,19 @@ fun StatsScreenContent(
                                     color = YesTMSTheme.color.grey700
                                 )
                             }
-                        }
 
-                        if (index != this.lastIndex) {
-                            item {
-                                HorizontalDivider(color = YesTMSTheme.color.grey200)
-                            }
+                            if (index != this@apply.lastIndex) HorizontalDivider(color = YesTMSTheme.color.grey200)
                         }
                     }
                 }
             }
         }
 
+
         PullRefreshIndicator(
             refreshing = refreshing,
             state = refreshState,
-            modifier = Modifier
-                .align(Alignment.TopCenter),
+            modifier = Modifier.align(Alignment.TopCenter),
             contentColor = YesTMSTheme.color.blue500
         )
     }

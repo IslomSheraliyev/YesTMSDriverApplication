@@ -49,7 +49,6 @@ fun LoadsScreenContent(
             ),
             verticalArrangement = Arrangement.Top,
         ) {
-
             when (loads.loadState.refresh) {
                 is LoadState.Error -> {
                     item {
@@ -78,7 +77,6 @@ fun LoadsScreenContent(
                         key = { loads[it]?.id.or0() }
                     ) { index ->
                         loads[index]?.let { notNullLoad ->
-
                             VerticalSpacer(dp = 16)
 
                             LoadCard(
@@ -104,8 +102,7 @@ fun LoadsScreenContent(
         PullRefreshIndicator(
             refreshing = refreshing,
             state = refreshState,
-            modifier = Modifier
-                .align(Alignment.TopCenter),
+            modifier = Modifier.align(Alignment.TopCenter),
             contentColor = YesTMSTheme.color.blue500
         )
     }

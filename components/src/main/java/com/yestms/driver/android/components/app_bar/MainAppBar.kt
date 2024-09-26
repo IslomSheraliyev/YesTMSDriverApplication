@@ -1,10 +1,9 @@
 package com.yestms.driver.android.components.app_bar
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -28,13 +27,10 @@ fun MainAppBar(
     onLogoutClick: () -> Unit
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
-
         Row(
-            modifier = Modifier
-                .padding(16.dp),
+            modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
@@ -59,18 +55,18 @@ fun MainAppBar(
 
             HorizontalSpacer(dp = 8)
 
-
             IconButton(
                 onClick = onLogoutClick,
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_logout),
                     contentDescription = null,
-                    modifier = Modifier
-                        .padding(horizontal = 6.dp),
+                    modifier = Modifier.padding(horizontal = 6.dp),
                     tint = Color.Unspecified
                 )
             }
         }
+
+        HorizontalDivider(color = YesTMSTheme.color.grey200)
     }
 }

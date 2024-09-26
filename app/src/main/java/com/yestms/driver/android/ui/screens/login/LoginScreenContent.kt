@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yestms.driver.android.components.R
 import com.yestms.driver.android.components.button.LoginButton
@@ -64,7 +65,8 @@ fun LoginScreenContent(
         Text(
             text = stringResource(id = R.string.title_enter_user_id),
             color = YesTMSTheme.color.grey400,
-            style = YesTMSTheme.typography.md16pxRegular
+            style = YesTMSTheme.typography.md16pxRegular,
+            textAlign = TextAlign.Center
         )
 
         VerticalSpacer(weight = 1f)

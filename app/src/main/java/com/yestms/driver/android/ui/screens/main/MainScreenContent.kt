@@ -1,9 +1,10 @@
 package com.yestms.driver.android.ui.screens.main
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -33,50 +34,50 @@ fun MainScreenContent(
         onDestinationChange()
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .systemBarsPadding()
-    ) {
-        MainAppBar(
-            isOnDuty = isOnDuty,
-            onDutyChange = onDutyChange,
-            onLogoutClick = onLogoutClick
-        )
-
-        HorizontalDivider(color = YesTMSTheme.color.grey200)
-
-        NavHost(
-            navController = mainNavController,
-            startDestination = Screen.Main.Home.screenName,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxSize()
-        ) {
-            createScreen(
-                route = Screen.Main.Home
+    Scaffold(
+        containerColor = YesTMSTheme.color.white,
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            MainAppBar(
+                isOnDuty = isOnDuty,
+                onDutyChange = onDutyChange,
+                onLogoutClick = onLogoutClick,
+                modifier = Modifier.statusBarsPadding()
+            )
+        },
+        content = {
+            NavHost(
+                navController = mainNavController,
+                startDestination = Screen.Main.Home.screenName,
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxSize()
             ) {
-                HomeScreen(
-                    navController = mainNavController,
-                    unreadCount = unreadCount,
-                    updateToSeen = updateToSeen,
-                    onDestinationChange = onDestinationChange
-                )
-            }
+                createScreen(
+                    route = Screen.Main.Home
+                ) {
+                    HomeScreen(
+                        navController = mainNavController,
+                        unreadCount = unreadCount,
+                        updateToSeen = updateToSeen,
+                        onDestinationChange = onDestinationChange
+                    )
+                }
 
-            createScreen(
-                route = Screen.Main.Details,
-                arguments = listOf(
-                    navArgument(Screen.ID) {
-                        type = NavType.IntType
-                    }
-                )
-            ) { backStackEntry ->
-                DetailsScreen(
-                    id = backStackEntry.arguments?.getInt(Screen.ID) ?: -1,
-                    navController = mainNavController
-                )
+                createScreen(
+                    route = Screen.Main.Details,
+                    arguments = listOf(
+                        navArgument(Screen.ID) {
+                            type = NavType.IntType
+                        }
+                    )
+                ) { backStackEntry ->
+                    DetailsScreen(
+                        id = backStackEntry.arguments?.getInt(Screen.ID) ?: -1,
+                        navController = mainNavController
+                    )
+                }
             }
         }
-    }
+    )
 }

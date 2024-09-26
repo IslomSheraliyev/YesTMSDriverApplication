@@ -1,28 +1,14 @@
 package com.yestms.driver.android.ui.screens.notifications
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,9 +37,21 @@ fun NotificationsScreenContent(
     refreshing: Boolean,
     refreshState: PullRefreshState,
     notifications: LazyPagingItems<NotificationModel>,
+
+    sortBy: String?,
+    dateFrom: String?,
+    dateTo: String?,
+    searchQuery: String?,
+
+    onUpdateSort: (String?) -> Unit,
+    onUpdateDateFrom: (String?) -> Unit,
+    onUpdateDateTo: (String?) -> Unit,
+    onUpdateSearchQuery: (String?) -> Unit,
+
     onClickDeleteAll: () -> Unit,
     onClickDelete: (Int) -> Unit,
     onClickView: (Int) -> Unit,
+
     onSearchClick: (
         sortBy: String?,
         dateFrom: String?,
@@ -61,11 +59,6 @@ fun NotificationsScreenContent(
         searchQuery: String?
     ) -> Unit
 ) {
-
-    var sortBy by rememberSaveable { mutableStateOf("") }
-    var dateFrom by rememberSaveable { mutableStateOf("") }
-    var dateTo by rememberSaveable { mutableStateOf("") }
-    var searchQuery by rememberSaveable { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -80,41 +73,31 @@ fun NotificationsScreenContent(
         ) {
 
             item {
-                SortBySpinner(
-                    onSelectOption = {
-                        sortBy = it
-                    }
-                )
+                SortBySpinner(onSelectOption = onUpdateSort)
             }
 
             item {
                 DatePickerTextField(
-                    value = dateFrom,
+                    value = dateFrom.orEmpty(),
                     prefixTextId = R.string.date_from,
-                    onDateSelected = {
-                        dateFrom = it
-                    }
+                    onDateSelected = onUpdateDateFrom
                 )
             }
 
             item {
                 DatePickerTextField(
-                    value = dateTo,
+                    value = dateTo.orEmpty(),
                     prefixTextId = R.string.date_to,
-                    onDateSelected = {
-                        dateTo = it
-                    }
+                    onDateSelected = onUpdateDateTo
                 )
             }
 
             item {
                 SearchTextField(
-                    value = searchQuery,
+                    value = searchQuery.orEmpty(),
                     placeHolder = stringResource(id = R.string.search_with_dots),
                     trailingIcon = painterResource(id = R.drawable.ic_search),
-                    onValueChange = {
-                        searchQuery = it
-                    }
+                    onValueChange = onUpdateSearchQuery
                 )
             }
 
@@ -122,12 +105,10 @@ fun NotificationsScreenContent(
                 SearchButton(
                     onClick = {
                         onSearchClick(
-                            sortBy.ifEmpty { null },
-                            if (dateFrom.isNotEmpty()) dateFrom
-                                .plus("T00:00:00.000Z") else null,
-                            if (dateTo.isNotEmpty()) dateTo
-                                .plus("T00:00:00.000Z") else null,
-                            searchQuery.ifEmpty { null }
+                            sortBy,
+                            if (dateFrom.isNullOrBlank()) null else dateFrom.plus("T00:00:00.000Z"),
+                            if (dateTo.isNullOrBlank()) null else dateTo.plus("T00:00:00.000Z"),
+                            searchQuery
                         )
                     }
                 )
@@ -137,11 +118,9 @@ fun NotificationsScreenContent(
 
             item {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Icon(
                         painter = painterResource(id = R.drawable.ic_notification_bell),
                         contentDescription = null,
@@ -161,9 +140,7 @@ fun NotificationsScreenContent(
                     Button(
                         onClick = onClickDeleteAll,
                         shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = YesTMSTheme.color.grey200
-                        )
+                        colors = ButtonDefaults.buttonColors(YesTMSTheme.color.grey200)
                     ) {
                         Text(
                             text = stringResource(id = R.string.delete_all),
@@ -175,9 +152,7 @@ fun NotificationsScreenContent(
                 }
             }
 
-            item {
-                HorizontalDivider(color = YesTMSTheme.color.grey200)
-            }
+            item { HorizontalDivider(color = YesTMSTheme.color.grey200) }
 
             when (notifications.loadState.refresh) {
                 is LoadState.Error -> {
@@ -233,8 +208,7 @@ fun NotificationsScreenContent(
         PullRefreshIndicator(
             refreshing = refreshing,
             state = refreshState,
-            modifier = Modifier
-                .align(Alignment.TopCenter),
+            modifier = Modifier.align(Alignment.TopCenter),
             contentColor = YesTMSTheme.color.blue500
         )
     }

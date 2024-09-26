@@ -18,8 +18,6 @@ fun TabRow(
     onItemClicked: (Screen, Int) -> Unit,
     items: Map<String, Screen> = Screen.Main.Home.menu,
 ) {
-
-
     LazyRow(
         modifier = modifier,
         contentPadding = PaddingValues(16.dp),

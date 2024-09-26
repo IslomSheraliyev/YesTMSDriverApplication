@@ -3,6 +3,7 @@ package com.yestms.driver.android.ui.screens.details
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import com.yestms.driver.android.core.BaseViewModel
 import com.yestms.driver.android.data.local.AppPreferences
 import com.yestms.driver.android.data.mapper.or0
@@ -56,12 +57,19 @@ class DetailsViewModel @Inject constructor(
 
     fun getDetails(id: Int) = vmScope.launch {
         _uiState.update { it.copy(loadId = id) }
-        getLoadUseCase(id).onSuccess { load ->
-            when (load.loadStatus.name) {
+        getLoadUseCase(id).onSuccess { remoteLoad ->
+            when (remoteLoad.loadStatus.name) {
                 DriverDetailsLoadStatus.PendingUnseen -> {
                     updateLoadStatusUseCase(id, 2).onSuccess {
-                        getLoadUseCase(id).onSuccess { load ->
-                            _load.emit(load)
+                        getLoadUseCase(id).onSuccess { newLoad ->
+                            _load.emit(newLoad)
+
+                            socketChangeForDashboardUseCase(newLoad.dispatchers.map { it.id })
+                            socketSendNoticeUseCase(
+                                parameter1 = newLoad.dispatchers.map { it.id },
+                                parameter2 = "Load ${load.value?.loadId} changed status on ${load.value?.loadStatus?.name} by driver ${AppPreferences.fullName}",
+                                parameter3 = "warning"
+                            )
                         }
                     }
                 }
@@ -70,10 +78,10 @@ class DetailsViewModel @Inject constructor(
                     changeMediaBolUploadedState(false)
                     changeLumperUploadedState(false)
                     changeTrailerPhotoUploadedState(false)
-                    _load.emit(load)
+                    _load.emit(remoteLoad)
                 }
 
-                else -> _load.emit(load)
+                else -> _load.emit(remoteLoad)
             }
         }
     }
